@@ -3918,12 +3918,12 @@ interpolated.  However, any scalar, array, hash or subroutine variable may
 start an interpolation if it is followed by a sequence of one or more bracketed
 dereferencers: that is, any of:
 
-=item1 #  . An array subscript
-=item1 #  . A hash subscript
-=item1 #  . A set of parentheses indicating a function call
-=item1 #  . Any of 1 through 3 in their B<dot> form
-=item1 #  . A method call that includes argument parentheses
-=item1 #  . A sequence of one or more unparenthesized method call, followed by any of 1 through 5
+=item1 # An array subscript
+=item1 # A hash subscript
+=item1 # A set of parentheses indicating a function call
+=item1 # Any of 1 through 3 in their B<dot> form
+=item1 # A method call that includes argument parentheses
+=item1 # A sequence of one or more unparenthesized method call, followed by any of 1 through 5
 In other words, this is legal:
 
     "Val = $a.ord.fmt('%x')\n"
@@ -4158,7 +4158,7 @@ backslash.  The backslash is always removed in this case.
 The treatment of backslashed characters that would I<not> have
 introduced an interpolation varies depending on the type of quote:
 
-=item1 #  . Any quoting form that includes C<qq> or C<:qq> in its semantic
+=item1 # Any quoting form that includes C<qq> or C<:qq> in its semantic
 derivation (including the normal double quote form) assumes that all
 backslashes are to be considered meaningful.  The meaning depends
 on whether the following character is alphanumeric; if it is, the
@@ -4167,7 +4167,7 @@ character is non-alphanumeric, the backslash is silently removed, on
 the assumption that the string was backslashed using C<quotemeta()>
 or some such.
 
-=item1 #  . All other quoting forms (including standard single quotes)
+=item1 # All other quoting forms (including standard single quotes)
 assume that non-interpolating sequences are to be left unaltered
 because they are probably intended to pass through to the result.
 Backslashes are removed I<only> for the terminating quote or for
