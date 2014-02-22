@@ -1,17 +1,14 @@
+=begin pod
 =encoding utf8
-
-=head1 TITLE
-
+=TITLE
 Synopsis 3: Perl 6 Operators
 
-=head1 AUTHORS
-
+=AUTHORS
     Luke Palmer <luke@luqui.org>
     Larry Wall <larry@wall.org>
     Darren Duncan <darren@darrenduncan.net>
 
-=head1 VERSION
-
+=VERSION
     Created: 8 Mar 2004
 
     Last Modified: 21 Jan 2014
@@ -19,7 +16,7 @@ Synopsis 3: Perl 6 Operators
 
 =head1 Overview
 
-For a summary of the changes from Perl 5, see L</Changes to Perl 5 operators>.
+For a summary of the changes from Perl 5, see L<#Changes to Perl 5 operators>.
 
 =head1 Operator precedence
 
@@ -116,41 +113,38 @@ This isn't really a precedence level, but it's in here because no operator
 can have tighter precedence than a term.  See L<S02> for longer descriptions of
 various terms.  Here are some examples.
 
-=over
-
-=item *
-
+=begin item1
 C<Int> literal
 
     42
 
-=item *
-
+=end item1
+=begin item1
 C<Num> literal
 
     3.14
 
-=item *
-
+=end item1
+=begin item1
 Non-interpolating C<Str> literal
 
     '$100'
 
-=item *
-
+=end item1
+=begin item1
 Interpolating C<Str> literal
 
     "Answer = $answer\n"
 
-=item *
-
+=end item1
+=begin item1
 Generalized C<Str> literal
 
     q["$100"]
     qq["$answer"]
 
-=item *
-
+=end item1
+=begin item1
 Heredoc
 
     qq:to/END/
@@ -160,8 +154,8 @@ Heredoc
         $me
         END
 
-=item *
-
+=end item1
+=begin item1
 Array composer
 
     [1,2,3]
@@ -171,8 +165,8 @@ Provides list context inside.  (Technically, it really provides a
 each of which is interpreted in list context and then concatenated
 into the final list.)
 
-=item *
-
+=end item1
+=begin item1
 Hash composer
 
     { }
@@ -181,8 +175,8 @@ Hash composer
 Inside must be either empty, or a single list starting with a pair or a hash,
 otherwise you must use C<hash()> or C<%()> instead.
 
-=item *
-
+=end item1
+=begin item1
 Closure
 
     { ... }
@@ -190,16 +184,16 @@ Closure
 When found where a statement is expected, executes immediately.  Otherwise
 always defers evaluation of the inside scope.
 
-=item *
-
+=end item1
+=begin item1
 Capture composer
 
     \(@a,$b,%c)
 
 An abstraction representing an argument list that doesn't yet know its context.
 
-=item *
-
+=end item1
+=begin item1
 Sigiled variables
 
     $x
@@ -210,8 +204,8 @@ Sigiled variables
     &func
     &div:(Int, Int --> Int)
 
-=item *
-
+=end item1
+=begin item1
 Sigils as contextualizer functions
 
     $()
@@ -219,31 +213,31 @@ Sigils as contextualizer functions
     %()
     &()
 
-=item *
-
+=end item1
+=begin item1
 Regexes in quote-like notation
 
     /abc/
     rx:i[abc]
     s/foo/bar/
 
-=item *
-
+=end item1
+=begin item1
 Transliterations
 
     tr/a..z/A..Z/
 
 Note ranges use C<..> rather than C<->.
 
-=item *
-
+=end item1
+=begin item1
 Type names
 
     Num
     ::Some::Package
 
-=item *
-
+=end item1
+=begin item1
 Subexpressions circumfixed by parentheses
 
     (1+2)
@@ -253,8 +247,8 @@ of statements, which (unlike the statements in a block) returns the results
 of all the statements concatenated together as a C<List> of C<Parcel>.
 How that is subsequently treated depends on its eventual binding.
 
-=item *
-
+=end item1
+=begin item1
 Function call with parens:
 
     a(1)
@@ -266,21 +260,21 @@ so you never have to worry about precedence in that case.  Hence:
 
     not($x) + 1         # means (not $x) + 1
 
-=item *
-
+=end item1
+=begin item1
 Pair composers
 
     :limit(5)
     :!verbose
 
-=item *
-
+=end item1
+=begin item1
 Signature literal
 
     :(Dog $self:)
 
-=item *
-
+=end item1
+=begin item1
 Method call with implicit invocant
 
     .meth       # call on $_
@@ -294,8 +288,8 @@ is a special C<.=> infix assignment operator that is equivalent in
 semantics to the method call form but that allows whitespace between
 the C<=> and the method name.)
 
-=item *
-
+=end item1
+=begin item1
 Listop (leftward)
 
     4,3, sort 2,1       # 4,3,1,2
@@ -304,8 +298,7 @@ As in Perl 5, a list operator looks like a term to the expression on
 its left, so it binds tighter than comma on the left but looser than
 comma on the right--see List prefix precedence below.
 
-=back
-
+=end item1
 =head2 Method postfix precedence
 
 All method postfixes start with a dot, though the dot is optional
@@ -315,16 +308,13 @@ merely expresses a complicated name.
 
 See L<S12> for more discussion of single dispatch method calls.
 
-=over
-
-=item *
-
+=begin item1
 Standard single-dispatch method calls
 
     $obj.meth
 
-=item *
-
+=end item1
+=begin item1
 Variants of standard single-dispatch method call
 
     $obj.+meth
@@ -335,8 +325,8 @@ In addition to the ordinary C<.> method invocation, there are variants
 C<.*>, C<.?>, and C<.+> to control how multiple related methods of
 the same name are handled.
 
-=item *
-
+=end item1
+=begin item1
 Class-qualified method call
 
     $obj.::Class::meth
@@ -345,16 +335,16 @@ Class-qualified method call
 As in Perl 5, tells the dispatcher which class to start searching from,
 not the exact method to call.
 
-=item *
-
+=end item1
+=begin item1
 Mutating method call
 
     $obj.=meth
 
 The C<.=> operator does inplace modification of the object on the left.
 
-=item *
-
+=end item1
+=begin item1
 Meta-method call
 
     $obj.^meth
@@ -362,8 +352,8 @@ Meta-method call
 The C<.^> operator calls a class metamethod;
 C<foo.^bar> is short for C<foo.HOW.bar>.
 
-=item *
-
+=end item1
+=begin item1
 Method-like postcircumfixes
 
     $routine.()
@@ -374,20 +364,20 @@ Method-like postcircumfixes
 
 The dotless forms of these have exactly the same precedences.
 
-=item *
-
+=end item1
+=begin item1
 Dotted form of any other postfix operator
 
     $x.++         # postfix:<++>($x)
 
-=item *
-
+=end item1
+=begin item1
 Dotted postfix form of any other prefix operator
 
     $x.:<++>       # prefix:<++>($x)
 
-=item *
-
+=end item1
+=begin item1
 There is specifically no C<< infix:<.> >> operator, so
 
     $foo . $bar
@@ -396,8 +386,7 @@ will always result in a compile-time error indicating the user should
 use C<< infix:<~> >> instead.  This is to catch an error likely to
 be made by Perl 5 programmers learning Perl 6.
 
-=back
-
+=end item1
 =head2 Autoincrement precedence
 
 As in C, these operators increment or decrement the object in question
@@ -405,7 +394,7 @@ either before or after the value is taken from the object, depending on
 whether it is put before or after.  Also as in C, multiple references
 to a single mutating object in the same expression may result in undefined
 behavior unless some explicit sequencing operator is interposed.
-See L</Sequence points>.
+See L<#Sequence points>.
 
 As with all postfix operators in Perl 6, no space is allowed between
 a term and its postfix.  See L<S02> for why, and for how to work around the
@@ -565,30 +554,23 @@ postincrement returns 0 the first time:
 
     my $x; say $x++;    # 0, not Any
 
-=over
-
-=item *
-
+=begin item1
 Autoincrement C<< prefix:<++> >> or C<< postfix:<++> >> operator
 
     $x++
     ++$x;
 
-=item *
-
+=end item1
+=begin item1
 Autodecrement C<< prefix:<--> >> or C<< postfix:<--> >> operator
 
     $x--
     --$x
 
-=back
-
+=end item1
 =head2 Exponentiation precedence
 
-=over
-
-=item *
-
+=begin item1
 C<< infix:<**> >> exponentiation operator
 
     $x ** 2
@@ -604,14 +586,10 @@ accuracy is left to implementation provided by that type; there is
 no requirement to recognize an integer to give it special treatment.
 (Coercion of an integer C<Str> via C<Cool> is likely to do the right thing, however.)
 
-=back
-
+=end item1
 =head2 Symbolic unary precedence
 
-=over
-
-=item *
-
+=begin item1
 C<< prefix:<?> >>, boolean context
 
     ?$x
@@ -620,8 +598,8 @@ Evaluates the expression as a boolean and returns C<True> if expression
 is true or C<False> otherwise.
 See "so" below for a low-precedence alternative.
 
-=item *
-
+=end item1
+=begin item1
 C<< prefix:<!> >>, boolean negation
 
     !$x
@@ -629,8 +607,8 @@ C<< prefix:<!> >>, boolean negation
 Returns the opposite of what C<?> would.
 See "not" below for a low-precedence alternative.
 
-=item *
-
+=end item1
+=begin item1
 C<< prefix:<+> >>, numeric context
 
     +$x
@@ -647,16 +625,16 @@ and radix notations are recognized.
 Only leading and trailing whitespace are allowed as extra characters;
 any other unrecognized character results in the return of a failure.
 
-=item *
-
+=end item1
+=begin item1
 C<< prefix:<-> >>, numeric negation
 
     -$x
 
 Coerces to numeric and returns the arithmetic negation of the resulting number.
 
-=item *
-
+=end item1
+=begin item1
 C<< prefix:<~> >>, string context
 
     ~$x
@@ -666,8 +644,8 @@ role.  (It only coerces the value, not the original variable.)  As with
 numerics, it is guaranteed only to coerce to something C<Stringy>,
 not necessarily C<Str>.
 
-=item *
-
+=end item1
+=begin item1
 C<< prefix:<|> >>, flatten object into arglist
 
     | $capture
@@ -678,8 +656,8 @@ If the first argument of the capture is marked as an invocant but is used
 in a context not expecting one, it is treated as an ordinary positional
 argument.
 
-=item *
-
+=end item1
+=begin item1
 C<< prefix:<||> >>, flatten object into semicolon list
 
     || $parcel
@@ -691,8 +669,8 @@ It is an error to use this operator outside of a lol context; in
 other words it must be bound into a C<**> (slice) parameter rather
 than a C<*> (slurpy) parameter.
 
-=item *
-
+=end item1
+=begin item1
 C<< prefix:<+^> >>, numeric bitwise negation
 
     +^$x
@@ -701,8 +679,8 @@ Coerces to C<Int> and then does bitwise negation on the number, returning an C<I
 (In order not to have to represent an infinitude of 1's, it represents
 that value as some negative in 2's complement form.)
 
-=item *
-
+=end item1
+=begin item1
 C<< prefix:<~^> >>, string bitwise negation
 
     ~^$x
@@ -715,38 +693,34 @@ The use of coercion probably indicates a design error, however.  This operator
 is distinguished from numeric bitwise negation in order to provide bit vectors
 that extend on the right rather than the left (and always do unsigned extension).
 
-=item *
-
+=end item1
+=begin item1
 C<< prefix:<?^> >>, boolean negation
 
     ?^$x
 
 Coerces to boolean and then flips the bit.  (Same as C<!>.)
 
-=item *
-
+=end item1
+=begin item1
 C<< prefix:<^> >>, upto operator
 
     ^$limit
 
-Constructs a range of C<0 ..^ +$limit>.  See L</Range and RangeIter semantics>.
+Constructs a range of C<0 ..^ +$limit>.  See L<#Range and RangeIter semantics>.
 
-=back
-
+=end item1
 =head2 Multiplicative precedence
 
-=over
-
-=item *
-
+=begin item1
 C<< infix:<*> >>
 
     $x*$y
 
 Multiplication, resulting in the wider type of the two.
 
-=item *
-
+=end item1
+=begin item1
 C<< infix:</> >>
 
     $numerator / $denominator
@@ -773,8 +747,8 @@ IEEE concepts, and if you subsequently try to use one of these values
 in a non-parallel computation, it will likely throw an exception at
 that point.)
 
-=item *
-
+=end item1
+=begin item1
 C<< infix:<div> >>, integer division
 
     $numerator div $denominator
@@ -801,8 +775,8 @@ This identity stops holding when C<$x/$y> degrades to a C<Num> and runs
 into precision limits.  A C<div> operation on two C<Int> objects must always
 be done precisely.
 
-=item *
-
+=end item1
+=begin item1
 C<< infix:<%> >>, modulo
 
     $x % $y
@@ -812,8 +786,8 @@ then calculates the remainder, which is defined as:
 
     $x % $y == $x - floor($x / $y) * $y
 
-=item *
-
+=end item1
+=begin item1
 C<< infix:<%%> >>, is divisible by
 
     $x %% $y
@@ -824,8 +798,8 @@ the C<$x> is evenly divisible by C<$y>, and C<Bool::False> otherwise.
 You may use C<!%%> to mean "not divisible by", though C<%> itself generally
 has the same effect.
 
-=item *
-
+=end item1
+=begin item1
 C<< infix:<mod> >>, integer modulo
 
     $x mod $y
@@ -838,8 +812,8 @@ This should preserve the identity
 
     $x mod $y == $x - ($x div $y) * $y
 
-=item *
-
+=end item1
+=begin item1
 C<< infix:['+&'] >>, numeric bitwise and
 
     $x +& $y
@@ -847,14 +821,14 @@ C<< infix:['+&'] >>, numeric bitwise and
 Converts both arguments to C<Int> and does a boolean AND between
 corresponding bits of each integer, returning an C<Int> result.
 
-=item *
-
+=end item1
+=begin item1
 C<< infix:['+<'] >>, numeric shift left
 
     $integer +< $bits
 
-=item *
-
+=end item1
+=begin item1
 C<< infix:['+>'] >>, numeric shift right
 
     $integer +> $bits
@@ -862,8 +836,8 @@ C<< infix:['+>'] >>, numeric shift right
 By default, signed types do sign extension, while unsigned types do not, but
 this may be enabled or disabled with a C<:signed> or C<:!signed> adverb.
 
-=item *
-
+=end item1
+=begin item1
 C<< infix:<~&> >>, buffer bitwise and
 
     $x ~& $y
@@ -878,14 +852,14 @@ The use of coercion probably indicates a design error, however.  This operator
 is distinguished from numeric bitwise AND in order to provide bit vectors
 that extend on the right rather than the left (and always do unsigned extension).
 
-=item *
-
+=end item1
+=begin item1
 C<< infix:['~<'] >>, buffer bitwise shift left
 
     $buf ~< $bits
 
-=item *
-
+=end item1
+=begin item1
 C<< infix:['~>'] >>, buffer bitwise shift right
 
     $buf ~> $bits
@@ -893,8 +867,8 @@ C<< infix:['~>'] >>, buffer bitwise shift right
 Sign extension is not done by default but may be enabled with a C<:signed>
 adverb.
 
-=item *
-
+=end item1
+=begin item1
 C<< infix:<?&> >>, boolean and
 
     $x ?& $y
@@ -902,8 +876,8 @@ C<< infix:<?&> >>, boolean and
 Converts both arguments to type C<Bool> and then ANDs those, returning the
 resulting C<Bool>.
 
-=item *
-
+=end item1
+=begin item1
 C<< infix:<gcd> >>, greatest common divisor
 
     $x gcd $y
@@ -911,8 +885,8 @@ C<< infix:<gcd> >>, greatest common divisor
 Converts both arguments to an integral type and then finds the largest integer
 that both arguments are evenly divisible by, and returns that integer.
 
-=item *
-
+=end item1
+=begin item1
 C<< infix:<lcm> >>, least common multiple
 
     $x lcm $y
@@ -920,18 +894,14 @@ C<< infix:<lcm> >>, least common multiple
 Converts both arguments to an integral type and then finds the smallest integer
 that is evenly divisible by both arguments, and returns that integer.
 
-=back
-
+=end item1
 Any bit shift operator may be turned into a rotate operator with the
 C<:rotate> adverb.  If C<:rotate> is specified, the concept of
 sign extension is meaningless, and you may not specify a C<:signed> adverb.
 
 =head2 Additive precedence
 
-=over
-
-=item *
-
+=begin item1
 C<< infix:<+> >>, numeric addition
 
     $x + $y
@@ -946,14 +916,14 @@ operators to do I/O.)  In general we feel it is much better for you
 to make up a different operator than overload an existing operator for
 "off topic" uses.  All of Unicode is available for this purpose.
 
-=item *
-
+=end item1
+=begin item1
 C<< infix:<-> >>, numeric subtraction
 
     $x - $y
 
-=item *
-
+=end item1
+=begin item1
 C<< infix:<+|> >>, numeric bitwise inclusive or
 
     $x +| $y
@@ -961,8 +931,8 @@ C<< infix:<+|> >>, numeric bitwise inclusive or
 Converts both arguments to C<Int> and does a boolean OR between
 corresponding bits of each integer, returning an C<Int> result.
 
-=item *
-
+=end item1
+=begin item1
 C<< infix:<+^> >> numeric bitwise exclusive or
 
     $x +^ $y
@@ -970,8 +940,8 @@ C<< infix:<+^> >> numeric bitwise exclusive or
 Converts both arguments to C<Int> and does a boolean XOR between
 corresponding bits of each integer, returning an C<Int> result.
 
-=item *
-
+=end item1
+=begin item1
 C<< infix:<~|> >>, buffer bitwise inclusive or
 
     $x ~| $y
@@ -986,8 +956,8 @@ The use of coercion probably indicates a design error, however.  This operator
 is distinguished from numeric bitwise OR in order to provide bit vectors
 that extend on the right rather than the left (and always do unsigned extension).
 
-=item *
-
+=end item1
+=begin item1
 C<< infix:<~^> >> buffer bitwise exclusive or
 
     $x ~^ $y
@@ -1002,8 +972,8 @@ The use of coercion probably indicates a design error, however.  This operator
 is distinguished from numeric bitwise XOR in order to provide bit vectors
 that extend on the right rather than the left (and always do unsigned extension).
 
-=item *
-
+=end item1
+=begin item1
 C<< infix:<?|> >>, boolean inclusive or
 
     $x ?| $y
@@ -1011,8 +981,8 @@ C<< infix:<?|> >>, boolean inclusive or
 Converts both arguments to type C<Bool> and then ORs those, returning the
 resulting C<Bool>.
 
-=item *
-
+=end item1
+=begin item1
 C<< infix:<?^> >> boolean exclusive or
 
     $x ?^ $y
@@ -1020,14 +990,10 @@ C<< infix:<?^> >> boolean exclusive or
 Converts both arguments to type C<Bool> and then XORs those, returning the
 resulting C<Bool>.
 
-=back
-
+=end item1
 =head2 Replication
 
-=over
-
-=item *
-
+=begin item1
 C<< infix:<x> >>, string/buffer replication
 
     $string x $count
@@ -1042,8 +1008,8 @@ infinite strings.  (At least, not yet...)  Note, however, that an
 infinite string may someday be emulated with C<cat($string xx *)>,
 in which case C<$string x *> may be a shorthand for that.
 
-=item *
-
+=end item1
+=begin item1
 C<< infix:<xx> >>, expression repetition operator
 
     @list xx $count
@@ -1068,26 +1034,18 @@ Of course, the optimizer can notice when the left side is a constant and avoid
 re-evaluation.  When this is not possible, you can subvert the re-evaluation
 by use of a temporary.
 
-=back
-
+=end item1
 =head2 Concatenation
 
-=over
-
-=item *
-
+=begin item1
 C<< infix:<~> >>, string/buffer concatenation
 
     $x ~ $y
 
-=back
-
+=end item1
 =head2 Junctive and (all) precedence
 
-=over
-
-=item *
-
+=begin item1
 C<< infix:<&> >>, all() operator
 
     $a & $b & $c ...
@@ -1106,20 +1064,16 @@ tests don't pass.  This cannot be guaranteed by:
 
     $target ~~ MyType & *.mytest1 & *.mytest2
 
-=back
-
+=end item1
 =head2 Junctive or (any) precedence
 
-=over
-
-=item *
-
+=begin item1
 C<< infix:<|> >>, any() operator
 
     $a | $b | $c ...
 
-=item *
-
+=end item1
+=begin item1
 By default junctions are allowed to reorder the comparisons in
 any order that makes sense to the optimizer.  To suppress this,
 use the C<S> metaoperator for force sequential evaluation, which
@@ -1135,8 +1089,8 @@ of safety:
 
     $target ~~ MyType S| *.mysafetest S| *.mydangeroustest
 
-=item *
-
+=end item1
+=begin item1
 C<< infix:<^> >>, one() operator
 
     $a ^ $b ^ $c ...
@@ -1144,8 +1098,7 @@ C<< infix:<^> >>, one() operator
 The C<S^> variant guarantees left-to-right evaluation, and in boolean
 context short-circuits to false if it sees a second match.
 
-=back
-
+=end item1
 =head2 Named unary precedence
 
 Operators of one argument
@@ -1168,22 +1121,19 @@ is a syntax error (two terms in a row), because C<int> is a type name now.
 
 =head2 Nonchaining binary precedence
 
-=over
-
-=item *
-
+=begin item1
 C<< infix:<but> >>
 
     $value but Mixin
 
-=item *
-
+=end item1
+=begin item1
 C<< infix:<does> >>
 
     $object does Mixin
 
-=item *
-
+=end item1
+=begin item1
 Sort comparisons
 
     $num1 <=> $num2
@@ -1194,11 +1144,11 @@ These operators compare their operands using numeric, string, or C<eqv>
 semantics respectively, and if the left operand is smaller, the same,
 or larger than the right operator, return respectively C<Order::Less>,
 C<Order::Same>, or C<Order::More> (which numerify to -1, 0, or +1,
-the customary values in most C-derived languages).  See L</Comparison
+the customary values in most C-derived languages).  See L<#Comparison
 semantics>.
 
-=item *
-
+=end item1
+=begin item1
 Range object constructor
 
     $min .. $max
@@ -1207,48 +1157,44 @@ Range object constructor
     $min ^..^ $max
 
 Constructs C<Range> objects, optionally excluding one or both endpoints.
-See L</Range and RangeIter semantics>.
+See L<#Range and RangeIter semantics>.
 
-=back
-
+=end item1
 =head2 Chaining binary precedence
 
 All operators on this precedence level may be I<chained>; see
-L</Chained comparisons>.  They all return a boolean value.
+L<#Chained comparisons>.  They all return a boolean value.
 
-=over
-
-=item *
-
+=begin item1
 C<< infix:<==> >> etc.
 
     == != < <= > >=
 
 As in Perl 5, converts to C<Num> before comparison.  C<!=> is short for C<!==>.
 
-=item *
-
+=end item1
+=begin item1
 C<< infix:<eq> >> etc.
 
     eq ne lt le gt ge
 
 As in Perl 5, converts to C<Str> before comparison. C<ne> is short for C<!eq>.
 
-=item *
-
+=end item1
+=begin item1
 Generic ordering
 
     $a before $b
     $a after $b
 
-=item *
-
+=end item1
+=begin item1
 Smart match
 
     $obj ~~ $pattern
 
 Perl 5's C<=~> becomes the "smart match" operator C<~~>, with an
-extended set of semantics.  See L</Smart matching> for details.
+extended set of semantics.  See L<#Smart matching> for details.
 
 To catch "brainos", the Perl 6 parser defines an C<< infix:<=~> >>
 operator, which always fails at compile time with a message directing
@@ -1258,16 +1204,16 @@ wanted to assign a stringified value as two separate operators.
 
 A negated smart match is spelled C<!~~>.
 
-=item *
-
+=end item1
+=begin item1
 Container identity
 
     VAR($a) =:= VAR($b)
 
-See L</Comparison semantics>.
+See L<#Comparison semantics>.
 
-=item *
-
+=end item1
+=begin item1
 Value identity
 
     $x === $y
@@ -1275,7 +1221,7 @@ Value identity
 For objects that are not value types, their identities are their values.
 (Identity is returned by the C<.WHICH> metamethod.)  The actual contents of
 the objects are ignored.  These semantics are those used by hashes that
-allow objects for keys.  See also L</Comparison semantics>.
+allow objects for keys.  See also L<#Comparison semantics>.
 
 Note that C<===> is defined with an C<(Any,Any)> signature, and therefore
 autothreads over junctions; hence it I<cannot> be used to determine if two
@@ -1287,8 +1233,8 @@ you can easily work around this limitation by saying:
 
 [Conjecture: primitive identity is checked with C<< $junk1 \=== $junk2 >>.]
 
-=item *
-
+=end item1
+=begin item1
 Canonical equivalence
 
     $obj1 eqv $obj2
@@ -1297,7 +1243,7 @@ Compares two objects for canonical equivalence.  For value types compares
 the values.  For object types, compares current contents according to some
 scheme of canonicalization.  These semantics are those used by hashes
 that allow only values for keys (such as Perl 5 string-key hashes).
-See also L</Comparison semantics>.
+See also L<#Comparison semantics>.
 
 Note that C<eqv> autothreads over junctions, as do all other comparison
 operators.  (Do not be confused by the fact that these return boolean values;
@@ -1309,8 +1255,8 @@ it can prove that both its arguments are already fully evaluated.)
 
 [Conjecture: primitive equivalence is checked with C<< $junk1 \eqv $junk2 >>.]
 
-=item *
-
+=end item1
+=begin item1
 Negated relational operators
 
     $num !== 42
@@ -1320,16 +1266,12 @@ Negated relational operators
     $a !=== $b
     $a !eqv $b
 
-See L</Negated relational operators>.
+See L<#Negated relational operators>.
 
-=back
-
+=end item1
 =head2 Tight and precedence
 
-=over
-
-=item *
-
+=begin item1
 C<< infix:<&&> >>, short-circuit and
 
     $a && $b && $c ...
@@ -1339,14 +1281,10 @@ returns the result of the last argument.  In list context forces
 a false return to mean C<()>.  See C<and> below for low-precedence
 version.
 
-=back
-
+=end item1
 =head2 Tight or precedence
 
-=over
-
-=item *
-
+=begin item1
 C<< infix:<||> >>, short-circuit inclusive-or
 
     $a || $b || $c ...
@@ -1361,8 +1299,8 @@ if the boolean is true:
 In list context this operator forces a false return to mean C<()>.
 See C<or> below for low-precedence version.
 
-=item *
-
+=end item1
+=begin item1
 C<< infix:<^^> >>, short-circuit exclusive-or
 
     $a ^^ $b ^^ $c ...
@@ -1382,9 +1320,8 @@ operator:
 but note that reduce operators are not macros but ordinary list
 operators, so c() is always called before the reduce is done.
 
-
-=item *
-
+=end item1
+=begin item1
 C<< infix:<//> >>, short-circuit default operator
 
     $a // $b // $c ...
@@ -1394,8 +1331,8 @@ returns the result of the last argument.  In list context forces a
 false return to mean C<()>.  See C<orelse> below for a similar but
 not identical low-precedence version.
 
-=item *
-
+=end item1
+=begin item1
 Minimum and maximum
 
     $a min $b min $c ...
@@ -1422,14 +1359,10 @@ support it:
     my int $max;
     $max max= -Inf;     # ERROR
 
-=back
-
+=end item1
 =head2 Conditional operator precedence
 
-=over
-
-=item *
-
+=begin item1
 Conditional operator
 
     say "My answer is: ", $maybe ?? "yes" !! "no";
@@ -1477,16 +1410,16 @@ The best don't-repeat-yourself solution is simply:
 
     my $x = hmm() ?? 1 !! 2;          # much better
 
-=item *
-
+=end item1
+=begin item1
 C<< infix:<?> >>
 
 To catch likely errors by people familiar with C-derived languages
 (including Perl 5), a bare question mark in infix position will
 produce an error suggesting that the user use C<?? !!> instead.
 
-=item *
-
+=end item1
+=begin item1
 Flipflop ranges
 
     start() ff end()
@@ -1494,8 +1427,8 @@ Flipflop ranges
     start() ff^ end()
     start() ^ff^ end()
 
-=item *
-
+=end item1
+=begin item1
 Flipflop ranges (sed style)
 
     start() fff end()
@@ -1503,8 +1436,7 @@ Flipflop ranges (sed style)
     start() fff^ end()
     start() ^fff^ end()
 
-=back
-
+=end item1
 =head2 Adverbs
 
 Operator adverbs are special-cased in the grammar, but give
@@ -1556,10 +1488,7 @@ Here the adverb is considered to be modifying the C<eqv> operator.
 
 =head2 Item assignment precedence
 
-=over
-
-=item *
-
+=begin item1
 C<< infix:<=> >>
 
     $x = 1, $y = 2;
@@ -1567,8 +1496,8 @@ C<< infix:<=> >>
 With simple lvalues, C<=> has this precedence, which is tighter than comma.
 (List assignments have listop precedence below.)
 
-=item *
-
+=end item1
+=begin item1
 C<< infix:['=>'] >>, Pair constructor
 
     foo => 1, bar => "baz"
@@ -1581,30 +1510,26 @@ however its precedence is now equivalent to assignment, and it is
 also right associative.  Note that, unlike in Perl 5, C<< => >>
 binds more tightly than comma.
 
-=item *
-
+=end item1
+=begin item1
 Assignment operators
 
     += -= **= xx= .= etc.
 
-See L</Assignment operators>.
+See L<#Assignment operators>.
 
-=back
-
+=end item1
 =head2 Loose unary precedence
 
-=over
-
-=item *
-
+=begin item1
 C<< prefix:<not> >>
 
     not any(@args) eq '-v' | '-V'
 
 Returns a C<Bool> value representing the logical negation of an expression.
 
-=item *
-
+=end item1
+=begin item1
 C<< prefix:<so> >>
 
     so any(@args) eq '-v' | '-V'
@@ -1617,14 +1542,10 @@ appropriate:
     mumble();
     if so $x { print "SRSLY!" }
 
-=back
-
+=end item1
 =head2 Comma operator precedence
 
-=over
-
-=item *
-
+=begin item1
 C<< infix:<,> >>, the argument separator
 
     1, 2, 3, @many
@@ -1632,8 +1553,8 @@ C<< infix:<,> >>, the argument separator
 Unlike in Perl 5, comma operator never returns the last value.  (In item
 context it returns a list instead.)
 
-=item *
-
+=end item1
+=begin item1
 C<< infix:<:> >>, the invocant marker
 
     say $*OUT: "howdy, world"
@@ -1697,8 +1618,7 @@ to be taken as a label.)
 The moral of the story is: if you don't know how the colon is
 going to bind, use whitespace or parentheses to make it clear.
 
-=back
-
+=end item1
 =head2 List infix precedence
 
 List infixes all have list associativity, which means that identical
@@ -1706,10 +1626,7 @@ infix operators work together in parallel rather than one after
 the other.  Non-identical operators are considered non-associative
 and must be parenthesized for clarity.
 
-=over
-
-=item *
-
+=begin item1
 C<< infix:<Z> >>, the zip operator
 
     1,2 Z 3,4   # (1,3),(2,4)
@@ -1717,8 +1634,8 @@ C<< infix:<Z> >>, the zip operator
 The C<Z> operator is actually a degenerate case of the C<Z> zipwith
 metaoperator (see L<Zip operators> below).
 
-=item *
-
+=end item1
+=begin item1
 C<< infix:<minmax> >>, the minmax operator
 
     @a minmax @b
@@ -1729,8 +1646,8 @@ minimum and maximum values were passed individually, except that if the
 corresponding C<excludes> flag is set in Range, the excludes flag is also set
 in the returned C<Range>.
 
-=item *
-
+=end item1
+=begin item1
 C<< infix:<X> >>, the cross operator
 
     1,2 X 3,4          # (1,3), (1,4), (2,3), (2,4)
@@ -1779,8 +1696,8 @@ and you'd never get to 'b'.  If your left list consists of only
 a single element, though, this may be useful, especially if C<X> is used as
 a metaoperator.  See below.
 
-=item *
-
+=end item1
+=begin item1
 Cross metaoperators
 
     @files X~ '.' X~ @extensions
@@ -1795,11 +1712,10 @@ A common idiom is to have a list with a single element on one side or the other:
 
 In this last case it's okay to have an infinite list on the right.
 
-See L</Cross operators>.
+See L<#Cross operators>.
 
-
-=item *
-
+=end item1
+=begin item1
 C<< infix:<...> >>, the sequence operator.
 
 As a list infix operator, C<...> takes a list on both its left and
@@ -2205,19 +2121,14 @@ implementation is required to trap such a loop termination and change the
 status of the list from 'infinite' to 'finite, such that C<.elems> reports
 the actual produced length, not C<Inf>.
 
-
-=back
-
+=end item1
 Many of these operators return a list of C<Parcel>s, which depending on
 context may or may not flatten them all out into one flat list.  The
 default is to flatten, but see the contextualizers below.
 
 =head2 List prefix precedence
 
-=over
-
-=item *
-
+=begin item1
 C<< infix:<=> >>, list assignment
 
     @array = 1,2,3;
@@ -2298,8 +2209,8 @@ memory, and then some.  C<:)>
 
 Assignment to a hash is not lazy (probably).
 
-=item *
-
+=end item1
+=begin item1
 C<< infix:<:=> >>, run-time binding
 
     $signature := $capture
@@ -2338,8 +2249,8 @@ generate a list on the right without parens:
 
     @list := 1 ... *;
 
-=item *
-
+=end item1
+=begin item1
 C<< infix:<::=> >>, bind and make readonly
 
     $signature ::= $capture
@@ -2364,28 +2275,28 @@ the normal binding of arguments to formal subroutine parameters
 
 This operator parses as a list assignment.
 
-=item *
-
+=end item1
+=begin item1
 Normal listops
 
     print push say join split substr open etc.
 
-=item *
-
+=end item1
+=begin item1
 Listop forms of junctional operators
 
     any all one none
 
-=item *
-
+=end item1
+=begin item1
 Exception generators
 
     fail "Division by zero"
     die System::Error(ENOSPC,"Drive $d seems to be full");
     warn "Can't open file: $!"
 
-=item *
-
+=end item1
+=begin item1
 Stubby exception generators
 
     ...
@@ -2403,16 +2314,16 @@ is stubbed out.  (This message differs from what C<fail>, C<warn>, and
 C<die> would say by default, since the latter operators typically point
 out bad data or programming rather than just an incomplete design.)
 
-=item *
-
+=end item1
+=begin item1
 Reduce operators
 
     [+] [*] [<] [\+] [\*] etc.
 
 See L<Reduction operators> below.
 
-=item *
-
+=end item1
+=begin item1
 Sigils as coercions to roles
 
     Sigil       Alpha variant
@@ -2442,8 +2353,8 @@ since there is no flattening.)
 Since a C<Parcel> with one argument is transparent, there can be no
 difference between the meaning of C<@($a)> and C<@$a>.
 
-=item *
-
+=end item1
+=begin item1
 The C<item> contextualizer
 
     item foo()
@@ -2464,8 +2375,8 @@ it does no flattening of its list items:
 
     @x = lol(item (1,2),(3,4))  # @x eqv LoL( (1,2), (3,4) )
 
-=item *
-
+=end item1
+=begin item1
 The C<list> contextualizer
 
     list foo()
@@ -2473,8 +2384,8 @@ The C<list> contextualizer
 Forces the subsequent expression to be evaluated in list context.
 Any flattening happens lazily.
 
-=item *
-
+=end item1
+=begin item1
 The C<flat> contextualizer
 
     flat foo()
@@ -2483,8 +2394,8 @@ Forces the subsequent expression to be evaluated in a flattening
 list context.  The result will be recursively flattened, i.e.,
 contain no embedded C<Parcel> objects.
 
-=item *
-
+=end item1
+=begin item1
 The C<lol> contextualizer
 
     lol foo()
@@ -2494,8 +2405,8 @@ context.  This is typically used to form a multidimensional slice.
 A parcel potentially containing subparcels will be transformed into
 a list of lists, specifically of type C<LoL>.
 
-=item *
-
+=end item1
+=begin item1
 The C<hash> contextualizer
 
     hash foo()
@@ -2508,14 +2419,10 @@ and grab the next value in the list as its value.)  Equivalent to
 C<%(...)> (except that empty C<%()> means C<%($/)>, while
 empty C<hash()> means an empty hash).
 
-=back
-
+=end item1
 =head2 Loose and precedence
 
-=over
-
-=item *
-
+=begin item1
 C<< infix:<and> >>, short-circuit and
 
     $a and $b and $c ...
@@ -2525,8 +2432,8 @@ returns the result of the last argument.  In list context forces
 a false return to mean C<()>.  See C<&&> above for high-precedence
 version.
 
-=item *
-
+=end item1
+=begin item1
 C<< infix:<andthen> >>, proceed on success
 
     test1() andthen test2() andthen test3() ...
@@ -2549,14 +2456,10 @@ is equivalent to
 
 There is no corresponding high-precedence version.
 
-=back
-
+=end item1
 =head2 Loose or precedence
 
-=over
-
-=item *
-
+=begin item1
 C<< infix:<or> >>, short-circuit inclusive or
 
     $a or $b or $c ...
@@ -2565,8 +2468,8 @@ Returns the first argument that evaluates to true, otherwise returns
 the result of the last argument.  In list context forces a false return
 to mean C<()>.  See C<||> above for high-precedence version.
 
-=item *
-
+=end item1
+=begin item1
 C<< infix:<xor> >>, exclusive or
 
     $a xor $b xor $c ...
@@ -2577,8 +2480,8 @@ otherwise (when more than one argument is true).  In list context
 forces a false return to mean C<()>. See C<^^> above for
 high-precedence version.
 
-=item *
-
+=end item1
+=begin item1
 C<< infix:<orelse> >>, proceed on failure
 
     test1() orelse test2() orelse test3() ...
@@ -2602,8 +2505,7 @@ is equivalent to
 (The high-precedence C<//> operator is similar, but does not set C<$!> or
 treat blocks specially.)
 
-=back
-
+=end item1
 =head2 Terminator precedence
 
 As with terms, terminators are not really a precedence level, but
@@ -2615,10 +2517,7 @@ and the final operator in the expression can't deal with a nullterm,
 then it's a syntax error.  (Notably, the comma operator and many prefix
 list operators can handle a nullterm.)
 
-=over
-
-=item *
-
+=begin item1
 Semicolon: ;
 
     $x = 1; $y = 2;
@@ -2630,8 +2529,8 @@ which in lol context will be treated as the multiple dimensions of a
 multidimensional slice.  (Other contexts may have other interpretations
 or disallow semicolons entirely.)
 
-=item *
-
+=end item1
+=begin item1
 Feed operators: <==, ==>, <<==, ==>>
 
     source() ==> filter() ==> sink()
@@ -2650,8 +2549,8 @@ you can stack multiple feeds onto one filter command:
 Similar semantics apply to C<<< <<== >>> except it looks backward for
 an appropriate target to append to.
 
-=item *
-
+=end item1
+=begin item1
 Control block: <ws>{...}
 
 When a block occurs after whitespace where an infix is expected, it is
@@ -2660,14 +2559,14 @@ interpreted as a control block for a statement control construct.
 term is expected, it's just a bare closure.)  If there is no statement
 looking for such a block currently, it is a syntax error.
 
-=item *
-
+=end item1
+=begin item1
 Statement modifiers: if, unless, while, until, for
 
 Statement modifiers terminate one expression and start another.
 
-=item *
-
+=end item1
+=begin item1
 Any unexpected ), ], } at this level.
 
 Calls into the operator precedence parser may be parameterized
@@ -2678,25 +2577,21 @@ could conceivably start with one of these characters, and would be
 recognized under the longest-token rule and continue the expression,
 but this practice is discouraged.  It would be better to use Unicode
 for your weird operator.)  Angle brackets are exempted so that they
-can form hyperoperators (see L</Hyper operators>).
+can form hyperoperators (see L<#Hyper operators>).
 
-=item *
-
+=end item1
+=begin item1
 A block-final } at the end of the line terminates the current expression.
 A block within an argument list terminates the argument list unless
 followed by the comma operator.
 
-=back
-
+=end item1
 =head1 Changes to Perl 5 operators
 
 Several operators have been given new names to increase clarity and better
 Huffman-code the language, while others have changed precedence.
 
-=over
-
-=item *
-
+=begin item1
 Perl 5's C<${...}>, C<@{...}>, C<%{...}>, etc. dereferencing
 forms are now C<$(...)>, C<@(...)>, C<%(...)>, etc. instead.
 (Use of the Perl 5 curly forms will result in an error message
@@ -2704,8 +2599,8 @@ pointing the user to the new forms.)
 As in Perl 5, the parens may be dropped when dereferencing
 a scalar variable.
 
-=item *
-
+=end item1
+=begin item1
 C<< -> >> becomes C<.>, like the rest of the world uses.  There is
 a pseudo C<< postfix:['->'] >> operator that produces a compile-time
 error reminding Perl 5 users to use dot instead.  (The "pointy block"
@@ -2713,14 +2608,14 @@ use of C<< -> >> in Perl 6 requires preceding whitespace when the arrow
 could be confused with a postfix, that is, when an infix is expected.
 Preceding whitespace is not required in term position.)
 
-=item *
-
+=end item1
+=begin item1
 The string concatenation C<.> becomes C<~>.  Think of it as
 "stitching" the two ends of its arguments together.  String append
 is likewise C<~=>.
 
-=item *
-
+=end item1
+=begin item1
 The filetest operators are gone.  We now use a C<Pair> as a
 pattern that calls an object's method:
 
@@ -2806,8 +2701,8 @@ a C<.path> method that can be queried for its path (if known).
 as a negated postdeclared subroutine, which is likely to produce an
 error message at the end of compilation.)
 
-=item *
-
+=end item1
+=begin item1
 All postfix operators that do not start with a dot also have
 an alternate form that does.  (The converse does not hold--just because
 you can write C<x().foo> doesn't mean you can write C<x()foo>.  Likewise
@@ -2824,8 +2719,8 @@ the method-call syntax instead of C<=$object>, the parser would take
 C<$object.=> as the mutation syntax (see L<S12>, "Mutating methods").
 Writing C<$object.'='> will call your prefix operator.
 
-=item *
-
+=end item1
+=begin item1
 Unary C<~> now imposes a string (C<Stringy>) context on its
 argument, and C<+> imposes a numeric (C<Numeric>) context (as opposed
 to being a no-op in Perl 5).  Along the same lines, C<?> imposes
@@ -2838,8 +2733,8 @@ so you need C<$($foo[bar])> to mean the other way.  In other
 words, sigils are not really parsed as operators, and you must
 use the parenthetical form for anything complicated.
 
-=item *
-
+=end item1
+=begin item1
 Bitwise operators get a data type prefix: C<+>, C<~>, or C<?>.
 For example, Perl 5's C<|> becomes either C<+|> or C<~|> or C<?|>,
 depending on whether the operands are to be treated as numbers,
@@ -2849,7 +2744,7 @@ C< +< >, and correspondingly with right shift. Perl 5's unary C<~>
 bitwise NOT is like an exclusive-or against solid ones.  Note that
 C<?^> is functionally identical to C<!>, but conceptually coerces to
 boolean first and then flips the bit.  Please use C<!> instead. As
-explained in L</Assignment operators>, a bitwise operator can be turned
+explained in L<#Assignment operators>, a bitwise operator can be turned
 into its corresponding assignment operator by following it with C<=>.
 For example Perl 5's C< <<= > becomes C< +<= >.
 
@@ -2870,8 +2765,8 @@ the C<+> operators in that the C<+> operators would try to convert
 the string to a number first on the assumption that the string was an
 ASCII representation of a number.
 
-=item *
-
+=end item1
+=begin item1
 C<x> splits into two operators: C<x> (which concatenates repetitions
 of a string to produce a single string), and C<xx> (which creates a list of
 repetitions of a list or item).  C<"foo" xx *> represents an arbitrary
@@ -2880,28 +2775,28 @@ an C<xx> is re-evaluated for each copy; use a temporary to force a single
 evaluation.  (But note that this is not necessary when the optimizer will
 do constant folding.)
 
-=item *
-
+=end item1
+=begin item1
 The C<? :> conditional operator becomes C<?? !!>.  A pseudo operator,
 C<< infix:<?> >>, catches migratory brainos at compile time.
 
-=item *
-
+=end item1
+=begin item1
 C<qw{ ... }> gets a synonym: C<< < ... > >>, and an interpolating
 variant, C<«...»>.
 For those still living without the blessings of Unicode, that can also be
 written: C<<< << ... >> >>>.
 
-=item *
-
+=end item1
+=begin item1
 Comma C<,> now constructs a C<Parcel> object from its
 operands.  In item context this turns into a C<Seq> object.  You have to use a C<[*-1]> subscript to get the last one.
 (Note the C<*>.  Negative subscripts no longer implicitly count from
 the end; in fact, the compiler may complain if you use C<[-1]> on an
 object known at compile time not to have negative subscripts.)
 
-=item *
-
+=end item1
+=begin item1
 The unary backslash operator is not really an operator, but a special noun form.
 It "captures" its argument or arguments, and returns an
 object representing those arguments.  You can I<dereference> this object
@@ -2912,8 +2807,8 @@ an escaped sequence of whitespace or comments.  See L<S02> for details.
 However, oddly enough, because of that unspace rule, saying C<\\ $foo>
 turns out to be equivalent to C<\$foo>.)
 
-=item *
-
+=end item1
+=begin item1
 The old C<..> flipflop operator is now done with
 C<ff> operator.  (C<..> now always produces a C<Range> object
 even in item context.)  The C<ff> operator may take a caret on
@@ -2939,13 +2834,13 @@ a numeric value to C<$_> to create a chimeric object that is both
 integer and string.  Conjecture: C<lines()> should have an option that
 does this.)
 
-=item *
-
+=end item1
+=begin item1
 All comparison operators are unified at the same precedence level.
-See L</Chained comparisons> below.
+See L<#Chained comparisons> below.
 
-=item *
-
+=end item1
+=begin item1
 The list assignment operator now parses on the right like
 any other list operator, so you don't need parens on the right side of:
 
@@ -2994,8 +2889,8 @@ any assignment is done.  Therefore this:
 
 assigns 2 to @b[0], not @b[1].
 
-=item *
-
+=end item1
+=begin item1
 The item assignment operator expects a single expression with
 precedence tighter than comma, so
 
@@ -3084,8 +2979,8 @@ In general, this will all just do what the user expects most of the time.
 The rest of the time item or list behavior can be forced with minimal
 syntax.
 
-=item *
-
+=end item1
+=begin item1
 List operators are all parsed consistently.  As in Perl 5,
 to the left a list operator looks like a term, while to the right it looks like
 an operator that is looser than comma.  Unlike in Perl 5, the difference
@@ -3157,8 +3052,8 @@ at the price of extensibility.  Perl 6 chooses instead to mandate a
 whitespace dependency in order to gain a completely extensible class
 of postfix operators.
 
-=item *
-
+=end item1
+=begin item1
 A list operator's arguments are also terminated by a closure
 that is not followed by a comma or colon.  (And a semicolon is implied
 if the closure is the final thing on a line.  Use an "unspace" to
@@ -3166,8 +3061,8 @@ suppress that.)  This final closure may be followed by a postfix,
 in which case the postfix is applied to the result of the entire
 list operator.
 
-=item *
-
+=end item1
+=begin item1
 A function predeclared with an empty signature is considered 0-ary
 at run time but is still parsed as a list prefix operator, and looks
 for a following argument list, which it may reject at run time.
@@ -3212,8 +3107,8 @@ a postfix operator) are required in order to invoke the object:
     my $i = Int($x);    # okay
     my $i = Int $x;     # ILLEGAL, two terms in a row
 
-=item *
-
+=end item1
+=begin item1
 A non-multi sub predeclared with an arity of exactly 1 also still
 parses as a list prefix operator expecting multiple arguments.  You must explicitly use the form
 C<< prefix:<foo> >> to declare C<foo> as a named unary in precedence;
@@ -3221,12 +3116,11 @@ it must still take a single positional parameter (though any number of
 named parameters are allowed, which can be bound to adverbs).
 All other subs with arguments parse as list operators.
 
-=back
-
+=end item1
 =head1 Junctive operators
 
 C<|>, C<&>, and C<^> are no longer bitwise operators (see
-L</Changes to Perl 5 operators>) but now serve a much higher cause:
+L<#Changes to Perl 5 operators>) but now serve a much higher cause:
 they are now the junction constructors.
 
 A junction is a single value that is equivalent to multiple values. They
@@ -3297,15 +3191,12 @@ which are instead classified as chaining operators).
 
 =head1 Comparison semantics
 
-=over
-
-=item *
-
+=begin item1
 Perl 5's comparison operators are basically unchanged, except that they
 can be chained because their precedence is unified.
 
-=item *
-
+=end item1
+=begin item1
 Binary C<===> tests immutable type and value correspondence:
 for two value types (that is, immutable types), tests whether
 they are the same value (eg. C<1 === 1>); for two mutable types
@@ -3331,8 +3222,8 @@ Note also that, while string-keyed hashes use C<eq> semantics by default,
 object-keyed hashes use C<===> semantics, and general value-keyed hashes
 use C<eqv> semantics.
 
-=item *
-
+=end item1
+=begin item1
 Binary C<eqv> tests equality much like C<===> does, but does
 so with "snapshot" semantics rather than "eternal" semantics.  For
 top-level components of your value that are of immutable types, C<eqv>
@@ -3357,8 +3248,8 @@ other comparisons with proper declarations of the parameter's type
 and traits.  If the signature doesn't match the operands, C<eqv()>
 reverts to standard C<eqv> comparison.  (Likewise for C<cmp()>.)
 
-=item *
-
+=end item1
+=begin item1
 Binary C<cmp> is no longer the comparison operator that
 forces stringification.  Use the C<leg> operator for the old Perl 5
 C<cmp> semantics.  The C<cmp> is just like the C<eqv> above except that
@@ -3366,8 +3257,8 @@ instead of returning C<Bool::False> or C<Bool::True> values it always
 returns C<Order::Less>, C<Order::Same>, or C<Order::More>
 (which numerify to -1, 0, or +1).
 
-=item *
-
+=end item1
+=begin item1
 The C<leg> operator (less than, equal to, or greater than) is defined
 in terms of C<cmp>, so C<$a leg $b> is now defined as C<~$a cmp ~$b>.
 The sort operator still defaults to C<cmp> rather than C<leg>.  The
@@ -3375,23 +3266,23 @@ C<< <=> >> operator's semantics are unchanged except that it returns
 an C<Order> value as described above.  In other words, C<< $a <=> $b >>
 is now equivalent to C<+$a cmp +$b>.
 
-=item *
-
+=end item1
+=begin item1
 For boolean comparison operators with non-coercive C<cmp>
 semantics, use the generic C<before> and C<after> infix operators.
 As ordinary infix operators these may be negated (C<!before> and C<!after>)
 as well as reduced (C<[before]> and C<[after]>).
 
-=item *
-
+=end item1
+=begin item1
 Infix C<min> and C<max> may be used to select one or the other
 of their arguments.  Reducing listop forms C<[min]> and C<[max]> are
 also available, as are the C<min=> and C<max=> assignment operators.
 By default C<min> and C<max> use C<cmp> semantics.  As with all C<cmp>-based
 operators, this may be modified by an adverb specifying different semantics.
 
-=item *
-
+=end item1
+=begin item1
 Note that, like most other operators, a comparison naturally returns
 failure if either of its arguments is undefined, and the general
 policy on unthrown exceptions is that the exception is thrown as soon
@@ -3400,8 +3291,7 @@ parallelizable contexts such as hyper (or other "mass production"
 contexts such as sort) will pass through unthrown exceptions rather
 than throwing them.
 
-=back
-
+=end item1
 =head1 Range and RangeIter semantics
 
 The C<..> range operator has variants with C<^> on either end to
@@ -5363,5 +5253,5 @@ writing parallelizing optimizers, we reserve the right to classify
 various of the unclassified operators into one of the two specified
 sets.  (We need to give these three sets of operators good names.)
 
-
-=for vim:set expandtab sw=4:
+=comment vim:set expandtab sw=4:
+=end pod
