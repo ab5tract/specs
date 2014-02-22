@@ -1,15 +1,12 @@
+=begin pod
 =encoding utf8
-
-=head1 TITLE
-
+=TITLE
 Synopsis 4: Blocks and Statements
 
-=head1 AUTHORS
-
+=AUTHORS
     Larry Wall <larry@wall.org>
 
-=head1 VERSION
-
+=VERSION
     Created: 19 Aug 2004
 
     Last Modified: 28 Nov 2013
@@ -78,7 +75,7 @@ return of C<next>, the control exception will contain the identity of
 the loop scope to be exited (since the label was already "used up" to
 discover that identity), but for the dynamic fallback, the exception
 will contain only the loop label to be matched dynamically.  See
-L</Control Exceptions> below.
+L<#Control Exceptions> below.
 
 The C<redo> operator, as a variant of C<goto>, directly transfers
 control to the first statement of the lexotically enclosed loop.
@@ -265,8 +262,8 @@ terminator:
     @yy := [ while yin() { yang() } ];       # okay within outer [...]
     while yin() { yang() } ==> sort          # okay, ==> separates statements
 
-=head1 Conditional statements
-X<if>X<unless>
+=head1 Conditional statementsX<|if>X<|unless>
+
 
 The C<if> and C<unless> statements work much as they do in
 Perl 5.  However, you may omit the parentheses on the conditional:
@@ -384,8 +381,8 @@ context.
 For finer-grained control of which iterations return values, use
 C<gather> and C<take>.
 
-=head2 The C<while> and C<until> statements
-X<while>X<until>
+=head2 The C<while> and C<until> statementsX<|while>X<|until>
+
 
 The C<while> and C<until> statements work as in Perl 5, except that you
 may leave out the parentheses around the conditional:
@@ -410,12 +407,11 @@ value and still remain themselves.  In general, for most iterated
 solutions you should consider using a C<for> loop instead (see below).
 In particular, we now generally use C<for> to iterate filehandles.
 
-=head2 The C<repeat> statement
-X<repeat>X<while>X<next>X<last>X<redo>
+=head2 The C<repeat> statementX<|repeat>X<|while>X<|next>X<|last>X<|redo>
+
 
 Unlike in Perl 5, applying a statement modifier to a C<do> block is
 specifically disallowed:
-
 
     do {
         ...
@@ -479,8 +475,8 @@ or
 Since the loop executes once before evaluating the condition, the
 bound parameter will be undefined that first time through the loop.
 
-=head2 The general loop statement
-X<loop>
+=head2 The general loop statementX<|loop>
+
 
 The C<loop> statement is the C-style C<for> loop in disguise:
 
@@ -498,8 +494,8 @@ is equivalent to the Cish idiom:
 
     loop (;;) {...}
 
-=head2 The C<for> statement
-X<for>X<zip>X<Z>X<STDIN>X<$*IN>X<lines>
+=head2 The C<for> statementX<|for>X<|zip>X<|Z>X<|STDIN>X<|$*IN>X<|lines>
+
 
 There is no C<foreach> statement any more. It's always spelled C<for>
 in Perl 6, so it always takes a list as an argument:
@@ -779,8 +775,8 @@ But as always, you must use them all:
     # Syntax error: Too many positional parameters passed
     { say $^x + $^x }(5,6);
 
-=head2 The C<gather> statement prefix
-X<gather>X<take>
+=head2 The C<gather> statement prefixX<|gather>X<|take>
+
 
 A variant of C<do> is C<gather>.  Like C<do>, it is followed by a statement
 or block, and executes it once.  Unlike C<do>, it evaluates the statement or
@@ -879,8 +875,8 @@ exceptions, or dynamic variables, or pigeons carrying clay tablets.
 The choice any particular implementation makes is specifically I<not> part
 of the definition of Perl 6, and you should not rely on it in portable code.
 
-=head2 Other C<do>-like forms
-X<do>
+=head2 Other C<do>-like formsX<|do>
+
 
 Other similar forms, where a keyword is followed by code to be controlled by it, may also take bare statements,
 including C<try>, C<once>, C<quietly>, C<contend>, C<start>, C<lazy>, and C<sink>.  These constructs
@@ -916,8 +912,8 @@ is parsed as:
 
     do { do { do { foo(); }}}; bar(43);
 
-=head1 Switch statements
-X<given>X<when>X<switch>X<case>X<default>
+=head1 Switch statementsX<|given>X<|when>X<|switch>X<|case>X<|default>
+
 
 A switch statement is a means of topicalizing, so the switch keyword
 is the English topicalizer, C<given>.  The keyword for individual
@@ -1030,8 +1026,8 @@ This is particularly useful for list comprehensions:
 
     @lucky = ($_ when /7/ for 1..100);
 
-=head1 Exception handlers
-X<CATCH>
+=head1 Exception handlersX<|CATCH>
+
 
 Unlike many other languages, Perl 6 specifies exception handlers by
 placing a C<CATCH> block I<within> that block that is having its exceptions
@@ -1283,8 +1279,8 @@ will be the value of the failure after it has resumed.  Otherwise the
 value will be the null string.  Numeric and string conversions
 use these lazy warnings to allow (but not require) failsoft semantics.
 
-=head1 The goto statement
-X<goto>
+=head1 The goto statementX<|goto>
+
 
 In addition to C<next>, C<last>, and C<redo>, Perl 6 also supports
 C<goto>.  As with ordinary loop controls, the label is searched for
@@ -1596,7 +1592,7 @@ If exit phasers are running as a result of a stack unwind initiated by
 an exception, this information needs to be made available.  In any
 case, the information as to whether the block is being exited
 successfully or unsuccessfully needs to be available to decide
-whether to run C<KEEP> or C<UNDO> blocks (also see L</"Definition of Success">).
+whether to run C<KEEP> or C<UNDO> blocks (also see L<#"Definition of Success">).
 How this information is made available is implementation dependent.
 
 An exception thrown from an C<ENTER> phaser will abort the C<ENTER>
@@ -1912,4 +1908,5 @@ to see transient variables in their current lexical scope, so their
 cloning status depends at least on the cloning status of the block
 they're in.
 
-=for vim:set expandtab sw=4:
+=comment vim:set expandtab sw=4:
+=end pod
