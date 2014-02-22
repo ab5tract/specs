@@ -4601,7 +4601,8 @@ into the pessimal C<FatRat> type.
 
 =item1 Perl still has the three main contexts: sink (aka void), item (aka scalar), and list.
 
-=item1 In addition to undifferentiated items, we also have these item contexts:
+=begin item1
+In addition to undifferentiated items, we also have these item contexts:
 
     Context     Type    OOtype   Operator
     -------     ----    ------   --------
@@ -4612,17 +4613,20 @@ into the pessimal C<FatRat> type.
 
 There are also various container contexts that require particular kinds of
 containers (such as slice and hash context; see S03 for details).
+=end item1
 
-=item1 Unlike in Perl 5, objects are no longer always considered true.
-It depends on the state of their C<.Bool> method, which may either be
-a synthetic attribute or an explicitly represented bit in the object.  Classes get to decide
-which of their values are true and which are false.  Individual objects
-can override the class definition:
+=begin item1
+Unlike in Perl 5, objects are no longer always considered true.  It depends on
+the state of their C<.Bool> method, which may either be a synthetic attribute or
+an explicitly represented bit in the object.  Classes get to decide which of
+their values are true and which are false.  Individual objects can override the
+class definition:
 
     return 0 but True;
 
 This overrides the C<.Bool> method of the C<0> without changing its
 official type (by mixing the method into an anonymous derived type).
+=end item1
 
 =item1 The definition of C<.Bool> for the most ancestral type (that is, the
 C<Mu> type) is equivalent to C<.defined>.  Since type objects are

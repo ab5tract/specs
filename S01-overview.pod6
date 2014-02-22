@@ -80,10 +80,11 @@ for multiple syntaxes above and multiple platforms below.
 Perl will continue to be a multiparadigmatic, context-sensitive
 language.  We are not turning Perl into any other existing language.
 
-=item1 Migration is important.  A Perl 6 interpreter, if invoked as "C<perl>", will assume that it
-is being fed Perl 5 code unless the code starts with a "class" or
-"module" keyword, or you specifically tell it you're running Perl 6
-code in some other way, such as by:
+=begin item1
+Migration is important.  A Perl 6 interpreter, if invoked as
+"C<perl>", will assume that it is being fed Perl 5 code unless the code starts
+with a "class" or "module" keyword, or you specifically tell it you're running
+Perl 6 code in some other way, such as by:
 
     #!/usr/bin/perl6
     use v6.0;
@@ -94,8 +95,10 @@ as may any other extension containing the digit C<6>, such as C<p6l>
 or C<p6m> or C<pl6> or C<pm6>.  (Though C<.pl> and C<.pm> are still
 perfectly acceptable extensions as long as the Perl-6-ness is indicated
 by one of the other indicators.)
+=end item1
 
-=item1 Migration in the other direction is also important.  In Perl 6
+=begin item1
+Migration in the other direction is also important.  In Perl 6
 mode, one can drop back to Perl 5 mode  with C<use v5> at the
 beginning of a lexical block.  Such blocks may be nested:
 
@@ -116,16 +119,18 @@ Perl 6 grammar will include the ability to parse a well-behaved
 subset of Perl 5 on its own (much like PPI does); implementations
 are required only to support this subset, though of course they may
 also choose to implement bug-for-bug compatibility.
+=end item1
 
-=item1 Scaling is one of those areas where Perl needs to be multiparadigmatic
-and context sensitive.  Perl 5 code is not strict by default, while
-Perl 6 code is.   But it should be easy to relax with C<-e> or
-a bare version number:
+=begin item1
+Scaling is one of those areas where Perl needs to be multiparadigmatic and
+context sensitive.  Perl 5 code is not strict by default, while Perl 6 code is.
+But it should be easy to relax with C<-e> or a bare version number:
 
     perl -e '$x = 1'
 
     #!/usr/bin/perl
     v6; $x = 1;
+=end item1
 
 =item1 It must be possible to write policy metamodules that invoke other
 modules on the user's behalf.
