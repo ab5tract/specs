@@ -1,16 +1,12 @@
-
+=begin pod
 =encoding utf8
-
-=head1 TITLE
-
+=TITLE
 Synopsis 2: Bits and Pieces
 
-=head1 AUTHORS
-
+=AUTHORS
     Larry Wall <larry@wall.org>
 
-=head1 VERSION
-
+=VERSION
     Created: 10 Aug 2004
 
     Last Modified: 4 Feb 2014
@@ -30,18 +26,10 @@ one-pass, predictive parser.  That is, lookahead of more than one
 "longest token" is discouraged.  The currently known exceptions to
 this are where the parser must:
 
-=over 4
-
-=item *
-
-Locate the end of interpolated expressions that begin with a sigil
+=item1 Locate the end of interpolated expressions that begin with a sigil
 and might or might not end with brackets.
 
-=item *
-
-Recognize that a reduce operator is not really beginning a C<[...]> composer.
-
-=back
+=item1 Recognize that a reduce operator is not really beginning a C<[...]> composer.
 
 One-pass parsing is fundamental to knowing exactly which language
 you are dealing with at any moment, which in turn is fundamental
@@ -144,7 +132,7 @@ may I<not> be used as the delimiter in quoting constructs.
 
 Embedded comments are supported as a variant on quoting syntax, introduced
 by C<#`> plus any user-selected bracket characters (as defined in
-L</Bracketing Characters> above):
+L<#Bracketing Characters> above):
 
     say #`( embedded comment ) "hello, world!";
 
@@ -304,7 +292,7 @@ In general, whitespace is optional in Perl 6 except where it is needed
 to separate constructs that would be misconstrued as a single token or
 other syntactic unit.  (In other words, Perl 6 follows the standard
 I<longest-token> principle, or in the cases of large constructs, a
-I<prefer shifting to reducing> principle.  See L</Grammatical Categories>
+I<prefer shifting to reducing> principle.  See L<#Grammatical Categories>
 below for more on how a Perl program is analyzed into tokens.)
 
 This is an unchanging deep rule, but the surface ramifications of it
@@ -559,7 +547,7 @@ You can pass in arguments to the constructor as well:
     my Dog $cerberus .= new(heads => 3);
     my Dog $cerberus = $cerberus.new(heads => 3);   # same thing
 
-Just like L</Nil>, type objects do not disappear in list context, but rely on
+Just like L<#Nil>, type objects do not disappear in list context, but rely on
 something downstream to catch it or blow up.  This allows type objects to be
 assigned to scalars, but to disappear in non-scalar contexts.
 
@@ -1736,7 +1724,7 @@ view, since iteration is typically triggered by context rather than
 by explicit call to the iterator's C<.get> method.  Filehandles are
 a notable exception.
 
-See L<S06/"Wrapping"> for a discussion of soft vs. hard routines.
+See L<S06#"Wrapping"> for a discussion of soft vs. hard routines.
 
 =head2 Of types
 
@@ -2226,17 +2214,9 @@ In these examples, the first argument to the function is
 a parcel in all but the first case, where it is simply the
 literal integer 1.  An argument is either of:
 
-=over
+=item1 A parcel that groups together a sublist, or
 
-=item *
-
-A parcel that groups together a sublist, or
-
-=item *
-
-Any other object that can function as a single argument.
-
-=back
+=item1 Any other object that can function as a single argument.
 
 Looking at it the other way, all arguments that don't actually need to be
 wrapped up in a parcel are considered degenerate parcels in their
@@ -2661,7 +2641,6 @@ Attempts to say something like:
     ($a, $, $c) = 1..3;
 
 will result in the message, "Anonymous variable requires declarator".
-
 
 =head2 Package-qualified names
 
@@ -3939,22 +3918,12 @@ interpolated.  However, any scalar, array, hash or subroutine variable may
 start an interpolation if it is followed by a sequence of one or more bracketed
 dereferencers: that is, any of:
 
-=over 4
-
-=item 1. An array subscript
-
-=item 2. A hash subscript
-
-=item 3. A set of parentheses indicating a function call
-
-=item 4. Any of 1 through 3 in their B<dot> form
-
-=item 5. A method call that includes argument parentheses
-
-=item 6. A sequence of one or more unparenthesized method call, followed by any of 1 through 5
-
-=back
-
+=item1 #  . An array subscript
+=item1 #  . A hash subscript
+=item1 #  . A set of parentheses indicating a function call
+=item1 #  . Any of 1 through 3 in their B<dot> form
+=item1 #  . A method call that includes argument parentheses
+=item1 #  . A sequence of one or more unparenthesized method call, followed by any of 1 through 5
 In other words, this is legal:
 
     "Val = $a.ord.fmt('%x')\n"
@@ -3973,7 +3942,6 @@ to the normal backslashing rules of that quote context:
     "Val = $a\[junk]";   # Val = 42[junk]
     "Val = $a\ [junk]";  # Val = 42 [junk]
     "Val = $a\.[junk]";  # Val = 42.[junk]
-
 
 =head3 Arrays
 
@@ -4190,11 +4158,7 @@ backslash.  The backslash is always removed in this case.
 The treatment of backslashed characters that would I<not> have
 introduced an interpolation varies depending on the type of quote:
 
-=over 4
-
-=item 1.
-
-Any quoting form that includes C<qq> or C<:qq> in its semantic
+=item1 #  . Any quoting form that includes C<qq> or C<:qq> in its semantic
 derivation (including the normal double quote form) assumes that all
 backslashes are to be considered meaningful.  The meaning depends
 on whether the following character is alphanumeric; if it is, the
@@ -4203,9 +4167,7 @@ character is non-alphanumeric, the backslash is silently removed, on
 the assumption that the string was backslashed using C<quotemeta()>
 or some such.
 
-=item 2.
-
-All other quoting forms (including standard single quotes)
+=item1 #  . All other quoting forms (including standard single quotes)
 assume that non-interpolating sequences are to be left unaltered
 because they are probably intended to pass through to the result.
 Backslashes are removed I<only> for the terminating quote or for
@@ -4215,8 +4177,6 @@ interpolate, the right bracket may optionally also be backslashed,
 and if so, the backslash will be removed.  If brackets are used as
 the delimiters, both left and right C<must> be backslashed the same,
 since they would otherwise be counted wrong in the bracket count.)
-
-=back
 
 As a consequence, these all produce the same literal string:
 
@@ -4639,15 +4599,9 @@ into the pessimal C<FatRat> type.
 
 =head1 Context
 
-=over 4
+=item1 Perl still has the three main contexts: sink (aka void), item (aka scalar), and list.
 
-=item *
-
-Perl still has the three main contexts: sink (aka void), item (aka scalar), and list.
-
-=item *
-
-In addition to undifferentiated items, we also have these item contexts:
+=item1 In addition to undifferentiated items, we also have these item contexts:
 
     Context     Type    OOtype   Operator
     -------     ----    ------   --------
@@ -4659,9 +4613,7 @@ In addition to undifferentiated items, we also have these item contexts:
 There are also various container contexts that require particular kinds of
 containers (such as slice and hash context; see S03 for details).
 
-=item *
-
-Unlike in Perl 5, objects are no longer always considered true.
+=item1 Unlike in Perl 5, objects are no longer always considered true.
 It depends on the state of their C<.Bool> method, which may either be
 a synthetic attribute or an explicitly represented bit in the object.  Classes get to decide
 which of their values are true and which are false.  Individual objects
@@ -4672,9 +4624,7 @@ can override the class definition:
 This overrides the C<.Bool> method of the C<0> without changing its
 official type (by mixing the method into an anonymous derived type).
 
-=item *
-
-The definition of C<.Bool> for the most ancestral type (that is, the
+=item1 The definition of C<.Bool> for the most ancestral type (that is, the
 C<Mu> type) is equivalent to C<.defined>.  Since type objects are
 considered undefined, all type objects (including C<Mu> itself)
 are false unless the type overrides the definition of C<.Bool>
@@ -4683,9 +4633,7 @@ unless the class overrides the definition.  Note that if you could
 instantiate a C<Mu> it would be considered defined, and thus true.
 (It is not clear that this is allowed, however.)
 
-=item *
-
-In general any container types should return false if they are empty,
+=item1 In general any container types should return false if they are empty,
 and true otherwise.  This is true of all the standard container types
 except Scalar, which always defers the definition of truth to its
 contents.  Non-container types define truthiness much as Perl 5 does.
@@ -4694,8 +4642,6 @@ Just as with the standard types, user-defined types should feel free
 to partition their defined values into true and false values if such
 a partition makes sense in control flow using boolean contexts, since
 the separate C<.defined> method is always there if you need it.
-
-=back
 
 =head1 Lists
 
@@ -4803,8 +4749,8 @@ insofar as iterators will have to pass on the policy to subiterators.
 The C<< => >> operator now constructs C<Pair> objects rather than merely
 functioning as a comma.  Both sides are in item context.
 
-=head2 The C<< .. >> operator
-X<..>
+=head2 The C<< .. >> operatorX<..>
+
 
 The C<< .. >> operator now constructs a C<Range> object rather than merely
 functioning as an operator.  Both sides are in item context.  Semantically,
@@ -4845,16 +4791,10 @@ C<Pair>) object, or anything that does the C<Associative> role.
 
 =head1 Files
 
-=over 4
-
-=item *
-
-Filename globs are no longer done with angle brackets.  Use the C<glob>
+=item1 Filename globs are no longer done with angle brackets.  Use the C<glob>
 function.
 
-=item *
-
-Input from a filehandle is no longer done with angle brackets.  Instead
+=item1 Input from a filehandle is no longer done with angle brackets.  Instead
 of
 
     while (<HANDLE>) {...}
@@ -4862,8 +4802,6 @@ of
 you now write
 
     for $handle.lines {...}
-
-=back
 
 =head1 Grammatical Categories
 
@@ -4954,4 +4892,5 @@ the caller sites to be recorded without any warnings.  When execution finishes,
 a report should be printed to STDERR stating which deprecated features where
 called where.
 
-=for vim:set expandtab sw=4:
+=comment vim:set expandtab sw=4:
+=end pod
