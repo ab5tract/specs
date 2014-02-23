@@ -2183,11 +2183,13 @@ C<P<>> codes are handy for breaking out standard elements of
 your documentation set into reusable components that can then be
 incorporated directly into multiple documents. For example:
 
+=begin code
     =COPYRIGHT
     P<file:/shared/docs/std_copyright.pod>
 
     =DISCLAIMER
     P<http://www.MegaGigaTeraPetaCorp.com/std/disclaimer.txt>
+=end code
 
 might produce:
 
