@@ -51,7 +51,7 @@ which will hopefully stand the test of time: All command-line arguments are
 assumed to be in Unicode unless proven otherwise; and Perl is born of Unix,
 and as such the syntax presented in this document is expected to work in a
 Unix-style shell. To explore the particularities of other operating systems,
-see L<Synopsis 25|S25-portability> (TBD).
+see L<Synopsis 25|doc:S25> (TBD).
 
 =head1 Command Line Elements
 
@@ -116,7 +116,7 @@ Many command-line options behave similarly, for example:
   -V                                   Display verbose config info
 
 All of these options have extended syntax, and some may have slightly
-different semantics, so see L<#"Option Reference"> below for the details.
+different semantics, so see L<#Option Reference> below for the details.
 
 =end item1
 =head2 Removed Syntactic Features
@@ -128,7 +128,7 @@ no longer relevant.  Here's a breakdown of what's been removed:
 =begin item1 
 -0 *octal/hex*
 Sets input record separator.  Missing due to lack of specification in
-L<Synopsis 16|S16-io>.  There is a comment about this in the L<#"Notes">
+L<Synopsis 16|doc:S16>.  There is a comment about this in the L<#Notes>
 section at the end of this document.
 
 =end item1
@@ -175,7 +175,7 @@ Run option through C preprocessor. This caused problems for Perl 5, and is compl
 -s
 Enable rudimentary switch parsing.  By default, Perl 6 parses the
 arguments passed to a script using the signature supplied by the user
-in the MAIN routine (see L<S06#"Declaring a MAIN subroutine">).
+in the MAIN routine (see L<doc:S06#Declaring a MAIN subroutine>).
 
 =end item1
 =begin item1 
@@ -435,7 +435,7 @@ each one representing an input line with an implicit newline at the end.
 
 If you wish to run in lax mode, without strictures and warnings enabled,
 pass a value of '6;' to the first -e on the command line, like C<-e '6;'>.
-See L<Synopsis 11|S11-modules#"Forcing Perl 6"> for details.
+See L<Synopsis 11|doc:S11#Forcing Perl 6> for details.
 
 =end item1
 =begin item1 
@@ -454,10 +454,10 @@ Print summary of options.  Desugars to C<++CMD --print-help --exit ++/CMD>.
 =begin item1 
 --include, -I location[,Class=location[,...]]
 Prepend C<CompUnitRepo>'s to @*INC, for ad hoc module searching.  The
-L<CompUnitRepo::Local::File> class will be assumed if no class has been
-specified.  Any class specified should adhere to the L<CompUnitRepo> interface.
+L<doc:CompUnitRepo::Local::File> class will be assumed if no class has been
+specified.  Any class specified should adhere to the L<doc:CompUnitRepo> interface.
 In any Searching the standard library follows the policies laid out in
-L<Synopsis 11|S11-modules>.
+L<Synopsis 11|doc:S11>.
 
 =end item1
 =begin item1 
@@ -493,7 +493,7 @@ Use PATH environment variable to search for script specified on command-line.
 =end item1
 =begin item1 
 --taint, -T
-Turns on "taint" checking. See L<Synopsis 23|S23-security> for details.
+Turns on "taint" checking. See L<Synopsis 23|doc:S23> for details.
 Commits very early.  Put this option as early on the command-line as possible.
 
 =end item1
@@ -526,7 +526,7 @@ Run program embedded in Unicode text.  Scan for the first line starting
 with C<#!> and containing the word C<perl>, and start there instead.
 This is useful for running a program embedded in a larger message.
 (In this case you would indicate the end of the program using the C<=END>
-block, as defined in L<Synopsis 26|S26-documentation#"The =END block">.)
+block, as defined in L<Synopsis 26|doc:S26#The =END block>.)
 
 Desugars to C<--PARSER --Perl6-extract-from-text --/PARSER>.
 
