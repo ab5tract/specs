@@ -1,23 +1,18 @@
-=encoding utf8
-
-=head1 TITLE
-
+=begin pod
+=TITLE
 Synopsis 24: Testing
 
-=head1 AUTHORS
-
+=AUTHORS
     Moritz Lenz <moritz@faui2k3.org>
     Carl Mäsak <cmasak@gmail.com>
 
-=head1 VERSION
-
+=VERSION
     Created: 30 Dec 2010
 
     Last Modified: 17 Oct 2011
     Version: 7
 
-=head1 SYNOPSIS
-
+=SYNOPSIS
     use Test;
 
     plan 6;
@@ -29,9 +24,7 @@ Synopsis 24: Testing
     dies_ok { die "yes"}, 'exceptions';
     eval_dies_ok '1 1', 'two terms in a row are a parse error';
 
-
-=head1 DESCRIPTION
-
+=DESCRIPTION
 Perl 6 comes with a standard testing module, C<Test>. It is the testing module
 used by the official spectest suite.
 
@@ -108,7 +101,7 @@ name from Perl 5's L<Test::More> and L<Test::Exception> modules.
 
 TODO: more precise explanation
 
-=head2 todo() and skip() 
+=head2 todo() and skip()
 
     todo($reason, $count = 1)
     skip($reason, $count = 1)
@@ -119,3 +112,4 @@ marks the next C<$count> tests as TODO.
 The C<skip()> function is called I<instead> of the some tests (usually because
 they would die), and emits C<$count> SKIP markers in the TAP output.
 
+=end pod
