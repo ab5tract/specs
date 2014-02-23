@@ -1,16 +1,13 @@
-
-=head1 TITLE
-
+=begin pod
+=TITLE
 Synopsis 99: Glossary
 
-=head1 AUTHORS
-
+=AUTHORS
     Elizabeth Mattijsen (liz@dijkmat.nl)
     Moritz Lenz
     Larry Wall
 
-=head1 VERSION
-
+=VERSION
     Created: 26 June 2013
 
     Last Modified: 30 June 2014
@@ -31,14 +28,14 @@ the explanation later for you and everybody else.
 
 =head2 ack
 
-An improved version of L</grep>, written in Perl (L<beyondgrep.com>).
+An improved version of L<#grep>, written in Perl (L<beyondgrep.com>).
 
 Also used by old folks to indicated acknowledgement.
 
 =head2 actions
 
-A class used to generate an L</AST> from the results of parsing text with a
-L</grammar>.
+A class used to generate an L<#AST> from the results of parsing text with a
+L<#grammar>.
 
 =head2 adverb
 
@@ -46,7 +43,7 @@ See L<adverbial pair>.
 
 =head2 adverbial pair
 
-A generalized form of L</pair notation>.  They all start with the colon, like:
+A generalized form of L<#pair notation>.  They all start with the colon, like:
 
   adverbial pair  | pair notation
   ================|==============
@@ -74,7 +71,7 @@ Away From Keyboard.  Logged in, but there's noone looking at the screen.
 
 =head2 Any
 
-The class from which most things derive, except for L</junction>s.
+The class from which most things derive, except for L<#junction>s.
 
 =head2 any()
 
@@ -88,17 +85,17 @@ necessarily knowing anything about the internals or implementation.
 
 =head2 Apocalypse
 
-A document originally written by L</TimToady>, in which he processed the
+A document originally written by L<#TimToady>, in which he processed the
 initial barrage of RFC's that came out of the Perl community.  Now only kept
-as an historical document for reference.  See also L</Exegesis> and
-L</Synopsis>.
+as an historical document for reference.  See also L<#Exegesis> and
+L<#Synopsis>.
 
 =head2 array
 
 =head2 AST
 
 Short for B<A>bstract B<S>yntax B<T>ree. Used in many places, including
-L</actions>, L</PAST>, and L</QAST>.
+L<#actions>, L<#PAST>, and L<#QAST>.
 
 =head2 attribute
 
@@ -107,7 +104,7 @@ Per-object storage slot. Other languages call it "Field", "Member", "Slot" or
 
 =head2 auth
 
-Way of deliberately ambiguously expressing L</author> or L</authority>.
+Way of deliberately ambiguously expressing L<#author> or L<#authority>.
 
 =head2 author
 
@@ -121,7 +118,7 @@ Way of deliberately ambiguously expressing L</author> or L</authority>.
 
 =head2 backlog
 
-That part of a discussion on an L</IRC> channel that you've missed.  If it is
+That part of a discussion on an L<#IRC> channel that you've missed.  If it is
 not or no longer available in your IRC client, you can go to sites such as
 L<http://irc.perl6.org> to see what has been logged for you.
 
@@ -132,7 +129,7 @@ is a port of Perl 5's Dancer web framework (L<http://perldancer.org/>).
 
 =head2 biab
 
-Back In A Bit.  Only L</afk> for a little while.
+Back In A Bit.  Only L<#afk> for a little while.
 
 =head2 blast
 
@@ -144,11 +141,11 @@ single statement, or a block. Thus, a blast:
     try dangerous-function();
     #   ^^^^^^^^^^^^^^^^^^^^          Statement
 
-Particularly cute, because L</phaser>s expect blasts.
+Particularly cute, because L<#phaser>s expect blasts.
 
 =head2 brb
 
-Be Right Back.  Only L</afk> for a little while.
+Be Right Back.  Only L<#afk> for a little while.
 
 =head2 BS
 
@@ -195,7 +192,7 @@ splice will be very difficult for the end-user to notice in day-to-day use.
 
 =head2 clog
 
-To L</backlog>.
+To L<#backlog>.
 
 Etymology: There is a website C<irclog.perlgeek.de> providing either IRC logs
 or IR clogs, depending on how you interpret the domain name.
@@ -210,7 +207,7 @@ Common Language Runtime, as used by Niecza/mono/.NET.
 
 =head2 compunit
 
-See L</compilation unit>.
+See L<#compilation unit>.
 
 =head2 concurrency
 
@@ -220,8 +217,8 @@ See L</compilation unit>.
 
 =head2 dalek
 
-An L</IRC> bot that reports when various projects have been updated. It gives
-L</karma> to those who pushed the changes to the project.
+An L<#IRC> bot that reports when various projects have been updated. It gives
+L<#karma> to those who pushed the changes to the project.
 
 =head2 dead code
 
@@ -248,7 +245,7 @@ subroutine to invoke.
 
 =head2 distribution
 
-A collection of 1 or more L</compunit>s for installing locally, or for loading
+A collection of 1 or more L<#compunit>s for installing locally, or for loading
 from a remote location.
 
 =head2 dynamic
@@ -270,9 +267,9 @@ yet in the end pleasing nobody, because nobody is catered for enough.
 
 =head2 Exegesis
 
-A document originally written by L</TheDamian>, in which he tried to explain
-the L</Apocalypse>s to the common (wo)man.  Now only kept as an historical
-document for reference.  See also L</Synopsis>.
+A document originally written by L<#TheDamian>, in which he tried to explain
+the L<#Apocalypse>s to the common (wo)man.  Now only kept as an historical
+document for reference.  See also L<#Synopsis>.
 
 =head2 export
 
@@ -286,10 +283,10 @@ document for reference.  See also L</Synopsis>.
 
 The creation of another process in Perl 6.
 
-Also, a feature of L</github> that copies a repository from one user to another,
+Also, a feature of L<#github> that copies a repository from one user to another,
 to allow users to make changes to a repository without needing permissions on
 the original project. After a user makes changes they will likely submit a
-L</pull request>.
+L<#pull request>.
 
 =head2 fossil
 
@@ -297,10 +294,10 @@ Something in a generally current document that is no longer true but which has n
 
 =head2 fudge
 
-Way to temporarily mark tests in the L</spectest> for a specific Perl 6 version
+Way to temporarily mark tests in the L<#spectest> for a specific Perl 6 version
 as I<todo> (so that a failure of the test will be marked ok, and a pass will
-be marked as an exception), or as I<skip> if they cause a L</compile-time> or
-L</runtime> exception.
+be marked as an exception), or as I<skip> if they cause a L<#compile-time> or
+L<#runtime> exception.
 
 =head1 G
 
@@ -317,7 +314,7 @@ projects.
 
 =head2 github
 
-Online open source repository hoster using L</git>.
+Online open source repository hoster using L<#git>.
 
 =head2 GLOBAL::
 
@@ -328,9 +325,9 @@ timezones, one contributor's morning is another contributor's evening.
 
 =head2 grammar
 
-A feature of Perl 6 that uses L</regex>es to implement a grammar for parsing
+A feature of Perl 6 that uses L<#regex>es to implement a grammar for parsing
 text. Perl 6 implementations use grammars themselves to parse the language. The
-results of parsing with a grammar can be further passed on to L</actions>.
+results of parsing with a grammar can be further passed on to L<#actions>.
 
 =head2 green threads
 
@@ -416,7 +413,7 @@ I Seem To Remember.
 
 =head2 jakudo
 
-L</Rakudo> running on the L</JVM>.
+L<#Rakudo> running on the L<#JVM>.
 
 =head2 JAST
 
@@ -469,7 +466,7 @@ Less Than Awesome.  #xa*~`ñ|Error -37: Operation not completedEgP&*1EW…
 
 =head2 LTM
 
-Longest Token Matching. See L<S05/Longest Token Matching>.
+Longest Token Matching. See L<S05#Longest Token Matching>.
 
 =head1 M
 
@@ -481,11 +478,11 @@ Longest Token Matching. See L<S05/Longest Token Matching>.
 
 =head2 MMD
 
-See L</multi-method dispatch>.
+See L<#multi-method dispatch>.
 
 =head2 MoarVM
 
-A virtual machine designed specifically for L</NQP> and its L</MOP>: L</6model>.
+A virtual machine designed specifically for L<#NQP> and its L<#MOP>: L<#6model>.
 
 =head2 module
 
@@ -540,7 +537,7 @@ An implementation of Perl 6 targeting the .NET platform.
 
 =head2 nom
 
-The name of the main branch of current L</Rakudo> in L</git>.
+The name of the main branch of current L<#Rakudo> in L<#git>.
 Originally named so for its "new object model".
 
 =head2 null-PMC access
@@ -552,8 +549,8 @@ Originally named so for its "new object model".
 =head2 NQP
 
 Short for B<N>ot B<Q>uite B<P>erl, a subset of Perl 6 suitable for tasks such as
-implementing L</Rakudo>. Targets L</Parrot> and the L</JVM>, with work underway
-on targeting L</MoarVM>.
+implementing L<#Rakudo>. Targets L<#Parrot> and the L<#JVM>, with work underway
+on targeting L<#MoarVM>.
 
 =head1 O
 
@@ -569,7 +566,7 @@ on targeting L</MoarVM>.
 
 =head2 pad
 
-See L</lexical pad>.
+See L<#lexical pad>.
 
 =head2 Pair
 
@@ -577,24 +574,24 @@ The simplest object containing a key and value pair.
 
 =head2 pair notation
 
-Way of expressing key/value pairs, using the L</fat comma>, creating a L</Pair>
+Way of expressing key/value pairs, using the L<#fat comma>, creating a L<#Pair>
 object, for instance:
 
   foo => 1
 
 =head2 Panda
 
-A Perl 6 program designed to make it easier to install L</module>s.
+A Perl 6 program designed to make it easier to install L<#module>s.
 
 =head2 panda bootstrap script
 
 =head2 parakudo
 
-L</Rakudo> running on L</Parrot>.
+L<#Rakudo> running on L<#Parrot>.
 
 =head2 parrakudo
 
-See L</parakudo>.
+See L<#parakudo>.
 
 =head2 Parrot
 
@@ -604,7 +601,7 @@ A virtual machine designed to run Perl 6 and other dynamic languages.
 
 =head2 PAST
 
-Parrot L</AST>.
+Parrot L<#AST>.
 
 =head2 pb
 
@@ -623,7 +620,7 @@ about said feature.
 
 =head2 phaser
 
-A piece of code (a L</blast>) that runs at a particular phase in the program's
+A piece of code (a L<#blast>) that runs at a particular phase in the program's
 lifecycle, for example during compilation (C<BEGIN>), the first time a loop is
 entered (C<FIRST>), or after al regular code has run (C<END>).
 
@@ -638,11 +635,11 @@ Parrot Magic Cookie.
 =head2 pod
 
 B<P>lain B<O>l' B<D>ocumentation, a documentation format understood by Perl
-6. See L</S26> for details.
+6. See L<#S26> for details.
 
 =head2 pod6
 
-Used to specify Perl 6's version of L</pod>, as opposed to Perl 5's.
+Used to specify Perl 6's version of L<#pod>, as opposed to Perl 5's.
 
 =head2 Positional
 
@@ -655,7 +652,7 @@ Used to specify Perl 6's version of L</pod>, as opposed to Perl 5's.
 =head2 precedence
 
 The order in which operators bind terms together; tighter precedence
-evaluates before looser precedence.  See L<S03/Operator precedence>
+evaluates before looser precedence.  See L<S03#Operator precedence>
 for details.
 
 =head2 prefix
@@ -672,7 +669,7 @@ for details.
 
 =head2 pull request
 
-A feature of L</github> that's used after a user has L</fork>ed a project and
+A feature of L<#github> that's used after a user has L<#fork>ed a project and
 made changes to it that they wish to have in the main project.
 
 =head2 pugs
@@ -704,17 +701,17 @@ result data is returned.
 
 =head2 Rakudo
 
-An implementation of Perl 6 originally targeting L</Parrot>, it now targets
-Parrot, the L</JVM>, and (soon) L</MoarVM> through L</NQP>.
+An implementation of Perl 6 originally targeting L<#Parrot>, it now targets
+Parrot, the L<#JVM>, and (soon) L<#MoarVM> through L<#NQP>.
 
 =head2 Rakudo *
 
 Rakudo Star, a useful and supposedly monthly distribution of Rakudo which
-includes modules and L</Panda>.
+includes modules and L<#Panda>.
 
 =head2 rakudobug
 
-A bug in L</rakudo>.  Usually used in contexts such as "/me submits rakudobug".
+A bug in L<#rakudo>.  Usually used in contexts such as "/me submits rakudobug".
 
 =head2 regex
 
@@ -723,7 +720,7 @@ kinds of information.
 
 =head2 regexp
 
-An alternative abbreviation of L</regex> that usually occurs in non-Perl 6
+An alternative abbreviation of L<#regex> that usually occurs in non-Perl 6
 contexts.
 
 =head2 reification
@@ -743,15 +740,15 @@ of code.
 
 =head2 roast
 
-The Perl 6 L<specification tests|/spectest>, which live here: L<https://github.com/perl6/roast/>
-Originally developed for L</pugs>, it now serves all Perl 6 implementations. Why roast? It's the
+The Perl 6 L<specification tests|#spectest>, which live here: L<https://github.com/perl6/roast/>
+Originally developed for L<#pugs>, it now serves all Perl 6 implementations. Why roast? It's the
 B<r>epository B<o>f B<a>ll B<s>pec B<t>ests.
 
 =head2 role
 
 =head2 RPA
 
-Resizable L</PMC> Array.
+Resizable L<#PMC> Array.
 
 =head2 runtime
 
@@ -766,7 +763,7 @@ fact that it doesn't work goes unnoticed.
 
 =head2 segfault
 
-See L</segmentation fault>.
+See L<#segmentation fault>.
 
 =head2 segmentation fault
 
@@ -798,7 +795,7 @@ glass of ice water.
 
 =head2 star
 
-See L</Rakudo *>.
+See L<#Rakudo *>.
 
 =head2 STM
 
@@ -813,26 +810,26 @@ Software Transactional Memory
 =head2 Synopsis
 
 The current definition of the Perl 6 language.  Still in development.  Much
-more a community effort than the L</Apocalypse>s and L</Exegesis|Exegeses> were.
+more a community effort than the L<#Apocalypse>s and L<#Exegesis|Exegeses> were.
 
 =head1 T
 
 =head2 TheDamian
 
-L</IRC> screen name for Damian Conway, writer of the original
-L</Exegesis|Exegeses>.
+L<#IRC> screen name for Damian Conway, writer of the original
+L<#Exegesis|Exegeses>.
 
 =head2 thinko
 
 A thinkographical error; i.e. a small mistake made by improperly expecting
-code to L</DWIM> or from an interrupted thought process.
+code to L<#DWIM> or from an interrupted thought process.
 
 =head2 thread
 
 =head2 TimToady
 
-L</IRC> screen name for Larry Wall, creator of Perl. The name comes from the
-pronunciation of L</TIMTOWTDI> as a word.
+L<#IRC> screen name for Larry Wall, creator of Perl. The name comes from the
+pronunciation of L<#TIMTOWTDI> as a word.
 
 =head2 TIMTOWTDI
 
@@ -850,7 +847,7 @@ Two Terms In A Row.
 
 =head2 TMTOWTDI
 
-An alternative form of L</TIMTOWTDI>. It occurs when the user replaces "There
+An alternative form of L<#TIMTOWTDI>. It occurs when the user replaces "There
 Is" with "There's" (removing the I that goes in the other abbreviation).
 
 =head2 tpyo
@@ -870,7 +867,7 @@ materialized in wooden nickels.
 
 =head2 unit
 
-See L</compilation unit>.
+See L<#compilation unit>.
 
 =head2 UNIT::
 
@@ -880,13 +877,13 @@ See L</compilation unit>.
 
 =head2 ver
 
-Short way to indicate L</version>.
+Short way to indicate L<#version>.
 
 =head2 version
 
 =head2 VM
 
-Virtual Machine.  Such as L</Parrot>, L</JVM> and L</MoarVM>.
+Virtual Machine.  Such as L<#Parrot>, L<#JVM> and L<#MoarVM>.
 
 =head2 v5
 
@@ -944,7 +941,7 @@ The IRC-bot on #perl6 that is your personal assistant.
 
 =head1 *
 
-Oh, um... L</whatever>.
+Oh, um... L<#whatever>.
 
 =head2 .
 
@@ -970,11 +967,11 @@ Something you should stop using, and just use subroutine signatures instead.
 
 =head2 ++
 
-Way to increase L</karma> on IRC.
+Way to increase L<#karma> on IRC.
 
 =head2 &
 
-Sigil for executable code.  Also used at the end of a line of an L</IRC>
+Sigil for executable code.  Also used at the end of a line of an L<#IRC>
 message to indicate the user is away, doing something else in the background.
 For instance:
 
@@ -982,6 +979,7 @@ For instance:
 
 =head2 6model
 
-The "new object model"/L</MOP> that's currently in rakudo.
+The "new object model"/L<#MOP> that's currently in rakudo.
 
-=for vim:set expandtab sw=4:
+=comment vim:set expandtab sw=4:
+=end pod
