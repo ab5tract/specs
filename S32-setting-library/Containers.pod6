@@ -1,11 +1,8 @@
-=encoding utf8
-
-=head1 TITLE
-
+=begin pod
+=TITLE
 DRAFT: Synopsis 32: Setting Library - Containers.pod
 
-=head1 AUTHORS
-
+=AUTHORS
     Rod Adams <rod@rodadams.net>
     Larry Wall <larry@wall.org>
     Aaron Sherman <ajs@ajs.com>
@@ -14,8 +11,7 @@ DRAFT: Synopsis 32: Setting Library - Containers.pod
     Moritz Lenz <moritz@faui2k3.org>
     Tim Nelson <wayland@wayland.id.au>
 
-=head1 VERSION
-
+=VERSION
     Created: 19 Feb 2009 extracted from S29-functions.pod
 
     Last Modified: 24 Jan 2014
@@ -40,10 +36,8 @@ The C<Positional> role implies the ability to support C<< postcircumfix:<[ ]> >>
 
 The C<Associative> role implies the ability to support C<< postcircumfix:<{ }> >>.
 
-=over
-
-=item cat
-
+=begin item1 
+cat
  multi cat( **@list --> Cat )
 
 C<cat> reads arrays serially rather than in parallel as C<zip> does. It
@@ -62,8 +56,9 @@ In addition, a C<Cat> in item context emulates the C<Str> interface lazily.
 [Conjecture: Cats should maybe just do the lazy strings, and leave flattening
 to other operators.]
 
-=item roundrobin
-
+=end item1
+=begin item1 
+roundrobin
  multi roundrobin( **@list --> Parcel )
 
 C<roundrobin> is very similar to C<zip>.  The difference is that
@@ -77,8 +72,9 @@ simply skip any undefined value:
 
 will get the following values for C<$x>: C<1, 1, 1, 2, 2, 3>
 
-=item zip
-
+=end item1
+=begin item1 
+zip
  multi zip ( **@list --> Parcel of Parcel )
  multi infix:<Z> ( **@list --> Parcel of Parcel )
 
@@ -107,30 +103,29 @@ C<Z> is an infix equivalent for zip:
 
 In lol context a list of C<List> is returned instead of a flat list.
 
-=back
-
+=end item1
 =head2 List
 
 The following are defined in the C<List> class:
 
     class List does Positional {...}
 
-=over
-
-=item new
-
+=begin item1 
+new
  multi method new(*@args --> List )
 
 Constructs an C<List> that can visit all iterable elements of all the arguments.
 
-=item list
-
+=end item1
+=begin item1 
+list
  sub list(*@args --> List )
 
 Constructs a C<List> that can visit all iterable elements of all the arguments.
 
-=item cat
-
+=end item1
+=begin item1 
+cat
  multi cat ( @values --> Cat )
 
 Returns a C<Cat> object, a concatenated version of the list that does the C<Str>
@@ -152,8 +147,9 @@ because lazy objects are not required to be as lazy as possible, but may
 instead choose to precalculate values in semi-eager batches to maximize
 cache hits.
 
-=item classify
-
+=end item1
+=begin item1 
+classify
  multi method classify ( @values: &mapper --> Hash )
  multi method classify ( @values: %mapper --> Hash )
  multi method classify ( @values: @mapper --> Hash )
@@ -197,8 +193,9 @@ elements.
 
 To categorize values into multiple categories, see C<categorize>.
 
-=item categorize
-
+=end item1
+=begin item1 
+categorize
  multi method categorize ( @values: &mapper --> Hash )
  multi method categorize ( @values: %mapper --> Hash )
  multi method categorize ( @values: @mapper --> Hash )
@@ -229,8 +226,9 @@ a Hash of Lists.  All higher up categorizations, will necessarily always be a
 Hash of Hashes.  Please note that all Parcels must have the same number of
 elements.
 
-=item grep
-
+=end item1
+=begin item1 
+grep
  multi method grep ( @values: Matcher $test --> List )
  multi grep ( Matcher $test, *@values --> List )
 
@@ -255,16 +253,18 @@ an argument will iterate or terminate the C<grep> itself, not some
 loop surrounding the statement containing the C<grep>.  Use a label
 if you mean the other thing.
 
-=item first
-
+=end item1
+=begin item1 
+first
  multi method first ( @values: Matcher $test --> Parcel )
  multi first ( Matcher $test, *@values --> Parcel )
 
 C<first> searches exactly like C<grep> but returns only the first matching value, or C<Nil>
 if not found.
 
-=item pick
-
+=end item1
+=begin item1 
+pick
  multi method pick ( @values: Int $num = 1 --> Any )
  multi method pick ( @values: Whatever --> Any )
  multi pick ( Int $num, *@values --> Any )
@@ -283,8 +283,9 @@ elements are returned in random order:
 Due to the normal semantics of returning a C<Parcel>, a pick of a
 single element may be used as an item without requiring C<.[0]>.
 
-=item roll
-
+=end item1
+=begin item1 
+roll
  multi method roll ( @values: Int $num = 1 --> Any )
  multi method roll ( @values: Whatever --> Any )
  multi roll ( Int $num, *@values --> Any )
@@ -307,8 +308,9 @@ single element may be used as an item without requiring C<.[0]>.
 Note that C<roll 1, 6> is not the same as a 1d6, but always returns
 C<6> as a degenerate one-sided die.  Use C<roll 1, 1..6> to simulate a six-sided die.
 
-=item join
-
+=end item1
+=begin item1 
+join
  multi method join ( @values: Str $separator = '' --> Str )
  multi join ( Str $separator = '', *@values --> Str )
 
@@ -320,8 +322,9 @@ Given an empty list, C<join> returns the empty string.
 The separator defaults to the null string.  To join with space,
 just coerce to C<Str>.
 
-=item map
-
+=end item1
+=begin item1 
+map
  multi method map ( @values: Code *&expression --> List of Parcel )
  multi map ( Code $expression, *@values --> List of Parcel )
  multi map ( Code $expression --> List of Parcel )
@@ -358,8 +361,9 @@ This effectively becomes a lazy loop returning values until it is exited with
 C<last>.  This may be a cheaper alternative to a C<gather>, C<loop>, C<take>
 setup.
 
-=item duckmap
-
+=end item1
+=begin item1 
+duckmap
  multi method duckmap ( @values: Code *&expression --> List of Parcel )
  multi duckmap ( Code $expression, *@values --> List of Parcel )
 
@@ -376,8 +380,9 @@ either would succeed.
 Because C<duckmap> is defined as a recursive implicit loop, loop
 controls apply only to the current level of the tree.
 
-=item deepmap
-
+=end item1
+=begin item1 
+deepmap
  multi method deepmap ( @values: Code *&expression --> List of Parcel )
  multi deepmap ( Code $expression, *@values --> List of Parcel )
 
@@ -391,8 +396,9 @@ are considered leaf values and mapped through the supplied expression.
 Because C<deepmap> is defined as a recursive implicit loop, loop
 controls apply only to the current level of the tree.
 
-=item reduce
-
+=end item1
+=begin item1 
+reduce
  multi method reduce ( @values: Code *&expression --> Item )
  multi reduce ( Code $expression ;; *@values --> Item ) {
    my $res;
@@ -408,9 +414,9 @@ an argument will iterate or terminate the C<reduce> itself, not some
 loop surrounding the statement containing the C<reduce>.  Use a label
 if you mean the other thing.
 
-
-=item reverse
-
+=end item1
+=begin item1 
+reverse
  multi method reverse ( @values: --> List ) is export
  multi reverse ( *@values --> List ) {
     gather {
@@ -420,16 +426,18 @@ if you mean the other thing.
 
 Note that strings are now reversed with C<flip>.
 
-=item rotate
-
+=end item1
+=begin item1 
+rotate
  multi method rotate ( @values is copy: Int $n = 1 --> List ) is export
 
 Produces a new list with the same elements as the old list,
 rotated by the specified amount.  See Array::rotate for more
 info.
 
-=item sort
-
+=end item1
+=begin item1 
+sort
  multi method sort( @values: *&by --> Array )
  multi method sort( @values: Ordering @by --> Array )
  multi method sort( @values: Ordering $by = &infix:<cmp> --> Array )
@@ -445,7 +453,7 @@ If C<$by> is a code object of arity zero or one, it is applied on each item
 of C<@values>, and C<@values> is sorted by comparing the result values with
 C<< &infix:<cmp> >> (Schwartzian Transform).
 
-C<Ordering> is as described in L<S29/Type Declarations>.  Any
+C<Ordering> is as described in L<S29#Type Declarations>.  Any
 C<Ordering> may receive either or both of the mixins C<descending>
 and C<canon(Code $how)> to reverse the order of sort, or
 to adjust the case, sign, or other order sensitivity of C<cmp>.
@@ -462,8 +470,9 @@ See L<http://www.nntp.perl.org/group/perl.perl6.language/16578>
 for more details and examples (with C<is insensitive> meaning
 C<is canonicalized(&lc)>.)
 
-=item uniq
-
+=end item1
+=begin item1 
+uniq
  multi method uniq(List:D: --> List:D, :&as)
 
  multi sub uniq(*@values --> List:D, :&as)
@@ -492,8 +501,9 @@ might work for you:
 
     say +uniq [100, 100e0, 200/2], :as(*.Num)   # 1
 
-=item squish
-
+=end item1
+=begin item1 
+squish
  multi method squish(List:D: --> List:D, :&as)
 
  multi sub squish(*@values --> List:D, :&as)
@@ -512,8 +522,9 @@ are removed.
 The optional C< :as > parameter, just like with C< uniq >, allows values to be
 temporarily transformed before comparison.
 
-=item min
-
+=end item1
+=begin item1 
+min
  multi method min( @values: *&by --> Any )
  multi method min( @values: Ordering @by --> Any )
  multi method min( @values: Ordering $by = &infix:<cmp> --> Any )
@@ -526,7 +537,7 @@ of C<@values> , using criteria C<$by> or C<@by> for
 comparisons. C<@by> differs from C<$by> in that each criterion
 is applied, in order, until a non-zero (tie) result is achieved.
 
-C<Ordering> is as described in L<S29/Type Declarations>.  Any
+C<Ordering> is as described in L<S29#Type Declarations>.  Any
 C<Ordering> may receive the mixin C<canonicalized(Code $how)> to
 adjust the case, sign, or other order sensitivity of C<cmp>.
 (Mixins are applied to values using C<but>.)  If a C<Signature>
@@ -536,8 +547,9 @@ canonicalized($how)> are allowed on the positional elements.
 For a C<min> function that does not require an ordering, see the
 C<[min]> reduction operator.
 
-=item max
-
+=end item1
+=begin item1 
+max
  multi method max( @values: *&by --> Any )
  multi method max( @values: Ordering @by --> Any )
  multi method max( @values: Ordering $by = &infix:<cmp> --> Any )
@@ -550,7 +562,7 @@ of C<@values> , using criteria C<$by> or C<@by> for
 comparisons. C<@by> differs from C<$by> in that each criterion
 is applied, in order, until a non-zero (tie) result is achieved.
 
-C<Ordering> is as described in L<S29/Type Declarations>.  Any
+C<Ordering> is as described in L<S29#Type Declarations>.  Any
 C<Ordering> may receive the mixin C<canonicalized(Code $how)> to
 adjust the case, sign, or other order sensitivity of C<cmp>.
 (Mixins are applied to values using C<but>.)  If a C<Signature>
@@ -560,8 +572,9 @@ canonicalized($how)> are allowed on the positional elements.
 For a C<max> function that does not require an ordering, see the
 C<[max]> reduction operator.
 
-=item minmax
-
+=end item1
+=begin item1 
+minmax
  multi method minmax( @values: *&by --> Any )
  multi method minmax( @values: Ordering @by --> Any )
  multi method minmax( @values: Ordering $by = &infix:<cmp> --> Any )
@@ -577,7 +590,7 @@ minimum and maximum values were passed individually, except that if the
 corresponding C<excludes> flag is set in Range, the excludes flag is also set
 in the returned C<Range>.
 
-C<Ordering> is as described in L<S29/Type Declarations>.  Any
+C<Ordering> is as described in L<S29#Type Declarations>.  Any
 C<Ordering> may receive the mixin C<canonicalized(Code $how)> to
 adjust the case, sign, or other order sensitivity of C<cmp>.
 (Mixins are applied to values using C<but>.)  If a C<Signature>
@@ -587,8 +600,9 @@ canonicalized($how)> are allowed on the positional elements.
 For a C<minmax> function that does not require an ordering, see the
 C<[minmax]> reduction operator.
 
-=item any
-
+=end item1
+=begin item1 
+any
  multi method any( @values: --> Junction )
  multi any( *@values --> Junction ) is export
 
@@ -596,8 +610,9 @@ Returns a junction with all the values of the list C<|>-ed together. The
 junction will only match against another value if at least one of the
 values in the list matches.
 
-=item all
-
+=end item1
+=begin item1 
+all
  multi method all( @values: --> Junction )
  multi all( *@values --> Junction ) is export
 
@@ -605,8 +620,9 @@ Returns a junction with all the values of the list C<&>-ed together. The
 junction will only match against another value if all of the values in the
 list match.
 
-=item one
-
+=end item1
+=begin item1 
+one
  multi method one( @values: --> Junction )
  multi one( *@values --> Junction ) is export
 
@@ -614,23 +630,26 @@ Returns a junction with all the values of the list C<^>-ed together. The
 junction will only match against another value if exactly one of the values
 in the list matches.
 
-=item none
-
+=end item1
+=begin item1 
+none
  multi method none( @values: --> Junction )
  multi none( *@values --> Junction ) is export
 
 Returns a junction which will only match against another value if none of
 the values in the list matches.
 
-=item comb
-
+=end item1
+=begin item1 
+comb
  multi method comb ( Regex $matcher, Int $limit = * )
 
 Treats the list as a string (by simply C<join>ing them together), and calls
 C<.comb> on that string with the same parameters. See C<Str::comb>.
 
-=item combinations
-
+=end item1
+=begin item1 
+combinations
  multi method combinations ( Int $of )
  multi method combinations ( Range $of = 0 .. * )
  multi combinations ( $n, $k )
@@ -660,8 +679,9 @@ The compiler is allowed to complain if it notices, however.
 
 The functional form assumes it is working on a list of integers C<^$n> taken C<$k> at a time.
 
-=item permutations
-
+=end item1
+=begin item1 
+permutations
  multi method permutations ( )
  multi permutations ( $n )
 
@@ -671,30 +691,29 @@ are converted to a list of individual values before permuting them.)
 
 The functional form assumes it is working on a list of integers C<^$n>.
 
-=back
-
+=end item1
 =head2 Array
 
 All these methods are defined in the C<Array> role/class.
 
     role Array does List {...}
 
-=over
-
-=item new 
-
+=begin item1 
+new
  multi method new(*@args --> Array )
 
 Constructs a new C<Array> containing the arguments passed to C<new>.
 
-=item shape
-
+=end item1
+=begin item1 
+shape
  method shape (@array: --> Parcel ) is export
 
 Returns the declared shape of the array, as described in S09.
 
-=item end
-
+=end item1
+=begin item1 
+end
  method end (@array: --> Any ) is export
 
 Returns the final subscript of the first dimension; for a one-dimensional
@@ -705,52 +724,60 @@ So that the degenerate case of an empty range works correctly, C<-1> is returned
 if the array is empty.  (If you actually try to index with C<-1>, you'll get a
 failure.)
 
-=item elems
-
+=end item1
+=begin item1 
+elems
  method elems (@array: --> Int ) is export
 
 Returns the length of the array counted in elements.
 
-=item delete (DEPRECATED)
-
+=end item1
+=begin item1 
+delete (DEPRECATED)
 The "delete" method is considered to be a deprecated internal method: the
 normal way to mark an element as deleted, is to apply the C<:delete> adverb
 to a subscripting operation.
 
-=item :delete
-
+=end item1
+=begin item1 
+:delete
 This adverb may be applied to any subscripting operation.  The operation
 returns the elements normally, but reads them out destructively.
 
-=item exists (DEPRECATED)
-
+=end item1
+=begin item1 
+exists (DEPRECATED)
 The "exists" method is considered to be a deprecated internal method: the
 normal way to test for existence is to apply the C<:exists> adverb to a
 subscripting operation.
 
-=item :exists
-
+=end item1
+=begin item1 
+:exists
 This adverb may be applied to any subscripting operation.  The
 operation returns true if specified element exists.  If a slice
 is specified by the subscript, a C<Parcel> of C<Bool> is returned,
 which can be processed using junctions.
 
-=item pop
-
+=end item1
+=begin item1 
+pop
  multi method pop ( @array: --> Scalar ) is export
 
 Remove the last element of C<@array> and return it.
 If C<@array> is empty returns a failure.
 
-=item push
-
+=end item1
+=begin item1 
+push
  multi method push ( @array: *@values --> Array ) is export
 
 Adds all the values to the end of C<@array> eagerly.  Returns the modified
 array.
 
-=item plan
-
+=end item1
+=begin item1 
+plan
  multi method plan ( @array: *@list --> Array ) is export
 
 Adds the list to the end of C<@array> lazily as a kind of "lazy push".
@@ -781,8 +808,9 @@ to perform the operation in question.  (Hence, there is no need for
 an C<.unplan> method, since the plan of an array may be thrown away
 by using C<splice> without the risk of memory exhaustion.)
 
-=item rotate
-
+=end item1
+=begin item1 
+rotate
  multi method rotate ( @array is copy: Int $n = 1, Int *@n --> Array ) is export
 
 Produces a new array with the same elements as the old array,
@@ -812,15 +840,17 @@ applied to subdimensions of multidimensional arrays.  (To perform
 a flat rotation on a shaped array requires flattening to a list
 and rotating that instead.)
 
-=item shift
-
+=end item1
+=begin item1 
+shift
  multi method shift ( @array: --> Scalar ) is export
 
 Remove the first element from C<@array> and return it.
 If C<@array> is empty returns a failure.
 
-=item splice
-
+=end item1
+=begin item1 
+splice
  multi method splice( @array is rw: $offset = 0, $size = Inf, *@values --> Any ) is export
 
 C<splice> fills many niches in array-management, but its fundamental behavior
@@ -863,21 +893,26 @@ While it is illegal for the offset to be larger than the size of
 the array, it is allowed for the final position to be off the end of the array;
 in this case the entire rest of the array is spliced, whatever is available.
 
-=item unshift
-
+=end item1
+=begin item1 
+unshift
  multi method unshift ( @array: *@values --> Array ) is export
 
 C<unshift> adds the values onto the start of the C<@array> and
 returns the modified array.
 
-=item keys
-
-=item kv
-
-=item pairs
-
-=item values
-
+=end item1
+=begin item1 
+keys
+=end item1
+=begin item1 
+kv
+=end item1
+=begin item1 
+pairs
+=end item1
+=begin item1 
+values
  multi method keys   ( @array: ) is export
  multi method kv     ( @array: ) is export
  multi method pairs  ( @array: ) is export
@@ -900,48 +935,52 @@ dimensionality, not their effective dimensionality.)
 
 Note that C<kv @array> returns the same as C<zip(^@array; @array)>
 
-=back
-
+=end item1
 =head2 Hash
 
 The following are defined in the C<Hash> class.
 
     class Hash is EnumMap {...}
 
-=over 4
-
-=item delete (DEPRECATED)
-
+=begin item1 
+delete (DEPRECATED)
 The "delete" method is considered to be a deprecated internal method: the
 normal way to remove a key from a hash, is to apply the C<:delete> adverb
 to a subscripting operation.
 
-=item :delete
-
+=end item1
+=begin item1 
+:delete
 This adverb may be applied to any subscripting operation.  The operation
 returns the elements normally, but reads them out destructively.
 
-=item exists (DEPRECATED)
-
+=end item1
+=begin item1 
+exists (DEPRECATED)
 The "exists" method is considered to be a deprecated internal method: the
 normal way to test for existence is to apply the C<:exists> adverb to a
 subscripting operation.
 
-=item :exists
-
+=end item1
+=begin item1 
+:exists
 This adverb may be applied to any subscripting operation.  The
 operation returns true if specified element exists.  If a slice
 is specified by the subscript, a C<Parcel> of C<Bool> is returned,
 which can be processed using junctions.
 
-=item keys
-
-=item kv
-
-=item pairs
-
-=item values
-
+=end item1
+=begin item1 
+keys
+=end item1
+=begin item1 
+kv
+=end item1
+=begin item1 
+pairs
+=end item1
+=begin item1 
+values
  multi method keys   ( %hash: ) is export
  multi method kv     ( %hash: ) is export
  multi method pairs  ( %hash: ) is export
@@ -964,39 +1003,44 @@ Note that C<kv %hash> returns the same as C<zip(keys %hash; values %hash)>
 The lvalue form of C<keys> is no longer supported. Use the C<.buckets>
 property instead.
 
-=item any
-
+=end item1
+=begin item1 
+any
  multi method any( %hash: --> Junction ) is export
 
 Returns a junction with all the keys of the hash C<|>-ed together. The
 junction will only match against another value if at least one of the
 keys in the hash matches.
 
-=item all
-
+=end item1
+=begin item1 
+all
  multi method all( %hash: --> Junction ) is export
 
 Returns a junction with all the keys of the hash C<&>-ed together. The
 junction will only match against another value if all of the keys in the hash
 match.
 
-=item one
-
+=end item1
+=begin item1 
+one
  multi method one( %hash: --> Junction ) is export
 
 Returns a junction with all the keys of the hash C<^>-ed together. The
 junction will only match against another value if exactly one of the keys
 in the hash matches.
 
-=item none
-
+=end item1
+=begin item1 
+none
  multi method none( %hash: --> Junction ) is export
 
 Returns a junction which will only match against another value if none of
 the keys in the hash matches.
 
-=item invert
-
+=end item1
+=begin item1 
+invert
  multi method invert ( %hash: --> List ) is export {
      map -> $k, $v { $v X=> $k }, %hash.kv;
  }
@@ -1005,8 +1049,9 @@ Produces a backmapping of values to keys, expanding list values
 into multiple pairs.  (The C<< X=> >> expands C<$v> if it is a list.)
 [NB: this may need refinement to handle keys that do C<Positional>.]
 
-=item push
-
+=end item1
+=begin item1 
+push
  multi method push ( %hash: *@values --> Hash ) is export
 
 Like hash assignment insofar as it accepts either C<Pair> objects or
@@ -1028,8 +1073,7 @@ that is not a list.)
 The intent is that reversing a hash twice produces a hash equivalent
 to the original hash.
 
-=back
-
+=end item1
 =head1 Classes and Roles
 
 This documents Buf, List, Range, Set, Bag, Junction, Array, Hash, MixHash, SetHash,
@@ -1069,7 +1113,7 @@ To explicit request a C<Buf> of a specific size, you can use
 
 Subtypes with additional constraints like C<utf8> (which only allows valid
 UTF-8 byte sequences) exist and provide similar constructors. See
-L<S02/Built-In Data Types>.
+L<S02#Built-In Data Types>.
 
 The array in the constructor used to be slurpy rather than positional, but
 the former was deemed to be too inefficient (during signature construction)
@@ -1077,18 +1121,17 @@ for arrays of many elements.
 
 =head3 Methods
 
-=over
-
-=item decode
-
+=begin item1 
+decode
     method decode($encoding = $?ENC, $nf = $?NF --> Str )
 
 Decode the C<Buf> into a C<Str>. For subtypes that know their encoding (like
 C<utf8>, C<utf16>) the C<$encoding> parameter defaults to their intrinsic
 encoding instead.
 
-=item  subbuf
-
+=end item1
+=begin item1 
+subbuf
     method subbuf($from, $elems?) returns Buf:D
 
 Returns a part of the original buffer, starting from index C<$from> and taking
@@ -1100,9 +1143,7 @@ C<$from>may be specified relative to the end of the string using a WhateverCode:
 
  Buf.new(0x00, 0xFF).subbuf(*-1, 1)
 
-=back
-
-
+=end item1
 =head3 C<Buf> Operators
 
 Two C<Buf> objects of the same bit size can be compared with the same
@@ -1126,22 +1167,18 @@ implications on speed and usage they might have --moritz].
     class Enum does Associative {...}
     class Pair does Associative {...}
 
-
 A value formed by associating a single key with a single value.
 In an C<Enum>, both key and value are immutable.  In a C<Pair>, the
 key is immutable but the value mutable.  C<Enum> works identically
 to C<Pair> unless you try to modify it.)
 
-=over
-
-=item invert
-
+=begin item1 
+invert
     multi method invert ( $pair: --> List ) is export {
      $pair.value X=> $pair.key
     }
 
-=back
-
+=end item1
 =head2 EnumMap
 
     class EnumMap does Associative does Positional {...}
@@ -1201,24 +1238,24 @@ in list context).  To create a set from the keys of a list of Pairs,
 use a C<Set()> coercion rather than a constructor.  Or to create a
 set from a hash, use the C<.keys> or C<:k> to extract only the keys.
 
-=over
-
-=item pick
-
+=begin item1 
+pick
  multi method pick ( $set: Int $num = 1 --> Any )
  multi method pick ( $set: Whatever --> Any )
 
 Works like an ordinary list C<pick>.
 
-=item roll
-
+=end item1
+=begin item1 
+roll
  multi method roll ( $set: Int $num = 1 --> Any )
  multi method roll ( $set: Whatever --> Any )
 
 Works like an ordinary list C<roll>.
 
-=item combinations
-
+=end item1
+=begin item1 
+combinations
  multi method combinations ( Int $of )
  multi method combinations ( Range $of = 0 .. * )
 
@@ -1228,8 +1265,7 @@ increasing size.  You may, of course, turn that list back into a set of sets.
 
 Note that, without an argument, this method basically calculates the powerset.
 
-=back
-
+=end item1
 =head2 SetHash
 
 A mutable Set container, represented as C<QuantHash[Bool,False]>.
@@ -1249,10 +1285,8 @@ interpolate items passed to them, even if they look like sets or bags.
 (To create a bag from a list of Pairs or a hash, use a C<Bag()> coercion
 rather than a constructor.)
 
-=over
-
-=item pick
-
+=begin item1 
+pick
  multi method pick ( $bag: Int $num = 1 --> Any )
  multi method pick ( $bag: Whatever --> Any )
  multi method pickpairs ( $bag: Int $num = 1 --> Pairs )
@@ -1276,8 +1310,9 @@ has no effect on subsequent C<.pick>/C<.pickpairs> invocations.
 The C<.pickpairs> version returns the grabbed values as a list of C<Pair>
 objects, whose keys are the keys and whose values are the replication values.
 
-=item roll
-
+=end item1
+=begin item1 
+roll
  multi method roll ( $bag: Int $num = 1 --> Any )
  multi method roll ( $bag: Whatever --> Any )
 
@@ -1293,8 +1328,7 @@ marbles of the same color corresponds to number of sides with the
 same color.  (For "picking without replacement" see C<pick> instead.)
 Rolling requires no temporary state.
 
-=back
-
+=end item1
 =head2 BagHash
 
 A mutable C<Bag> container, represented as C<QuantHash[UInt,0]>.
@@ -1320,10 +1354,8 @@ All standard C<QuantHash> containers have a default value that is false
 only those entries with non-default values, automatically deleting
 any entry if its value goes to that (false) default value.
 
-=over
-
-=item grab
-
+=begin item1 
+grab
  multi method grab ( $bag: Int $num = 1 --> Any )
  multi method grab ( $bag: Whatever --> Any )
  multi method grabpairs ( $bag: Int $num = 1 --> Any )
@@ -1349,8 +1381,7 @@ the bag, as it were.  Instead of returning keys, returns the grabbed
 values as a list of C<Pair> objects, whose keys are the deleted keys
 and whose values are the deleted replication values.
 
-=back
-
+=end item1
 =head2 MixHash
 
 A C<QuantHash[Real,0]>; like a C<BagHash> but may have non-integral
@@ -1363,10 +1394,8 @@ such a weight.
 
 All method calls on junctions autothread because the type provides no public methods.
 
-=over 4
-
-=item !eigenstates
-
+=begin item1 
+!eigenstates
     method !eigenstates (Junction $j: --> Parcel)
 
 Returns an unordered list of the values that constitute the junction (formerly
@@ -1388,9 +1417,10 @@ Since set items are by definition unique, only the C<one> junction
 can be unthinkingly mapped to and from a given set.  (This is why we
 discourage casual use of the eigenstates as a set.)
 
-=back
-
+=end item1
 =head1 Additions
 
 Please post errors and feedback to perl6-language.  If you are making
 a general laundry list, please separate messages by topic.
+
+=end pod
