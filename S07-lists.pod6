@@ -1,16 +1,11 @@
-
-=encoding utf8
-
-=head1 TITLE
-
+=begin pod
+=TITLE
 Synopsis 7: Lists and Iteration
 
-=head1 AUTHORS
-
+=AUTHORS
     Patrick R. Michaud <pmichaud@pobox.com
 
-=head1 VERSION
-
+=VERSION
     Created: 12 July 2012
 
     Last Modified: 29 May 2013
@@ -184,16 +179,15 @@ to be eager instead of lazy.
 
 Perl 6 defines four levels of laziness:
 
-=over
-
-=item Strictly Lazy
-
+=begin item1 
+Strictly Lazy
 Does not evaluate anything unless explicitly required by the caller,
 including not traversing non-lazy objects.  This behavior generally
 occurs only by a pragma or by explicit lazy primitives.
 
-=item Mostly Lazy
-
+=end item1
+=begin item1 
+Mostly Lazy
 Try to obtain available elements without causing eager evaluation
 of other lazy objects.  However, the implementation is allowed to
 do batching for efficiency.  The programmer must not rely on
@@ -202,8 +196,9 @@ like this, or the results will be indeterminate.  (However, this
 does not rule out pure I<definitional> circularity; earlier array
 values may be used in the definition of subsequent values.)
 
-=item Mostly Eager
-
+=end item1
+=begin item1 
+Mostly Eager
 Obtain all leading items that are not known to be infinite.
 The remainder of the items are left for lazy evaluation.  
 As with the "mostly lazy" case, the programmer must not depend 
@@ -219,21 +214,19 @@ primarily just hints to the implementation as to whether you are
 likely to want to use all the values in the list.  Nothing
 transactional should be allowed to depend on the difference.
 
-=item Strictly Eager
-
+=end item1
+=begin item1 
+Strictly Eager
 Obtain all items, failing immediately with an appropriate message
 if asked to evaluate any data structures known to be infinite.
 (Data structures that are effectively infinite but not provably
 so will likely exhaust memory instead.)
 
-=back
-
+=end item1
 =head2 The laziness level of some common operations
 
-=over
-
-=item List assignment; my @a = @something;
-
+=begin item1 
+List assignment; my @a = @something;
 In order to provide p5-like behavior in list assignment, it is performed
 at the Mostly Eager level.  This means that if you do
 
@@ -243,20 +236,23 @@ it will eagerly evaluate the return value from C<foo()> to place
 elements into C<@a>, stopping only when encountering something
 that is "known infinite" or upon reaching the end of the sequence.
 
-=item C<for>, C<map>, C<grep>, etc.
-
+=end item1
+=begin item1 
+C<for>, C<map>, C<grep>, etc.
 The C<for> loop and looping routines such as C<map>, C<grep>, etc. are
 Mostly Lazy by default, but will be eager when evaluated in sink context.
 (Note, however, that we force C<for>, C<while>, C<until>, C<repeat> and
 C<loop> loops to always be in sink context when used as a statement within
 a statementlist.)
 
-=item Slurpy parameters
-
+=end item1
+=begin item1 
+Slurpy parameters
 Slurpy parameters are Mostly Lazy.
 
-=item Feed operators
-
+=end item1
+=begin item1 
+Feed operators
 The feed operator is strictly lazy, meaning that no operation
 should be performed before the user requests any element.  That's how
 
@@ -265,8 +261,7 @@ should be performed before the user requests any element.  That's how
 is completely lazy, even if 1,2,3 is a fairly small known compact
 list.
 
-=back
-
+=end item1
 =head2 Common list operations
 
-
+=end pod
