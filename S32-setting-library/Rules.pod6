@@ -1,18 +1,13 @@
-
-=encoding utf8
-
-=head1 TITLE
-
+=begin pod
+=TITLE
 DRAFT: Synopsis 32: Setting Library - Rules
 
-=head1 AUTHORS
-
+=AUTHORS
     Tim Nelson <wayland@wayland.id.au>
     Larry Wall <larry@wall.org>
     Brent Laabs <bslaabs@gmail.com>
 
-=head1 VERSION
-
+=VERSION
     Created: 27 Feb 2009
 
     Last Modified: 5 Jul 2013
@@ -45,15 +40,12 @@ Regex objects are created through the syntax described in S05:
 They can be stored in variables for later use, as with the C<qr//> syntax
 in Perl 5.
 
-=over
-
-=item method Bool(Regex:D: )
-
+=begin item1 
+method Bool(Regex:D: )
 In boolean context, a regex object will match against C<$_>, and return
 the result as a Bool.
 
-=back
-
+=end item1
 =head2 Match
 
     class Match is Cool does Positional does Associative {
@@ -85,12 +77,10 @@ the result as a Bool.
 
 Much as a class is a collection of named attributes and methods, a grammar
 is a collection of named regexes and rules.  For more on creating and using
-grammars, see L<S05/Grammars>.
+grammars, see L<S05#Grammars>.
 
-=over
-
-=item parse / subparse
-X<parse> X<subparse>
+=begin item1 
+parse / subparseX<|parse> X<|subparse>
 
     method parse ($target, :$rule = 'TOP', Mu :$actions = Mu, *%opts)
     method subparse ($target, :$rule = 'TOP', Mu :$actions = Mu, *%opts)
@@ -103,18 +93,20 @@ The C<parse> method automatically anchors the rule to the beginning and end
 of the target string (adding C<^> and C<$> around the rule).  The C<subparse>
 method does not add anchors, and will match substrings against the rule.
 
-=item parsefile
-
+=end item1
+=begin item1 
+parsefile
     method parsefile (Cool $filename, :$rule = 'TOP', Mu :$actions = Mu, *%opts)
 
 Parse the file as with C<.parse>, but matches the grammar against the contents
 of C<$filename> instead.
 
-=back
-
+=end item1
 See Abstractions.pod
 
 =head1 Additions
 
 Please post errors and feedback to perl6-language.  If you are making
 a general laundry list, please separate messages by topic.
+
+=end pod
