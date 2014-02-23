@@ -1,17 +1,12 @@
-
-=encoding utf8
-
-=head1 TITLE
-
+=begin pod
+=TITLE
 DRAFT: Synopsis 32: Setting Library - Callable
 
-=head1 AUTHORS
-
+=AUTHORS
     Tim Nelson <wayland@wayland.id.au>
     Larry Wall <larry@wall.org>
 
-=head1 VERSION
-
+=VERSION
     Created: 26 Feb 2009
 
     Last Modified: 5 Nov 2013
@@ -40,22 +35,22 @@ to support C<< postcircumfix:<( )> >>.
 
 Base class for all executable objects.
 
-=over
-
-=item signature
-
+=begin item1 
+signature
  method signature( --> Signature )
 
-=item assuming
-
+=end item1
+=begin item1 
+assuming
  method assuming( Code $executable: *@curried_positionals, *%curried_named --> Code)
 
 C<assuming> primes C<$executable>, returning a C<Code> object that,
 when executed, will use curried arguments as well as any additionally
-supplied arguments. See L<S06/Priming>.
+supplied arguments. See L<S06#Priming>.
 
-=item defined
-
+=end item1
+=begin item1 
+defined
  method defined( --> Bool )
 
 For C<Code>, the C<.defined> method returns whether a body has
@@ -65,8 +60,7 @@ been defined.  A body consisting only of C<...>, C<!!!>, or C<???>
 To test if a name has been declared, look up the symbol in the
 appropriate symbol table.
 
-=back
-
+=end item1
 =head1 Block
 
     # Executable objects that have lexical scopes
@@ -76,7 +70,7 @@ appropriate symbol table.
         method redo()   {...}
         method leave()  {...}
         method labels() {...}
-        method as()     {...} # See L<S12/Introspection> and L<S02/Value types>
+        method as()     {...} # See L<S12#Introspection> and L<S02#Value types>
     }
 
 =head1 Signature
@@ -85,7 +79,7 @@ appropriate symbol table.
 
 The C<Signature> class is used for function parameters, as the left-hand
 side of a binding, and for the argument to declarators like C<my>.
-See L<S02/Signature objects>, L<S06/Signatures>, and L<S06/Signature Introspection>
+See L<S02#Signature objects>, L<S06#Signatures>, and L<S06#Signature Introspection>
 
 =head1 Capture
 
@@ -93,7 +87,7 @@ See L<S02/Signature objects>, L<S06/Signatures>, and L<S06/Signature Introspecti
 
 The C<Capture> class is used for the arguments of function calls
 and the right-hand side of a binding.
-See L<S02/Parcels, parameters, and Captures>
+See L<S02#Parcels, parameters, and Captures>
 
 =head1 WrapHandle
 
@@ -108,20 +102,18 @@ See L<S02/Parcels, parameters, and Captures>
       method multi( --> Bool ) {...}
  }
 
-=over
+=begin item1 
+unwrap
+See L<S06#Wrapping>.
 
-=item unwrap
-
-See L<S06/Wrapping>.
-
-=item wrap
-
+=end item1
+=begin item1 
+wrap
  method wrap(Code $code) {...}
 
-See L<S06/Wrapping>.
+See L<S06#Wrapping>.
 
-=back
-
+=end item1
 =head1 Sub
 
     class Sub is Routine {...}
@@ -142,3 +134,5 @@ See L<S06/Wrapping>.
 
 Please post errors and feedback to perl6-language.  If you are making
 a general laundry list, please separate messages by topic.
+
+=end pod
