@@ -94,25 +94,25 @@ same result as evaluating it serially:
 
 =begin item1 
 
-Hyper operators (L<S03#Hyper operators>) express that parallel operator
+Hyper operators (L<doc:S03#Hyper operators>) express that parallel operator
 application is safe.
 
 =end item1
 =begin item1 
 
-Junctions (L<S09#Junctions>) may auto-thread in parallel.
+Junctions (L<doc:S09#Junctions>) may auto-thread in parallel.
 
 =end item1
 =begin item1 
 
-Feeds (L<S06#Feed operators>) form pipelines and express that the stages
+Feeds (L<doc:S06#Feed operators>) form pipelines and express that the stages
 may be executed in parallel in a producer-consumer style relationship (though
 each stage is in itself not parallelized).
 
 =end item1
 =begin item1 
 
-C<hyper> and C<race> list operators (L<S02#The hyper operator>) express
+C<hyper> and C<race> list operators (L<doc:S02#The hyper operator>) express
 that iteration may be done in parallel; this is a generalization of hyper
 operators.
 

@@ -20,22 +20,22 @@ concurrency detailed elsewhere includes:
 
 =begin item1 
 
-Hyper operators (L<S03#Hyper operators>)
+Hyper operators (L<doc:S03#Hyper operators>)
 
 =end item1
 =begin item1 
 
-Junctions (L<S09#Junctions>)
+Junctions (L<doc:S09#Junctions>)
 
 =end item1
 =begin item1 
 
-Feeds (L<S06#Feed operators>)
+Feeds (L<doc:S06#Feed operators>)
 
 =end item1
 =begin item1 
 
-C<hyper> and C<race> operators (L<S02#The hyper operator>)
+C<hyper> and C<race> operators (L<doc:S02#The hyper operator>)
 
 =end item1
 The remainder of this draft has been pasted from various sources.  The
@@ -175,7 +175,7 @@ The exceptions are:
  ControlExceptionSigLOST   Term    ? File lock lost
  ControlExceptionSigWINCH  Ign     ? Window resize signal (4.3BSD, Sun)
 
-See L<S04> for details on how to handle exceptions.
+See L<doc:S04> for details on how to handle exceptions.
 
 XXX I'm unsure how the actions in the table above can be made to make sense.  The Ign
 actions are already dealt with because %SIG{CHLD}.exception already defaults to undefined.
@@ -340,7 +340,7 @@ Perl 6 supports this concept through C<contend> blocks.
 
 These sections are guaranteed to either be completed totally (when the Code
 block is exited), or have their state reverted to the state at the start of
-the Code block (with the L<defer> statement).
+the Code block (with the L<#defer> statement).
 
 (EM: maybe point out if / how old style locks can be "simulated", for those
 needing a migration path?)
@@ -369,7 +369,7 @@ inside that scope is guaranteed not to be interrupted in any way.
 
 The start of a block marked C<contend> also becomes a I<checkpoint> to
 which execution can return (in exactly the same state) if a problem occurs
-(a.k.a. a L<defer> is done) inside the scope of the Code block.
+(a.k.a. a L<#defer> is done) inside the scope of the Code block.
 
 =head4 defer
 
@@ -672,17 +672,17 @@ Live in userland for the time being.
 
 =begin item1 
 
-L<S16#IE<sol>O Considerations>
+L<doc:S16#IE<sol>O Considerations>
 
 =end item1
 =begin item1 
 
-L<S16#File Descriptors>
+L<doc:S16#File Descriptors>
 
 =end item1
 =begin item1 
 
-L<S16#Sockets>
+L<doc:S16#Sockets>
 
 =end item1
 =head1 Additions
