@@ -1,11 +1,8 @@
-=encoding utf8
-
-=head1 TITLE
-
+=begin pod
+=TITLE
 DRAFT: Synopsis 32: Setting Library - Numeric
 
-=head1 AUTHORS
-
+=AUTHORS
     Rod Adams <rod@rodadams.net>
     Larry Wall <larry@wall.org>
     Aaron Sherman <ajs@ajs.com>
@@ -15,8 +12,7 @@ DRAFT: Synopsis 32: Setting Library - Numeric
     Tim Nelson <wayland@wayland.id.au>
     Stefan O'Rear <stefanor@cox.net>
 
-=head1 VERSION
-
+=VERSION
     Created: 19 Mar 2009 extracted from S29-functions.pod
 
     Last Modified: 28 Dec 2013
@@ -37,22 +33,20 @@ XXX So where are Bit, Int, and Rat
 
 =head2 Bool
 
-=over 4
-
-=item succ
-
+=begin item1 
+succ
  multi method succ ( Bool $b: --> Bool ) is export
 
 Returns C<Bool::True>.
 
-=item pred
-
+=end item1
+=begin item1 
+pred
  multi method pred ( Bool $b: --> Bool ) is export
 
 Returns C<Bool::False>.
 
-=back
-
+=end item1
 =head2 Numeric
 
 C<Numeric> is a role for everything that's a scalar number. So C<Num>, C<Int>,
@@ -76,89 +70,98 @@ mathematical functions.
     constant e  is export = 2.71828_18284_59045_23536_02874_71352_66249;
     constant i  is export = 1i;
 
-=over
-
-=item Real
-
+=begin item1 
+Real
  multi method Real ( --> Real )
 
 If this C<Numeric> is equivalent to a C<Real>, return that C<Real>.  
 (For instance, if this number is a C<Complex> with a zero imaginary part.)  
 Fail with C<X::Numeric::Real> otherwise.
 
-=item Int
-
+=end item1
+=begin item1 
+Int
  multi method Int ( --> Int )
 
 If this C<Numeric> is equivalent to a C<Real>, return the equivalent of
 calling C<truncate> on that C<Real> to get an C<Int>. Fail with
 C<X::Numeric::Real> otherwise.
 
-=item Rat
-
+=end item1
+=begin item1 
+Rat
  multi method Rat ( Real $epsilon = 1.0e-6 --> Rat )
 
 If this C<Numeric> is equivalent to a C<Real>, return a C<Rat> which is
 within C<$epsilon> of that C<Real>'s value. Fail with C<X::Numeric::Real>
 otherwise.
 
-=item Num
-
+=end item1
+=begin item1 
+Num
  multi method Num ( --> Num )
 
 If this C<Numeric> is equivalent to a C<Real>, return that C<Real> as a C<Num>
 as accurately as is possible. Fail with C<X::Numeric::Real> otherwise.
 
-=item succ
-
+=end item1
+=begin item1 
+succ
  multi method succ ( Numeric $x: --> Numeric ) is export
  multi method succ ( Int $x: --> Int     )     is export
 
 Returns the successor of C<$x>. This method is used by C<< prefix:<++> >> and
 C<< postfix:<++> >> to increment the value in a container.
 
-=item pred
-
+=end item1
+=begin item1 
+pred
  multi method pred ( Numeric $x: --> Numeric ) is export
  multi method pred ( Int $x: --> Int     ) is export
 
 Returns the predecessor of C<$x>. This method is used by C<< prefix:<--> >>
 and C<< postfix:<--> >> to decrement the value in a container.
 
-=item abs
-
+=end item1
+=begin item1 
+abs
  multi method abs ( Numeric $x: --> Numeric ) is export
 
 Absolute Value.
 
-=item conj
-
+=end item1
+=begin item1 
+conj
  multi method conj ( Numeric $x: --> Numeric ) is export
 
 The complex conjugate of the value. For non-complex types, returns self.
 
-=item exp
-
+=end item1
+=begin item1 
+exp
  multi method exp ( Numeric $exponent: Numeric :$base = Num::e --> Numeric ) is export
 
 Performs similar to C<$base ** $exponent>. C<$base> defaults to the
 constant I<e>.
 
-=item log
-
+=end item1
+=begin item1 
+log
  multi method log ( Numeric $x: Numeric $base = Num::e --> Numeric ) is export
 
 Logarithm of base C<$base>, default Natural. Calling with C<$x == 0> is an
 error.
 
-=item log10
-
+=end item1
+=begin item1 
+log10
  multi method log10 (Numeric $x: --> Numeric ) is export
 
 A base C<10> logarithm, otherwise identical to C<log>.
 
-=item rand
-
+=end item1
+=begin item1 
+rand
  sub term:<rand> ( --> Num )
 
 Pseudo random number in range C<< 0 ..^ 1 >>.  That is, C<0> is
@@ -167,14 +170,16 @@ unary C<rand> function in Perl 6, but there is a C<rand> method.
 For picking a random integer you probably want
 to use something like C<(1..6).pick> instead.
 
-=item sqrt
-
+=end item1
+=begin item1 
+sqrt
  multi method sqrt ( Numeric $x: --> Numeric ) is export
 
 Returns the principal square root of the parameter.
 
-=item roots
-
+=end item1
+=begin item1 
+roots
   method roots (Numeric $x: Int $n ) is export
 
 Returns a list of all C<$n>th (complex) roots of C<$x>. Returns C<NaN> if
@@ -182,8 +187,9 @@ C<< $n <= 0 >>, itself if C<$n == 0>,  and is free to return a single C<NaN>
 if C<$x> is C<NaN> or C<Inf>, or in case of complex numbers if one of the
 components is.
 
-=item i
-
+=end item1
+=begin item1 
+i
  multi postfix:<i> ( Numeric $x --> Complex )
 
 Returns a complex number representing the parameter multiplied by the imaginary
@@ -193,20 +199,23 @@ with the postfix, it's necessary to use a backslash or parentheses:
     $land\i
     ($land)i
 
-=item to-radians
-
+=end item1
+=begin item1 
+to-radians
  multi method to-radians ( Numeric $x: TrigBase $base --> Numeric ) is export
 
 Convert from C<$base> to radians.
 
-=item from-radians
-
+=end item1
+=begin item1 
+from-radians
  multi method from-radians ( Numeric $x: TrigBase $base --> Numeric ) is export
 
 Convert from radians to C<$base>.
 
-=item narrow
-
+=end item1
+=begin item1 
+narrow
  multi method narrow ( Numeric $x: ) is export
 
 Attempts to coerce the number to the narrowest type that can represent it accurately;
@@ -215,9 +224,7 @@ an integral C<Num> may likewise turn into an C<Int>.  (Neither C<Num> nor C<Rat>
 to each other, however.)  C<Complex> with a 0 imaginary part may narrow to a C<Real> type.
 Conjecturally, wide native types could narrow to narrower native types.
 
-=back
-
-
+=end item1
 =head2 Real
 
     role Real does Numeric;
@@ -236,23 +243,23 @@ Perl 6 types and calling C<Bridge> on them.  This then makes the default C<Real
 and operators all work with your C<Real> type.  While the name of this method may changed,
 it is hoped that something like this will remain in the spec.
 
-=over
-
-=item Complex
-
+=begin item1 
+Complex
  multi method Complex ( --> Complex )
 
 Returns a C<Complex> whose real part is this C<Real> and whose imaginary part is 0.
 
-=item Str
-
+=end item1
+=begin item1 
+Str
  multi method Str ( --> Str )
 
 Returns the C<Real> as a C<Str>.  All built-in C<Real> types format it as a decimal 
 number, so for example, the C<Rat> C<5/4> is returned as C<"1.2">.
 
-=item base
-
+=end item1
+=begin item1 
+base
   multi method base(Cool $base as Int)
 
 Returns a C<Str> representing the invocant in base C<$base>. Fails if C<$base>
@@ -261,20 +268,23 @@ is smaller than C<2> or larger than C<36>.
 For bases above ten, the digit repertoire is enhanced with uppercase latin
 characters starting from C<A>.
 
-=item floor
-
+=end item1
+=begin item1 
+floor
  multi method floor ( Real $x: --> Int ) is export
 
 Returns the highest integer not greater than C<$x>.
 
-=item ceiling
-
+=end item1
+=begin item1 
+ceiling
  multi method ceiling ( Real $x: --> Int ) is export
 
 Returns the lowest integer not less than C<$x>.
 
-=item round
-
+=end item1
+=begin item1 
+round
  multi method round ( Real $x: $scale = 1 --> Real ) is export
 
 With no arguments, returns the nearest integer to C<$x>.  If C<$scale>
@@ -284,8 +294,9 @@ is given, rounds $x to the nearest multiple of C<$scale>.  The algorithm is:
 
 (Other rounding algorithms will be given extended names beginning with "round".)
 
-=item truncate
-
+=end item1
+=begin item1 
+truncate
  multi method truncate ( Real $x: --> Int ) is export
 
 Returns the closest integer to C<$x> whose absolute value is not greater
@@ -296,15 +307,17 @@ implicit integer conversions.
 You may also truncate using explicit integer casts, either C<Int()> for
 an arbitrarily large integers, or C<int()> for native integers.
 
-=item sign
-
+=end item1
+=begin item1 
+sign
  multi method sign ( Real $x: --> Int ) is export
 
 Returns 1 when C<$x> is greater than 0, -1 when it is less than 0, 0 when it
 is equal to 0, or undefined when the value passed is undefined.
 
-=item srand
-
+=end item1
+=begin item1 
+srand
  multi srand ( Real $seed = default_seed_algorithm())
 
 Seed the generator C<rand> uses. C<$seed> defaults to some combination
@@ -313,29 +326,30 @@ Note that you get one C<srand()> for free when you start a Perl program, so
 you I<must> call C<srand()> yourself if you wish to specify a deterministic seed
 (or if you wish to be differently nondeterministic).
 
-=item rand
-
+=end item1
+=begin item1 
+rand
  multi method rand (Real $x: --> Num ) is export
 
 Pseudo random number in range C<< 0 ..^ $x >>.  That is, C<0> is
 theoretically possible, while C<$x> is not.  For picking a random integer
 you probably want to use something like C<(1..6).pick> instead.
 
-=item cis
-
+=end item1
+=begin item1 
+cis
     multi method cis (Real $angle: --> Complex ) is export
 
 Returns 1.unpolar($angle)
 
-=item unpolar
-
+=end item1
+=begin item1 
+unpolar
     multi method unpolar (Real $mag: Real $angle --> Complex ) is export
 
 Returns a complex number specified in polar coordinates.  Angle is in radians.
 
-
-=back
-
+=end item1
 =head2 Num
 
     class Num does Real;
@@ -354,50 +368,54 @@ necessary) if the imaginary part is 0, and fails otherwise. Comparison
 between a C<Real> number and a C<Complex> must be smart enough not to coerce
 the C<Complex> to a real number blindly.
 
-=over 4
-
-=item new
-
+=begin item1 
+new
     multi method new(Real $re, Real $im --> Complex )
 
 Constructs a C<Complex> number from real and imaginary part. This is the
 method form of C<$re+$im\i>.  (But use the C<< <1+2i> >> form for literals,
 so that you don't have to worry about precedence or rely on constant folding.)
 
-=item polar
-
+=end item1
+=begin item1 
+polar
     multi method polar (Complex $nim: --> Seq ) is export
 
 Returns (magnitude, angle) corresponding to the complex number.
 The magnitude is non-negative, and the angle in the range C<-π ..^ π>.
 
-=item re
-
+=end item1
+=begin item1 
+re
     multi method re( --> Real )
 
 Returns the real part of the complex number.
 
-=item im
-
+=end item1
+=begin item1 
+im
     multi method im( --> Real )
 
 Returns the imaginary part of a complex number.
 
-=item conj
-
+=end item1
+=begin item1 
+conj
     multi method conj(Complex $c --> Complex )
 
 Returns C<< ($c.re - $c.im\i) >>, the complex conjugate.
 
-=item gist
-
+=end item1
+=begin item1 
+gist
     multi method gist( --> Str )
 
 Returns a string representation of the form "C<1+2i>", without
 internal spaces.  (C<Str> coercion also returns this.)
 
-=item perl
-
+=end item1
+=begin item1 
+perl
     multi method perl( --> Str )
 
 Returns a string representation corresponding to the unambiguous
@@ -405,22 +423,25 @@ C<val()>-based representation of complex literals, of the form "C<< <1+2i> >>",
 without internal spaces, and including the angles that keep the C<+>
 from being treated as a normal addition operator.
 
-=item floor
-
+=end item1
+=begin item1 
+floor
  multi method floor ( Complex $c: --> Complex ) is export
 
 Returns C<$c.re.floor + $c.im.floor>.  That is, each of the real and imaginary parts
 is rounded to the highest integer not greater that the value of that part.
 
-=item ceiling
-
+=end item1
+=begin item1 
+ceiling
  multi method ceiling ( Complex $c: --> Complex ) is export
 
 Returns C<$c.re.ceiling + $c.im.ceiling>.  That is, each of the real and imaginary
 parts is rounded to the lowest integer not less that the value of that part.
 
-=item round
-
+=end item1
+=begin item1 
+round
  multi method round ( Complex $c: $scale = 1 --> Complex ) is export
 
 With no arguments, rounds both the real and imaginary parts to the nearest
@@ -428,15 +449,15 @@ integer and returns a new Complex number.  If C<$scale> is given, rounds both
 parts of $c to the nearest multiple of C<$scale>.  Uses the same algorithm as
 Real.round on each part of the number.
 
-=item truncate
-
+=end item1
+=begin item1 
+truncate
  multi method truncate ( Complex $c: --> Complex ) is export
 
 Removes the fractional part of both the real and imaginary parts of the number,
 using Real.truncate, and returns the result as a new Complex.
 
-=back
-
+=end item1
 =head2 Trigonometric functions
 
 The following are also defined in C<Numeric>.  Most trig functions are
@@ -451,10 +472,8 @@ from radians.  Angle specifications are given in terms of enum TrigBase:
     Circles  => 2*pi
  );
 
-=over 4
-
-=item I<Standard Trig Functions>
-
+=begin item1 
+I<Standard Trig Functions>
  Numeric multi method func ( Numeric  $x ) is export
 
 where I<func> is one of:
@@ -466,8 +485,9 @@ Performs the various trigonometric functions.  The argument is always expressed
 in radians.  The return value from C<CORE::> versions of these functions is
 always C<Num>, unless domain limits force it to be C<Complex> instead.
 
-=item I<Converting Angles>
-
+=end item1
+=begin item1 
+I<Converting Angles>
 If you prefer to express angles in units other than radians, you have two
 choices.  First, you can convert the angles into radians, by multiplication:
 
@@ -500,30 +520,29 @@ highest scope where it makes sense.
 The C<$?TRIGBASE> constant is not used by the trig operators themselves.  It
 exists only to allow modules to be C<trigbase> aware.
 
-=item atan2
-
+=end item1
+=begin item1 
+atan2
  multi method atan2 ( Real $y: Real $x = 1, TrigBase $base = CALLER::<$?TRIGBASE> --> Real )
  multi atan2 ( Real $y, Real $x = 1, TrigBase $base = CALLER::<$?TRIGBASE> --> Real )
 
 This second form of C<atan> computes the arctangent of C<$y/$x>, and takes
 the quadrant into account. Otherwise behaves as other trigonometric functions.
 
-=back
-
+=end item1
 =head2 Int
 
 An C<Int> is an immutable, integral number of arbitrary size.
 
-=over
-
-=item expmod
-
+=begin item1 
+expmod
  multi method expmod ( Int $x: Int $y, Int $mod --> Int ) is export
 
 Returns C<$x> raised to the C<$y> power within modulus C<$mod>.
 
-=item is-prime
-
+=end item1
+=begin item1 
+is-prime
  multi method is-prime ( Int $x: Int $tries = 100) is export
 
 Returns True if C<$x> is known to be a prime, or is likely to be a
@@ -533,8 +552,9 @@ if such is necessary.)
 
 Returns False if C<$x> is known not to be a prime.
 
-=item lsb
-
+=end item1
+=begin item1 
+lsb
  multi method lsb ( Int $x: ) is export
 
 Returns the least significant bit position containing a 1 bit, counting
@@ -547,8 +567,9 @@ a lowest bit set somewhere, if only the sign bit.  Hence, a -32768
 returns an lsb of 15 regardless of whether it's stored in an C<int16>
 or an C<Int>.
 
-=item msb
-
+=end item1
+=begin item1 
+msb
  multi method msb ( Int $x: ) is export
 
 Returns the most significant bit position containing a 1 bit, that is,
@@ -565,8 +586,7 @@ So C<msb(-1)> returns 0, C<msb(-2)> returns 1, and C<msb(-32768)>
 returns 15, just as if we'd converted it from C<int16> to C<uint16>
 and examined that for its top bit.
 
-=back
-
+=end item1
 =head2 Rat
 
     class Rat does Real;
@@ -582,10 +602,8 @@ determines that normalizing repeatedly is detrimental to performance,
 such as when adding a column of numbers that all have an internal
 denominator of 100.)
 
-=over
-
-=item new
-
+=begin item1 
+new
     multi method new(Int $num, Int $denom)
 
 Constructs a C<Rat> object from the numerator and denominator.
@@ -596,26 +614,30 @@ rely on precedence.  You may use the C<val()>-based C<< <3/5> >> form,
 or you can simply write decimal numbers with a decimal point, since
 C<12.34> is essentially identical to C<< <1234/100> >> as a literal.
 
-=item nude
-
+=end item1
+=begin item1 
+nude
     multi method nude( --> Parcel[Int] )
 
 Returns a C<Parcel> of numerator and denominator.
 
-=item denominator
-
+=end item1
+=begin item1 
+denominator
     multi method denominator( --> Int )
 
 Returns the denominator.
 
-=item numerator
-
+=end item1
+=begin item1 
+numerator
     multi method numerator( --> Int )
 
 Returns the numerator.
 
-=item gist
-
+=end item1
+=begin item1 
+gist
     multi method gist( --> Str )
 
 Returns a string representation of the number in decimal.  If the
@@ -628,8 +650,9 @@ The final digit of the fractional part is rounded.
 
 C<Str> coercion is identical to C<gist>.
 
-=item perl
-
+=end item1
+=begin item1 
+perl
     multi method perl( --> Str )
 
 Returns a string representation corresponding to the unambiguous
@@ -639,12 +662,11 @@ the form "C<< <3/5> >>", without internal spaces, and including the
 angles that keep the C</> from being treated as a normal division 
 operator.
 
-=back
-
-
+=end item1
 =head1 Additions
 
 Please post errors and feedback to perl6-language.  If you are making
 a general laundry list, please separate messages by topic.
 
-=for vim:set expandtab sw=4:
+=comment vim:set expandtab sw=4:
+=end pod
