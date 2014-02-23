@@ -156,7 +156,7 @@ samecase
  multi method samecase ( Str $string: Str $pattern --> Str ) is export
 
 Has the effect of making the case of the string match the case pattern in C<$pattern>.
-(Used by s:ii/// internally, see L<S05>.)
+(Used by s:ii/// internally, see L<doc:S05>.)
 
 =end item1
 =begin item1 
@@ -164,7 +164,7 @@ samemark
  multi method samemark ( Str $string: Str $pattern --> Str ) is export
 
 Has the effect of making the case of the string match the marking pattern in C<$pattern>.
-(Used by s:mm/// internally, see L<S05>.)
+(Used by s:mm/// internally, see L<doc:S05>.)
 
 =end item1
 =begin item1 
@@ -527,7 +527,7 @@ unpack
 match
  method match(Str $self: Regex $search --> Match );
 
-See L<S05#Substitution>
+See L<doc:S05#Substitution>
 
 =end item1
 =begin item1 
