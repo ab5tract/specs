@@ -1,11 +1,8 @@
-=encoding utf8
-
-=head1 TITLE
-
+=begin pod
+=TITLE
 Synopsis 32: Setting Library - Temporal
 
-=head1 AUTHORS
-
+=AUTHORS
     Carl Mäsak <cmasak@gmail.com>
     Martin Berends <mberends@autoexec.demon.nl>
     Moritz Lenz <moritz@faui2k3.org>
@@ -13,8 +10,7 @@ Synopsis 32: Setting Library - Temporal
     Kodi Arfer
     (and others named in FOOTNOTE at bottom)
 
-=head1 VERSION
-
+=VERSION
     Created: 19 Mar 2009
 
     Last Modified: 24 Jan 2013
@@ -283,3 +279,5 @@ indirect contribution made by the previous authors:
     Daniel Ruoso <daniel@ruoso.com>
     Dave Rolsky <autarch@urth.org>
     Matthew (lue) <rnddim@gmail.com>
+
+=end pod
