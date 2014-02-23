@@ -1,11 +1,8 @@
-=encoding utf8
-
-=head1 TITLE
-
+=begin pod
+=TITLE
 DRAFT: Synopsis 32: Setting Library - Exceptions
 
-=head1 AUTHORS
-
+=AUTHORS
     Moritz Lenz <moritz@faui2k.org>
 
 Authors of previous versions of this document:
@@ -13,8 +10,7 @@ Authors of previous versions of this document:
     Tim Nelson <wayland@wayland.id.au>
     Larry Wall <larry@wall.org>
 
-=head1 VERSION
-
+=VERSION
     Created: 26 Feb 2009
 
     Last Modified: 28 Dec 2013
@@ -72,7 +68,6 @@ system (failed IO, system calls, fork, memory allocation).
     role X::IO does X::OS { }
 
 For IO related errors
-
 
 =head3 X::IO::Rename
 
@@ -205,7 +200,6 @@ So C<&die> could be written as
         X::AdHoc.new(:$payload).throw;
     }
 
-
 =head2 Compile-time errors
 
 =head3 X::Comp
@@ -311,7 +305,6 @@ example on mandatory parameters.
         }
     }
 
-
 =head3 X::Parameter::Placeholder
 
 Thrown when the user tries to use a placeholder as a formal parameter.
@@ -399,7 +392,6 @@ fully qualifying the class.
             "Private method call to $.method must be fully qualified with the package containing the method";
         }
     }
-
 
 =head3 X::Bind::NativeType
 
@@ -522,7 +514,6 @@ Thrown when trying to inherit from a type that does not support inheritance
         }
     }
 
-
 =head2 Syntax Errors
 
 Note that the distinction between general compile-time errors and syntax
@@ -547,7 +538,6 @@ Thrown when obsolete (mostly Perl 5) syntax is detected.
             "Unsupported use of $.old; $.when please use $.replacement";
         }
     }
-
 
 =head3 X::Syntax::Name::Null
 
@@ -807,7 +797,7 @@ Common role for all Pod-related errors.
 
 =head2 Dispatch errors
 
-=head3 X::Method::NotFound 
+=head3 X::Method::NotFound
 
 Thrown when the user tries to call a method that isn't there, for example
 C<1.foo>.
@@ -1101,7 +1091,7 @@ cannot be used for composition (roles and enums are generally OK).
         }
     }
 
-=head2 X::TypeCheck 
+=head2 X::TypeCheck
 
 Thrown when a type check fails.
 
@@ -1336,3 +1326,5 @@ it is caught by a default handler in the setting.
 This handler calls the C<.gist> method on the exception, prints the result,
 and terminates the program. The exit code is determined as
 C<$exception.?exit-code // 1>.
+
+=end pod
