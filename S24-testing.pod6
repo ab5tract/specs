@@ -97,7 +97,7 @@ All of the following functions are exported by default:
     eval_dies_ok(Str $code, $desc?)
 
 These functions work roughly the same way as the functions of the same
-name from Perl 5's L<Test::More> and L<Test::Exception> modules.
+name from Perl 5's L<doc:Test::More> and L<doc:Test::Exception> modules.
 
 TODO: more precise explanation
 
