@@ -262,8 +262,9 @@ terminator:
     @yy := [ while yin() { yang() } ];       # okay within outer [...]
     while yin() { yang() } ==> sort          # okay, ==> separates statements
 
-=head1 Conditional statementsX<|if>X<|unless>
-
+=head1 Conditional statements
+X<|if>
+X<|unless>
 
 The C<if> and C<unless> statements work much as they do in
 Perl 5.  However, you may omit the parentheses on the conditional:
@@ -381,8 +382,9 @@ context.
 For finer-grained control of which iterations return values, use
 C<gather> and C<take>.
 
-=head2 The C<while> and C<until> statementsX<|while>X<|until>
-
+=head2 The C<while> and C<until> statements
+X<|while>
+X<|until>
 
 The C<while> and C<until> statements work as in Perl 5, except that you
 may leave out the parentheses around the conditional:
@@ -407,8 +409,12 @@ value and still remain themselves.  In general, for most iterated
 solutions you should consider using a C<for> loop instead (see below).
 In particular, we now generally use C<for> to iterate filehandles.
 
-=head2 The C<repeat> statementX<|repeat>X<|while>X<|next>X<|last>X<|redo>
-
+=head2 The C<repeat> statement
+X<|repeat>
+X<|while>
+X<|next>
+X<|last>
+X<|redo>
 
 Unlike in Perl 5, applying a statement modifier to a C<do> block is
 specifically disallowed:
@@ -475,8 +481,8 @@ or
 Since the loop executes once before evaluating the condition, the
 bound parameter will be undefined that first time through the loop.
 
-=head2 The general loop statementX<|loop>
-
+=head2 The general loop statement
+X<|loop>
 
 The C<loop> statement is the C-style C<for> loop in disguise:
 
@@ -494,8 +500,13 @@ is equivalent to the Cish idiom:
 
     loop (;;) {...}
 
-=head2 The C<for> statementX<|for>X<|zip>X<|Z>X<|STDIN>X<|$*IN>X<|lines>
-
+=head2 The C<for> statement
+X<|for>
+X<|zip>
+X<|Z>
+X<|STDIN>
+X<|$*IN>
+X<|lines>
 
 There is no C<foreach> statement any more. It's always spelled C<for>
 in Perl 6, so it always takes a list as an argument:
@@ -775,8 +786,9 @@ But as always, you must use them all:
     # Syntax error: Too many positional parameters passed
     { say $^x + $^x }(5,6);
 
-=head2 The C<gather> statement prefixX<|gather>X<|take>
-
+=head2 The C<gather> statement prefix
+X<|gather>
+X<|take>
 
 A variant of C<do> is C<gather>.  Like C<do>, it is followed by a statement
 or block, and executes it once.  Unlike C<do>, it evaluates the statement or
@@ -875,8 +887,8 @@ exceptions, or dynamic variables, or pigeons carrying clay tablets.
 The choice any particular implementation makes is specifically I<not> part
 of the definition of Perl 6, and you should not rely on it in portable code.
 
-=head2 Other C<do>-like formsX<|do>
-
+=head2 Other C<do>-like forms
+X<|do>
 
 Other similar forms, where a keyword is followed by code to be controlled by it, may also take bare statements,
 including C<try>, C<once>, C<quietly>, C<contend>, C<start>, C<lazy>, and C<sink>.  These constructs
@@ -912,8 +924,12 @@ is parsed as:
 
     do { do { do { foo(); }}}; bar(43);
 
-=head1 Switch statementsX<|given>X<|when>X<|switch>X<|case>X<|default>
-
+=head1 Switch statements
+X<|given>
+X<|when>
+X<|switch>
+X<|case>
+X<|default>
 
 A switch statement is a means of topicalizing, so the switch keyword
 is the English topicalizer, C<given>.  The keyword for individual
@@ -1026,8 +1042,8 @@ This is particularly useful for list comprehensions:
 
     @lucky = ($_ when /7/ for 1..100);
 
-=head1 Exception handlersX<|CATCH>
-
+=head1 Exception handlers
+X<|CATCH>
 
 Unlike many other languages, Perl 6 specifies exception handlers by
 placing a C<CATCH> block I<within> that block that is having its exceptions
@@ -1279,8 +1295,8 @@ will be the value of the failure after it has resumed.  Otherwise the
 value will be the null string.  Numeric and string conversions
 use these lazy warnings to allow (but not require) failsoft semantics.
 
-=head1 The goto statementX<|goto>
-
+=head1 The goto statement
+X<|goto>
 
 In addition to C<next>, C<last>, and C<redo>, Perl 6 also supports
 C<goto>.  As with ordinary loop controls, the label is searched for

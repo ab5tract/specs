@@ -2076,25 +2076,25 @@ calculating word properties of the preceding character.  See TR18 1.4.)
 These are some of the predefined subrules for any grammar or regex:
 
 =begin item1 
-identX<|ident>X<|< <ident> >>
+identX<|ident>X<|<ident>>
 
 Match an identifier.
 
 =end item1
 =begin item1 
-upperX<|upper>X<|< <upper> >>
+upperX<|upper>X<|<upper>>
 
 Match a single uppercase character.
 
 =end item1
 =begin item1 
-lowerX<|lower>X<|< <lower> >>
+lowerX<|lower>X<|<lower>>
 
 Match a single lowercase character.
 
 =end item1
 =begin item1 
-alphaX<|alpha>X<|< <alpha> >>
+alphaX<|alpha>X<|<alpha>>
 
 Match a single alphabetic character, or an underscore.
 
@@ -2103,31 +2103,31 @@ C<< <+alpha-[_]> >>.
 
 =end item1
 =begin item1 
-digitX<|digit>X<|< <digit> >>
+digitX<|digit>X<|<digit>>
 
 Match a single digit.
 
 =end item1
 =begin item1 
-xdigitX<|xdigit>X<|< <xdigit> >>
+xdigitX<|xdigit>X<|<xdigit>>
 
 Match a single hexadecimal digit.
 
 =end item1
 =begin item1 
-printX<|print>X<|< <print> >>
+printX<|print>X<|<print>>
 
 Match a single printable character.
 
 =end item1
 =begin item1 
-graphX<|graph>X<|< <graph> >>
+graphX<|graph>X<|<graph>>
 
 Match a single "graphical" character.
 
 =end item1
 =begin item1 
-cntrlX<|cntrl>X<|< <cntrl> >>
+cntrlX<|cntrl>X<|<cntrl>>
 
 Match a single "control" character. A control character is usually one that
 doesn't produce output as such but instead controls the terminal somehow: for
@@ -2138,20 +2138,20 @@ of 127 (DEL).
 
 =end item1
 =begin item1 
-punctX<|punct>X<|< <punct> >>
+punctX<|punct>X<|<punct>>
 
 Match a single punctuation character (that is, any character from the
 Unicode General Category "Punctuation").
 
 =end item1
 =begin item1 
-alnumX<|alnum>X<|< <alnum> >>
+alnumX<|alnum>X<|<alnum>>
 
 Match a single alphanumeric character. This is equivalent to <+alpha +digit> .
 
 =end item1
 =begin item1 
-wbX<|wb>X<|< <wb> >>
+wbX<|wb>X<|<wb>>
 
 Returns a zero-width match that is true at word boundaries.  A word
 boundary is a spot with a "\w" on one side and a "\W" on the other
@@ -2160,13 +2160,13 @@ as matching "\W".
 
 =end item1
 =begin item1 
-wwX<|ww>X<|< <ww> >>
+wwX<|ww>X<|<ww>>
 
 Matches between two word characters (zero-width match).
 
 =end item1
 =begin item1 
-wsX<|ws>X<|< <ws> >>
+wsX<|ws>X<|<ws>>
 
 Matches required whitespace between two word characters, optional
 whitespace otherwise.  This is roughly equivalent to  C<< <!ww> \s* >>
@@ -2174,20 +2174,20 @@ whitespace otherwise.  This is roughly equivalent to  C<< <!ww> \s* >>
 
 =end item1
 =begin item1 
-spaceX<|space>X<|< <space> >>
+spaceX<|space>X<|<space>>
 
 Match a single whitespace character (same as C< \s > ).
 
 =end item1
 =begin item1 
-blankX<|blank>X<|< <blank> >>
+blankX<|blank>X<|<blank>>
 
 Match a single "blank" character -- in most locales, this corresponds
 to space and tab.
 
 =end item1
 =begin item1 
-before C<pattern>X<|before>X<|< <before> >>
+before C<pattern>X<|before>X<|<before>>
 
 Perform lookahead -- i.e., check if we're at a position where
 C<pattern> matches.  Returns a zero-width C<Match> object on
@@ -2195,7 +2195,7 @@ success.
 
 =end item1
 =begin item1 
-after C<pattern>X<|after>X<|< <after> >>
+after C<pattern>X<|after>X<|<after>>
 
 Perform lookbehind -- i.e., check if the string before the
 current position matches <pattern> (anchored at the end).
@@ -2203,13 +2203,13 @@ Returns a zero-width C<Match> object on success.
 
 =end item1
 =begin item1 
-<?>X<|?>X<|< <?> >>
+<?>X<|?>X<|<?>>
 
 Match a null string, viz., always returns true
 
 =end item1
 =begin item1 
-<!>X<|!>X<|< <!> >>
+<!>X<|!>X<|<!>>
 
 Inverse of <?>, viz., always returns false.
 

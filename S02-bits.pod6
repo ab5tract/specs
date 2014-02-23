@@ -4753,8 +4753,8 @@ insofar as iterators will have to pass on the policy to subiterators.
 The C<< => >> operator now constructs C<Pair> objects rather than merely
 functioning as a comma.  Both sides are in item context.
 
-=head2 The C<< .. >> operatorX<|..>
-
+=head2 The C<< .. >> operator
+X<|..>
 
 The C<< .. >> operator now constructs a C<Range> object rather than merely
 functioning as an operator.  Both sides are in item context.  Semantically,
