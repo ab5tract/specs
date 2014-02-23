@@ -1,5 +1,4 @@
 =begin pod
-=encoding utf8
 =TITLE
 Synopsis 1: Overview
 
