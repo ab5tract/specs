@@ -84,7 +84,7 @@ processed line-by-line, but IO will be in terms of C<Buf> rather
 than C<Str> types.
 
 For a discussion of the read/write/append modes (:r, :w, :a), see
-L</IO::Handle/open> under IO::Handle.
+L<defn:open> under IO::Handle.
 
 =end item1
 =begin item1 
@@ -100,7 +100,7 @@ returned.
 The return value is a list of C<IO::Path> objects.  Because of this, you may
 want use the C<basename> method on the results to get the just the file name,
 without its full path.  If dir() fails, it returns an
-L<X::IO::Dir|S32::Exception#X::IO::Dir> failure.
+L<X::IO::Dir|doc:S32::Exception#X::IO::Dir> failure.
 
 =end item1
 =begin item1 
@@ -266,7 +266,7 @@ unlink
     sub unlink(Cool:D $path)
 
 Unlinks an ordinary file, link, or symbolic link from disk -- that is, it is
-deleted.  Returns True on success; otherwise returns an L<S32::Exception#X::IO::Unlink>
+deleted.  Returns True on success; otherwise returns an L<doc:S32::Exception#X::IO::Unlink>
 failure.
 
 =end item1
@@ -275,7 +275,7 @@ rmdir
     sub rmdir(Cool:D $directory)
 
 Removes the directory given from disk.  Returns True on success, or an 
-L<X::IO::Rmdir|S32::Exception#X::IO::Rmdir> failure.
+L<X::IO::Rmdir|doc:S32::Exception#X::IO::Rmdir> failure.
 
 =end item1
 =begin item1 
@@ -283,7 +283,7 @@ mkdir
     sub mkdir(Cool:D $directory)
 
 Makes (creates) the directory represented by the IO::Path. Returns True on success,
-or an L<X::IO::Mkdir|S32::Exception#X::IO::Mkdir> failure.
+or an L<X::IO::Mkdir|doc:S32::Exception#X::IO::Mkdir> failure.
 
 =end item1
 =head1 IO Types
@@ -399,7 +399,7 @@ printfX<|printf>
     method printf (Str $fmt, *@LIST --> Bool)
     multi printf (IO::Handle:D: Str $fmt, *@LIST --> Bool)
 
-Output through C<Str.sprintf>. See L<S32::Str> for details.
+Output through C<Str.sprintf>. See L<doc:S32::Str> for details.
 
 =end item1
 =begin item1 
@@ -815,7 +815,7 @@ on error.
 =begin item1 
 mkdir
 Makes (creates) the directory represented by the IO::Path. Returns True on success.
-The method will C<fail> with L<X::IO::Mkdir|S32::Exception#X::IO::Mkdir> if it 
+The method will C<fail> with L<X::IO::Mkdir|doc:S32::Exception#X::IO::Mkdir> if it 
 can not create the directory, if file or directory already exists or if the parent
 directory of the path does not exist.
 
@@ -1040,7 +1040,7 @@ from the base path to the destination path:
 
 If C<$base> is not present or '', then C<$*CWD> is used. If C<$base> is
 relative, then it is converted to absolute form using
-L</IO::Spec/rel2abs>. This means that it is taken to be relative to
+L<defn:rel2abs>. This means that it is taken to be relative to
 C<$*CWD>.
 
 On systems with the concept of volume, if C<$path> and C<$base> appear to be
@@ -1051,7 +1051,7 @@ On systems that have a grammar that indicates filenames, this ignores the
 C<$base> filename as well. Otherwise all path components are assumed to be
 directories.
 
-If C<$path> is relative, it is converted to absolute form using L</IO::Spec/rel2abs>.
+If C<$path> is relative, it is converted to absolute form using L<defn:rel2abs>.
 This means that it is taken to be relative to C<$*CWD>.
 
 No checks against the filesystem are made.
@@ -1137,7 +1137,7 @@ and I</tmp>.
 =begin item1 
 no-parent-or-current-test
 Returns a test as to whether a given path is identical to the parent or the
-current directory.  On Linux, this is simply C<none('.', '..')>.  The L</Functions/dir>
+current directory.  On Linux, this is simply C<none('.', '..')>.  The L<defn:dir>
 function automatically removes these for you in directory listings, so under
 normal circumstances you shouldn't need to use it directly.
 
