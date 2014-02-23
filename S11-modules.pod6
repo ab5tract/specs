@@ -1,17 +1,12 @@
-
-=encoding utf8
-
-=head1 TITLE
-
+=begin pod
+=TITLE
 Synopsis 11: Units and Modules
 
-=head1 AUTHORS
-
+=AUTHORS
     Larry Wall <larry@wall.org>
     Elizabeth Mattijsen <liz@dijkmat.nl>
 
-=head1 VERSION
-
+=VERSION
     Created: 27 Oct 2004
 
     Last Modified: 28 Dec 2013
@@ -70,10 +65,8 @@ meta-information that is needed to add a compunit to a given Perl 6
 installation (for instance with L<CompUnitRepo::Local::Installation>, as well
 as being able to load the compunit at a later time.  These are:
 
-=over 4
-
-=item =NAME
-
+=begin item1 
+=NAME
 This is the (long) name of the compunit, which with the compunit can be found
 with C<use>, C<need> or C<require>.  To keep this compatible with older uses
 of NAME, only the first \S+ of the string will actually be used. So:
@@ -82,8 +75,9 @@ of NAME, only the first \S+ of the string will actually be used. So:
 
 would only use "Foo::Bar" for the (long) name of the compunit.
 
-=item =AUTHOR
-
+=end item1
+=begin item1 
+=AUTHOR
 This is the I<auth> of the compunit.  It is supposed to be a URI identifying the
 author or authorizing authority. Only the first \S+ of the string will actually
 be used.  For example:
@@ -92,8 +86,9 @@ be used.  For example:
 
 would only use I<cpan:JRANDOM> as the I<auth>.
 
-=item =VERSION
-
+=end item1
+=begin item1 
+=VERSION
 This is the I<ver> of the compunit.  Also, only the first \S+ of the string will
 actually be used.  For example:
 
@@ -101,8 +96,7 @@ actually be used.  For example:
 
 would only use I<2013.06> as the I<ver>.
 
-=back
-
+=end item1
 The combination of (long) NAME, AUTHOR (auth) and VERSION (ver), we call the
 I<credentials> of a compunit.
 
@@ -134,7 +128,7 @@ name within the current package.  However, at the start of a compunit,
 the current package is C<GLOBAL>, so the first such declaration in the
 file is automatically global.
 
-X<use>
+X<|use>
 You can use C<our module> to explicitly declare a module in the current
 package.  To declare a lexically scoped module, use C<my module>.
 Module names are always searched for from innermost scopes to outermost.
@@ -222,8 +216,8 @@ arguments.
 If the exporting module is actually a class, C<EXPORTALL> will invoke its
 C<EXPORT> method with the class itself as the invocant.
 
-=head1 Compile-time Importation
-X<use>
+=head1 Compile-time ImportationX<|use>
+
 
 [Note: the :MY forms are being rethought currently.]
 
@@ -284,8 +278,8 @@ These further break down into:
       }
     }
 
-=head2 Loading without importing
-X<need>
+=head2 Loading without importingX<|need>
+
 
 The C<need> declarator takes a list of modules and loads them (at
 compile time) without importing any symbols.  It's good for loading
@@ -321,8 +315,8 @@ is equivalent to:
       }
     }
 
-=head2 Importing without loading
-X<import>
+=head2 Importing without loadingX<|import>
+
 
 The importation into your lexical scope may also be a separate declaration
 from loading.  This is primarily useful for modules declared inline, which
@@ -350,7 +344,6 @@ This really means:
     BEGIN (role Silly {
         enum Ness is export <Dilly String Putty>;
     }).WHO.EXPORTALL(MY, <Ness>)
-
 
 Without an import list, C<import> imports the C<:DEFAULT> imports.
 
@@ -793,8 +786,6 @@ Base class (interface, really) for the object living in the @*INC array.  Used
 both for installing compunits, as well as finding a certain compunit by way
 of its from, longname, auth and ver information.
 
-
-
 =head2 new
 
  my $repo = CompUnitRepo.new( $location );
@@ -847,4 +838,5 @@ C<install> interface.
 
  my $loaded = @candidates[0].load;
 
-=for vim:set expandtab sw=4:
+=comment vim:set expandtab sw=4:
+=end pod
