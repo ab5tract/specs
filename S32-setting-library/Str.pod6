@@ -1,12 +1,8 @@
-
-=encoding utf8
-
-=head1 TITLE
-
+=begin pod
+=TITLE
 DRAFT: Synopsis 32: Setting Library - Str
 
-=head1 AUTHORS
-
+=AUTHORS
     Rod Adams <rod@rodadams.net>
     Larry Wall <larry@wall.org>
     Aaron Sherman <ajs@ajs.com>
@@ -15,8 +11,7 @@ DRAFT: Synopsis 32: Setting Library - Str
     Moritz Lenz <moritz@faui2k3.org>
     Tim Nelson <wayland@wayland.id.au>
 
-=head1 VERSION
-
+=VERSION
     Created: 19 Mar 2009 extracted from S29-functions.pod
 
     Last Modified: 2013-06-06
@@ -57,16 +52,15 @@ will support the same levels as the input, unless specified otherwise.
 
 The following are all provided by the C<Str> role:
 
-=over
-
-=item chop
-
+=begin item1 
+chop
  multi method chop ( Str  $string: --> Str ) is export
 
 Returns string with one Char removed from the end.
 
-=item chomp
-
+=end item1
+=begin item1 
+chomp
  multi method chomp ( Str $string: --> Str ) is export
 
 Returns string with one newline removed from the end.  An arbitrary
@@ -77,32 +71,36 @@ as a property of the string.)  Otherwise a standard newline is removed.
 Note: Most users should just let their I/O handles autochomp instead.
 (Autochomping is the default.)
 
-=item lc
-
+=end item1
+=begin item1 
+lc
  multi method lc ( Str $string: --> Str ) is export
 
 Returns the input string after forcing each character to its lowercase
 form.  Note that one-to-one mapping is not in general guaranteed;
 different forms may be chosen according to context.
 
-=item uc
-
+=end item1
+=begin item1 
+uc
  multi method uc ( Str $string: --> Str ) is export
 
 Returns the input string after forcing each character to its uppercase
 (not titlecase) form.  Note that one-to-one mapping is not in general guaranteed;
 different forms may be chosen according to context.
 
-=item fc
-
+=end item1
+=begin item1 
+fc
  multi method fc ( Str $string: --> Str ) is export
 
 Does a Unicode "fold case" operation suitable for doing caseless
 string comparisons.  (In general, the returned string is unlikely to
 be useful for any purpose other than comparison.)
 
-=item tc
-
+=end item1
+=begin item1 
+tc
  multi method tc ( Str $string: --> Str ) is export
 
 Converts the first character of a string to titlecase form,
@@ -112,15 +110,17 @@ character, the entire string is returned unchanged.  In any case,
 this function never changes any character after the first.  (It
 is like the old Perl 5 C<ucfirst> function in that respect.)
 
-=item tclc
-
+=end item1
+=begin item1 
+tclc
  multi method tclc ( Str $string: --> Str ) is export
 
 Forces the first character of a string to titlecase and the rest of
 the characters to lowercase, then returns the modified string.
 
-=item wordcase
-
+=end item1
+=begin item1 
+wordcase
  multi method wordcase ( Str $string: :&filter = &tclc, :$where = True --> Str ) is export
 
 Performs a substitutional mapping of each word in the string,
@@ -150,51 +150,59 @@ is C<&tcuc>, in which case the exception will be forced to uppercase.
 There is no provision for an alternate regex; if you need a custom
 word recognizer, you can write your own C<.subst> as above.
 
-=item samecase
-
+=end item1
+=begin item1 
+samecase
  multi method samecase ( Str $string: Str $pattern --> Str ) is export
 
 Has the effect of making the case of the string match the case pattern in C<$pattern>.
 (Used by s:ii/// internally, see L<S05>.)
 
-=item samemark
-
+=end item1
+=begin item1 
+samemark
  multi method samemark ( Str $string: Str $pattern --> Str ) is export
 
 Has the effect of making the case of the string match the marking pattern in C<$pattern>.
 (Used by s:mm/// internally, see L<S05>.)
 
-=item length
-
+=end item1
+=begin item1 
+length
 This word is banned in Perl 6.  You must specify units.
 
-=item chars
-
+=end item1
+=begin item1 
+chars
  multi method chars ( Str $string: --> Int ) is export
 
 Returns the number of characters in the string in the current
 (lexically scoped) idea of what a normal character is, usually graphemes.
 
-=item graphs
-
+=end item1
+=begin item1 
+graphs
  multi method graphs ( Str $string: --> Int ) is export
 
 Returns the number of graphemes in the string in a language-independent way.
 
-=item codes
-
+=end item1
+=begin item1 
+codes
  multi method codes ( Str $string: $nf = $?NF --> Int ) is export
 
 Returns the number of codepoints in the string as if it were canonicalized the
 specified way.  Do not confuse codepoints with UTF-16 encoding.  Characters
 above U+FFFF count as a single codepoint.
 
-=item bytes
-
+=end item1
+=begin item1 
+bytes
 Gone. Use C<$str.encode($encoding).bytes> instead.
 
-=item encode
-
+=end item1
+=begin item1 
+encode
     multi method encode($encoding = $?ENC, $nf = $?NF --> Buf )
 
 Returns a C<Blob> which represents the original string in the given encoding
@@ -202,8 +210,9 @@ and normal form. The actual return type is as specific as possible, so
 C<$str.encode('UTF-8')> returns a C<utf8> object,
 C<$str.encode('ISO-8859-1')> a C<blob8>.
 
-=item index
-
+=end item1
+=begin item1 
+index
  multi method index( Str $string: Str $substring, StrPos $pos = StrPos(0) --> StrPos ) is export
  multi method index( Str $string: Str $substring, Int $pos --> StrPos ) is export
 
@@ -219,9 +228,9 @@ evaluates to false because it's really a kind of undefined value.  Do not evalua
 as a number, because instead of returning -1 it will return 0 and issue
 a warning.
 
-
-=item pack
-
+=end item1
+=begin item1 
+pack
  multi pack( *@items where { all(@items) ~~ Pair } --> buf8 )
  multi pack( Str $template, *@items --> buf8 )
 
@@ -256,8 +265,9 @@ internal form for efficiency.  I also think that compact classes
 should be able to express their serialization in pack form if
 asked for it with .packformat or some such.  -law]
 
-=item quotemeta
-
+=end item1
+=begin item1 
+quotemeta
  multi method quotemeta ( Str $string: --> Str ) is export
 
 Returns the input string with all non-"word" characters back-slashed.
@@ -268,8 +278,9 @@ by a backslash in the returned string, regardless of any locale settings.
 is to duplicate p5 functionality, perhaps it should be "p5quotemeta"?
 Do we even want this method at all?]
 
-=item rindex
-X<rindex>
+=end item1
+=begin item1 
+rindexX<|rindex>
 
  multi method rindex( Str $string: Str $substring, StrPos $pos? --> StrPos ) is export
  multi method rindex( Str $string: Str $substring, Int $pos --> StrPos ) is export
@@ -278,8 +289,9 @@ Returns the position of the last C<$substring> in C<$string>. If C<$pos>
 is specified, then the search starts at that location in C<$string>, and
 works backwards. See C<index> for more detail.
 
-=item split
-X<split>
+=end item1
+=begin item1 
+splitX<|split>
 
  multi split ( Str $delimiter, Str $input, Int $limit = Inf --> List )
  multi split ( Regex $delimiter, Str $input, Int $limit = Inf --> List )
@@ -311,8 +323,9 @@ fed through C<cat> in order to pretend to be string.  The resulting
 C<Cat> is lazy.  Accessing a filehandle as both a filehandle and as
 a C<Cat> is undefined.
 
-=item comb
-
+=end item1
+=begin item1 
+comb
  multi comb ( Str $matcher, Str $input, Int $limit = Inf, Bool :$match --> List )
  multi comb ( Regex $matcher, Str $input, Int $limit = Inf, Bool :$match --> List )
  multi method comb ( Str $input: Str $matcher, Int $limit = Inf, Bool :$match --> List )
@@ -346,22 +359,25 @@ are never returned -- if you want that, use C<split :all>.  If the
 function is combing a lazy structure, the return values may also be
 lazy.  (Strings are not lazy, however.)
 
-=item lines
-
+=end item1
+=begin item1 
+lines
  multi method lines ( Str $input: Int $limit = Inf --> List ) is export
 
 Returns a list of lines, i.e. the same as a call to
 C<$input.comb( / ^^ \N* /, $limit )> would.
 
-=item words
-
+=end item1
+=begin item1 
+words
  multi method words ( Str $input: Int $limit = Inf --> List ) is export
 
 Returns a list of non-whitespace bits, i.e. the same as a call to
 C<$input.comb( / \S+ /, $limit )> would.
 
-=item flip
-
+=end item1
+=begin item1 
+flip
 The C<flip> function reverses a string character by character.
 
      multi method flip ( $str: --> Str ) is export {
@@ -371,8 +387,9 @@ The C<flip> function reverses a string character by character.
 This function will misplace accents if used at a Unicode
 level less than graphemes.
 
-=item sprintf
-
+=end item1
+=begin item1 
+sprintf
  multi method sprintf ( Str $format: *@args --> Str ) is export
 
 This function is mostly identical to the C library sprintf function.
@@ -424,8 +441,9 @@ Perl 5 (non-)compatibility:
  n   produces a runtime exception
  p   produces a runtime exception
 
-=item fmt
-
+=end item1
+=begin item1 
+fmt
   multi method fmt( Scalar $scalar: Str $format = '%s' --> Str )
   multi method fmt( List $list:
                     Str $format = '%s',
@@ -446,8 +464,9 @@ C<join $sep, map { sprintf($format, $_.key, $_.value) }, %h.pairs>. A call
 to the pair version C<$p.fmt($format)> returns the result of
 C<sprintf($format, $p.key, $p.value)>.
 
-=item substr
-
+=end item1
+=begin item1 
+substr
  multi method substr (Str $string: StrPos $start, StrLen $length? --> Str ) is export
  multi method substr (Str $string: StrPos $start, StrPos $end --> Str ) is export
  multi method substr (Str $string: StrPos $start, Int $length --> Str ) is export
@@ -476,8 +495,9 @@ it is illegal for the start position to be outside of the string, it
 is allowed for the final position to be off the end of the string; in
 this case the entire rest of the string is returned, whatever is available.
 
-=item substr-rw
-
+=end item1
+=begin item1 
+substr-rw
  multi sub substr-rw($s is rw, $from = 0; $chars = $s.chars - $from) is rw
 
 A version of C<substr> that returns a writable reference to a part of a
@@ -486,8 +506,9 @@ string variable:
  $string ~~ /(barney)/;
  substr-rw($string, $0.from, $0.to) = "fred";
 
-=item trim
-
+=end item1
+=begin item1 
+trim
   multi method trim() is export;
   multi method trim-leading() is export;
   multi method trim-trailing() is export;
@@ -498,26 +519,31 @@ The variants C<trim-leading> and C<trim-trailing> also return a copy of the
 string, but with whitespace removed only at their respective end of the
 string.
 
-=item unpack
-
-=item match
-
+=end item1
+=begin item1 
+unpack
+=end item1
+=begin item1 
+match
  method match(Str $self: Regex $search --> Match );
 
-See L<S05/Substitution>
+See L<S05#Substitution>
 
-=item subst
-
+=end item1
+=begin item1 
+subst
  method subst(Str $self: Regex $search, Str $replacement --> Str);
 
-=item trans
-
+=end item1
+=begin item1 
+trans
  method trans(Str $self: Str $key, Str $val);
 
  multi trans(List of Pair %data --> Any );
 
-=item indent
-
+=end item1
+=begin item1 
+indent
      multi method indent ($str: $steps --> Str ) is export;
 
 Returns a re-indented string wherein C<$steps> number of spaces have been added
@@ -553,17 +579,20 @@ that line. Thus, an C<.indent> call on a multiline string therefore amounts
 to C< .lines».indent.join("\n") >, modulo exotic line endings in the
 original string, and the proviso about empty lines.
 
-=item IO
-
+=end item1
+=begin item1 
+IO
 Returns an unopened IO::Handle, using the string as the file path.
 
-=item path
-
+=end item1
+=begin item1 
+path
 Returns an IO::Path, using the string as the file path.
 
-=back
-
+=end item1
 =head1 Additions
 
 Please post errors and feedback to perl6-language.  If you are making
 a general laundry list, please separate messages by topic.
+
+=end pod
