@@ -1,20 +1,15 @@
-
-=encoding utf8
-
-=head1 TITLE
-
+=begin pod
+=TITLE
 DRAFT: Synopsis 16: IO / Name Services
 
-=head1 AUTHORS
-
+=AUTHORS
     Largely, the authors of the related Perl 5 docs.
     Larry Wall <larry@wall.org>
     Mark Stosberg <mark@summersault.com>
     Tim Nelson <wayland@wayland.id.au>
     Daniel Ruoso <daniel@ruoso.com>
 
-=head1 VERSION
-
+=VERSION
     Created: 12 Sep 2006
 
     Last Modified: 19 Nov 2009
@@ -215,30 +210,30 @@ If a writable directory isn't found, it is set to $*CWD.
         has $dir; # Home directory for files
     }
 
-=over
-
-=item new
-
+=begin item1 
+new
     method User new($Username?, $UID?) {...}
 
 Creates a new User object, fetching the information either by username or user ID.
 
-=item write
-
+=end item1
+=begin item1 
+write
     method write() {...}
 
 Tries to write the current User object to the user database.  This may well fail.
 
-=item Str
-
+=end item1
+=begin item1 
+Str
 When converted to a Str, returns $username.
 
-=item Num
-
+=end item1
+=begin item1 
+Num
 When converted to a Num, returns $uid.
 
-=back
-
+=end item1
 =head2 OS::Unix::User role
 
     role OS::Unix::User does User {
@@ -259,20 +254,18 @@ like.
         has @members;
     }
 
-=over
-
-=item new
-
+=begin item1 
+new
     method Group new(:$Name, :$ID);
 
-=item write
-
+=end item1
+=begin item1 
+write
     method write();
 
 Tries to write the group entry into the system group database.
 
-=back
-
+=end item1
 =head2 OS::Unix::NameServices role
 
 The NameServices role has a bunch of functions that between them will return the whole
@@ -293,6 +286,5 @@ intended to be lazy.
 Please post errors and feedback to perl6-language.  If you are making
 a general laundry list, please separate messages by topic.
 
-=cut
-
-=for vim:set expandtab sw=4:
+=comment vim:set expandtab sw=4:
+=end pod
