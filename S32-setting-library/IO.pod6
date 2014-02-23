@@ -1,11 +1,8 @@
-﻿=encoding utf8
-
-=head1 TITLE
-
+=begin pod
+=TITLE
 DRAFT: Synopsis 32: Setting Library - IO
 
-=head1 AUTHORS
-
+=AUTHORS
     The authors of the related Perl 5 docs
     Rod Adams <rod@rodadams.net>
     Larry Wall <larry@wall.org>
@@ -18,8 +15,7 @@ DRAFT: Synopsis 32: Setting Library - IO
     Lyle Hopkins <webmaster@cosmicperl.com>
     Brent Laabs <bslaabs@gmail.com>
 
-=head1 VERSION
-
+=VERSION
     Created: 19 Feb 2009 extracted from S29-functions.pod; added stuff from S16-IO later
 
     Last Modified: 23 Sep 2013
@@ -59,10 +55,8 @@ File tests are performed through C<IO::Path> objects.
 
 =head1 Functions
 
-=over 4
-
-=item open
-X<open>
+=begin item1 
+openX<|open>
 
     multi open (Str $name,
       # mode
@@ -92,8 +86,9 @@ than C<Str> types.
 For a discussion of the read/write/append modes (:r, :w, :a), see
 L</IO::Handle/open> under IO::Handle.
 
-=item dir
-X<dir>
+=end item1
+=begin item1 
+dirX<|dir>
 
     multi dir($directory = '.', Mu :$test = none('.', '..')) { ... }
 
@@ -105,10 +100,11 @@ returned.
 The return value is a list of C<IO::Path> objects.  Because of this, you may
 want use the C<basename> method on the results to get the just the file name,
 without its full path.  If dir() fails, it returns an
-L<X::IO::Dir|S32::Exception/X::IO::Dir> failure.
+L<X::IO::Dir|S32::Exception#X::IO::Dir> failure.
 
-=item glob
-
+=end item1
+=begin item1 
+glob
     multi glob(Str $pattern --> Array[Str])
 
 Accepts a pattern that will then be expanded into a array of filenames (the
@@ -164,8 +160,9 @@ within.
 Unlike Perl 5, no special attention is given to the interpolation rules of
 strings, particularly braces.
 
-=item note
-
+=end item1
+=begin item1 
+note
     multi note (*@LIST --> Bool)
 
 Does a "say" to C<$*ERR>, more or less.  Like C<warn>, it adds a
@@ -176,8 +173,9 @@ scope by declaring:
 
     only note(*@) {}
 
-=item slurp
-
+=end item1
+=begin item1 
+slurp
     multi slurp (IO::Handle $fh = $*ARGFILES,
         Bool :$bin = False,
         Str  :$enc = "Unicode",
@@ -194,8 +192,9 @@ Slurps the entire file into a C<Str> (or C<Buf> if C<:bin>) regardless of contex
 
 The routine will C<fail> if the file does not exist, or is a directory.
 
-=item spurt
-
+=end item1
+=begin item1 
+spurt
     multi spurt (IO::Handle $fh,
         Str   $contents,
         Str  :$enc = $?ENC,
@@ -229,8 +228,9 @@ string will be appended.
 The routine will also C<fail> with the corresponding exception if there was any
 other error in opening, writing, or closing.
 
-=item chdir
-
+=end item1
+=begin item1 
+chdir
     multi sub chdir(Str:D)
     multi sub chdir(IO::Path:D)
 
@@ -248,8 +248,9 @@ foreign function, only one thread can safely use it; in general it's
 better to pass absolute paths to foreign functions that don't allow
 you to set the working directory as a parameter.
 
-=item visitdir
-
+=end item1
+=begin item1 
+visitdir
     multi sub visitdir(Str:D)
     multi sub visitdir(IO::Path:D)
 
@@ -259,31 +260,32 @@ would. Fails (X::IO::Chdir) on error.  Since C<$*CWD> is dynamically scoped,
 leaving the current dynamic scope automatically restores the current (emulated)
 working directory.
 
-=item unlink
-
+=end item1
+=begin item1 
+unlink
     sub unlink(Cool:D $path)
 
 Unlinks an ordinary file, link, or symbolic link from disk -- that is, it is
-deleted.  Returns True on success; otherwise returns an L<S32::Exception/X::IO::Unlink>
+deleted.  Returns True on success; otherwise returns an L<S32::Exception#X::IO::Unlink>
 failure.
 
-=item rmdir
-
+=end item1
+=begin item1 
+rmdir
     sub rmdir(Cool:D $directory)
 
 Removes the directory given from disk.  Returns True on success, or an 
-L<X::IO::Rmdir|S32::Exception/X::IO::Rmdir> failure.
+L<X::IO::Rmdir|S32::Exception#X::IO::Rmdir> failure.
 
-=item mkdir
-
+=end item1
+=begin item1 
+mkdir
     sub mkdir(Cool:D $directory)
 
 Makes (creates) the directory represented by the IO::Path. Returns True on success,
-or an L<X::IO::Mkdir|S32::Exception/X::IO::Mkdir> failure.
+or an L<X::IO::Mkdir|S32::Exception#X::IO::Mkdir> failure.
 
-
-=back
-
+=end item1
 =head1 IO Types
 
 =head2 IO
@@ -293,7 +295,6 @@ or an L<X::IO::Mkdir|S32::Exception/X::IO::Mkdir> failure.
 The base role only tags that this is an C<IO> object for more generic
 purposes. It doesn't specify any methods or attributes.
 
-
 =head2 IO::Handle
 
     class IO::Handle does IO { ... }
@@ -301,10 +302,8 @@ purposes. It doesn't specify any methods or attributes.
 A handle of a file, pipe or anything else that supports reading or
 writing like a file.
 
-=over 4
-
-=item open
-
+=begin item1 
+open
     multi method open (
       # mode
         Bool :$r  = True,
@@ -325,37 +324,41 @@ opens the handle as read-only, C<:w> is write-only, C<:rw> is read-write, and
 C<:a> appends writes to the file.
 
 The C<:enc> parameter controls which text encoding the file is interpreted as.
-Unicode is the default encoding.  See L</encoding> for encoding options.
+Unicode is the default encoding.  See L<#encoding> for encoding options.
 
-The C<:nl> option sets L</input-line-separator>, and C<:chomp> determines if
+The C<:nl> option sets L<#input-line-separator>, and C<:chomp> determines if
 the new line separator will be chopped removed by C<get> and C<lines>.
 
 Conjectural: The <:p> parameter opens a pipe, which is readable with C<:r>
 (default) and writable with C<:w>.
 
-=item get
-
+=end item1
+=begin item1 
+get
     method get() returns Str:D
 
 Reads and returns one line from the handle. Uses C<input-line-separator>
 to determine where a line ends.
 
-=item lines
-
+=end item1
+=begin item1 
+lines
     method lines($limit = Inf)
 
 Returns a lazy list of lines read via the C<get> method, limited to C<$limit>
 lines.
 
-=item getc
-X<getc>
+=end item1
+=begin item1 
+getcX<|getc>
 
     method getc (IO::Handle:D: Int $chars = 1 --> Str)
 
 Reads C<$chars> and returns them
 
-=item print
-X<print>
+=end item1
+=begin item1 
+printX<|print>
 
     method print (IO::Handle:D: *@LIST --> Bool)
     multi print (*@LIST --> Bool)
@@ -373,8 +376,9 @@ the empty list at runtime.)
     if $_ { print() }  # ok, but does nothing
     if $_ { print () } # ok, but does nothing
 
-=item say
-X<say>
+=end item1
+=begin item1 
+sayX<|say>
 
     method say (IO::Handle:D: *@LIST --> Bool)
     multi say (*@LIST --> Bool)
@@ -388,16 +392,18 @@ C<.gist> on them and auto-appends a newline after the final argument.
 As with C<print>, the compiler will warn you if you use a bare sub C<say>
 without arguments.
 
-=item printf
-X<printf>
+=end item1
+=begin item1 
+printfX<|printf>
 
     method printf (Str $fmt, *@LIST --> Bool)
     multi printf (IO::Handle:D: Str $fmt, *@LIST --> Bool)
 
 Output through C<Str.sprintf>. See L<S32::Str> for details.
 
-=item  write
-
+=end item1
+=begin item1 
+write
     method write(IO::Handle:D: Buf $buf --> Int)
 
 Tries to write C<$buf>. The actual number of bytes
@@ -408,8 +414,9 @@ This is "raw" write. C<$buf> contains plain octets. If you want to C<write>
 a C<Str>, you should C<.encode> it first, or use "print" or other
 C<IO::Writeable::Encoded> methods.
 
-=item slurp
-
+=end item1
+=begin item1 
+slurp
     method slurp(
         Bool :$bin = False,
         Str  :$enc = "Unicode",
@@ -418,12 +425,13 @@ C<IO::Writeable::Encoded> methods.
 Opens the handle if necessary, slurps the entire file into a C<Str>
 (or C<Buf> if C<:bin> parameter is given) regardless of context.  Closes the
 handle after it is done, and returns the contents of the file.
-(See also L</lines>.)
+(See also L<#lines>.)
 
 The routine will C<fail> if the file does not exist, or is a directory.
 
-=item spurt
-
+=end item1
+=begin item1 
+spurt
     multi method spurt (
         Str   $contents,
         Str  :$enc = $?ENC,
@@ -445,26 +453,30 @@ string will be appended.
 The routine will also C<fail> with the corresponding exception if there was any
 other error in opening, writing, or closing.
 
-=item t
-
+=end item1
+=begin item1 
+t
     method t() returns Bool:D
 
 Returns C<True> if the handle is opened to a tty.
 
-=item p
-
+=end item1
+=begin item1 
+p
     method p() returns Bool:D
 
 Returns C<True> if the handle is opened to a pipe.
 
-=item eof
-
+=end item1
+=begin item1 
+eof
     method eof() returns Bool:D
 
 Returns C<True> if the handle is exhausted.
 
-=item seek
-
+=end item1
+=begin item1 
+seek
 method seek(Int $position, Int $whence --> Bool)
 
 Position this stream into C<$position>. The meaning of this position is
@@ -474,20 +486,23 @@ Fails if the handle is not seekable.
 
 TODO: make $whence an Enum
 
-=item tell
-
+=end item1
+=begin item1 
+tell
     method tell() returns Int:D:
 
 Returns the current raw position in the stream in number of "octets".
 
-=item ins
-
+=end item1
+=begin item1 
+ins
     method ins( --> Int)
 
 Returns the number of lines that have been read with C<get>.
 
-=item input-line-separator
-
+=end item1
+=begin item1 
+input-line-separator
     method input-line-separator( --> Str) is rw
 
 This regulates how C<get> and C<lines> behave.
@@ -510,8 +525,9 @@ You may also set it to a regular expression.  The value of C<$/>
 will be (temporarily) set to the matched separator upon input,
 if you care about the contents of the separator.
 
-=item encoding
-
+=end item1
+=begin item1 
+encoding
     multi method encoding($enc?)
 
 With no arguments, simply returns the current encoding used on the handle.
@@ -519,16 +535,17 @@ If supplied a string identifying a valid encoding, change the handle to read
 with that encoding.  Options include C<binary>, C<utf8>, and
 other text encodings.  An invalid encoding causes the method to fail.
 
-=item IO
-
+=end item1
+=begin item1 
+IO
 Returns the handle itself (no-op).
 
-=item close
-
+=end item1
+=begin item1 
+close
 Closes the handle. Fails on error.
 
-=back
-
+=end item1
 =head2 IO::FileTests
 
     role IO::FileTests does IO { ... }
@@ -569,28 +586,29 @@ strikes) and are summarized in the following table:
     g  Path has setgid bit set.
     k  Path has sticky bit set.
 
-=over 4
-X<stattimes>
+= X<|stattimes>
 
-=item accessed
-
+=begin item1 
+accessed
 Returns the last access time (C<atime>) of the path, to the degree that it is
 updated on that system.
 
-=item modified
-
+=end item1
+=begin item1 
+modified
 Returns the time that the path was last modified (C<mtime>).
 
-=item changed
-
+=end item1
+=begin item1 
+changed
 Returns the time that the path was last changed (modified or a metadata change).
 
-=item stat
-
+=end item1
+=begin item1 
+stat
 Returns a stat buffer for the path.
 
-=back
-
+=end item1
 TODO: methods created, accessed, modified: return format, failure
 
 =head2 IO::Path
@@ -626,34 +644,38 @@ a .path method, or you can construct it directly:
 	IO::Path.new( $full-path );
 	IO::Path.new( :$volume, :$directory, :$basename);
 	
-=over 4
 
-=item Str
-
+=begin item1 
+Str
 Stringification returns the path (volume, directory and base name joined
 together) as a string.
 
-=item volume
-
+=end item1
+=begin item1 
+volume
 Returns the volume part of the path.  On Unix-like OSes or systems without a
 concept of volume in the path, returns the empty string.
 
-=item directory
-
+=end item1
+=begin item1 
+directory
 Returns the directory part of the path, not including the last item.  Functions
 equivalently to the C<dirname> shell program on Unix-like systems. 
 
-=item basename
-
+=end item1
+=begin item1 
+basename
 Returns the base name part of the path -- that is, the last portion.  Functions
 equivalently to the C<basename> shell program on Unix-like systems. 
 
-=item path
-
+=end item1
+=begin item1 
+path
 Returns the entire IO::Path object (a no-op).
 
-=item contents
-
+=end item1
+=begin item1 
+contents
 	method contents( Mu :$test = none('.', '..') )
 
 Returns a lazy list of file names in the path, if it is a directory. The
@@ -665,8 +687,9 @@ The return value is a list of C<IO::Path> objects.  Because of this, you may
 want use the C<basename> method on the results to get the just the file name,
 without its full path.
 
-=item cleanup
-
+=end item1
+=begin item1 
+cleanup
         method cleanup( :$parent = False )
 
 Returns a new IO::Path object with the canonical path.  This eliminates extra
@@ -678,8 +701,9 @@ directory without I<checking the filesystem>.  That is, the parent of a
 symbolic link will remove the symlink itself, not the parent of the symlink's
 destination.
 
-=item resolve
-
+=end item1
+=begin item1 
+resolve
 Returns a new IO::Path object that is cleaned-up (as above), and all symbolic
 links and references to the parent directory (C<..>) are physically resolved.
 This means that the filesystem is examined for each directory in the path,
@@ -692,18 +716,21 @@ where symbolic links are not supported.
    $path.cleanup(:parent); # yields "foo"
    $path.=resolve;  # now "/" (the parent of "/baz")
 
-=item is-relative
-
+=end item1
+=begin item1 
+is-relative
 Returns True if the path is a relative path (like C<foo/bar>), False
 otherwise.
 
-=item is-absolute
-
+=end item1
+=begin item1 
+is-absolute
 Returns True if the path is an absolute path (like C</usr/bin>), False
 otherwise.
 
-=item absolute
-
+=end item1
+=begin item1 
+absolute
     method absolute ( Str $base = $*CWD )
 
 Transforms the path into an absolute form, and returns the result as a new
@@ -711,8 +738,9 @@ IO::Path.  If C<$base> is supplied, transforms it relative to that base
 directory; otherwise the current working directory is used.  Paths that are
 already absolute are returned unchanged.
 
-=item relative
-
+=end item1
+=begin item1 
+relative
     method relative ( Str $base = $*CWD )
 
 Transforms the path into an relative form, and returns the result as a new
@@ -720,8 +748,9 @@ IO::Path.  If C<$base> is supplied, transforms it relative to that base
 directory; otherwise the current working directory is used.  Paths that are
 already relative are returned unchanged.
 
-=item parent
-
+=end item1
+=begin item1 
+parent
 Removes the last portion the given path, and returns a new IO::Path.  This does
 not remove C<.>, C<..>, or symbolic links, so you may want to consider calling
 cleanup or resolve first.
@@ -736,15 +765,17 @@ On a Unix/POSIX filesystem, if called recursively, it will work like so:
 	4                      ../..            /
 	5                     ../../..          /
 
-=item child
-
+=end item1
+=begin item1 
+child
     method child ( Str $childname )
 
 Appends C<$childname> to the end of the path, adding path separators where
 needed and returns the result as a new IO::Path.
 
-=item succ
-
+=end item1
+=begin item1 
+succ
 Increments the basename portion of the string, as Str.succ does, and returns
 that successor as an IO::Path.
 
@@ -752,39 +783,43 @@ This is useful for getting all the parts of say, a multi-part archive, but
 does not always return the next item in the folder.  To crawl a folder, you
 probably want to iterate on the parent directory's contents.
 
-=item pred
-
+=end item1
+=begin item1 
+pred
 Decrements the basename portion of the string, as Str.pred does, and returns
 that predecessor as an IO::Path.
 
-=item copy
-
+=end item1
+=begin item1 
+copy
     method copy ($dest, :$createonly = False )
 
 Copies a file from the path, to the destination specified.  If :createonly is
 set to True, copy fails when a file already exists in the destination.  If the
 operation cannot be completed, fails as X::IO::Copy.
 
-=item unlink
-
+=end item1
+=begin item1 
+unlink
 Unlinks (deletes) the ordinary file, link, or symbolic link represented by the
 IO::Path.  Returns True on success; on error, fails with an X::IO::Unlink.
 
-=item rmdir
-
+=end item1
+=begin item1 
+rmdir
 Removes (deletes) the directory represented by the IO::Path.  Typically fails
 unless the directory is empty.  Returns True on success; fails with an X::IO::Rmdir
 on error.
 
-=item mkdir
-
+=end item1
+=begin item1 
+mkdir
 Makes (creates) the directory represented by the IO::Path. Returns True on success.
-The method will C<fail> with L<X::IO::Mkdir|S32::Exception/X::IO::Mkdir> if it 
+The method will C<fail> with L<X::IO::Mkdir|S32::Exception#X::IO::Mkdir> if it 
 can not create the directory, if file or directory already exists or if the parent
 directory of the path does not exist.
 
-=back
-
+=end item1
 =head3 OS Specific subclasses.
 
 IO::Path::Unix, IO::Path::Win32, and IO::Path::Cygwin subclasses are available
@@ -816,10 +851,8 @@ is no longer an alias for catfile, but is now a function similar to C<catpath>.
 Each of the following methods are available under the subclasses, with the
 exception of C<os>.
 
-=over
-
-=item os
-
+=begin item1 
+os
 The os method takes a single argument, an operating system string, and returns
 an IO::Spec object for the appropriate OS.
 
@@ -836,33 +869,34 @@ you the same subclass that IO::Spec already uses for your system.
 
 This is only implemented by the IO::Spec class, and not its subclasses.
 
-
-=item canonpath
-X<canonpath>
+=end item1
+=begin item1 
+canonpathX<|canonpath>
 
 No physical check on the filesystem, but a logical cleanup of a
 path.
 
     $cpath = IO::Spec.canonpath( $path ) ;
 
-Note that this does *not* collapse F<x/../y> sections into F<y>.  This
-is by design.  If F</foo> on your system is a symlink to F</bar/baz>,
-then F</foo/../quux> is actually F</bar/quux>, not F</quux> as a naive
-F<../>-removal would give you.  If you want to do this kind of
+Note that this does *not* collapse I<x/../y> sections into I<y>.  This
+is by design.  If I</foo> on your system is a symlink to I</bar/baz>,
+then I</foo/../quux> is actually I</bar/quux>, not I</quux> as a naive
+I<../>-removal would give you.  If you want to do this kind of
 processing, you probably want IO::Path's C<resolve> method to
 actually traverse the filesystem cleaning up paths like this.
 
-=item is-absolute
-
+=end item1
+=begin item1 
+is-absolute
 Takes as its argument a path, and returns True if it is an absolute path,
 False otherwise.  For File::Spec::Win32, it returns 1 if it's an absolute
 path with no volume, and 2 if it's absolute with a volume.
 
     $is_absolute = IO::Spec.is-absolute( $path );
 
-
-=item splitpath
-X<splitpath>
+=end item1
+=begin item1 
+splitpathX<|splitpath>
 
     method splitpath( $path, $nofile = False )
 
@@ -874,16 +908,17 @@ with no concept of volume, returns '' for volume.
 
 For systems with no syntax differentiating filenames from directories, 
 assumes that the last file is a path unless C<$no_file> is true or a
-trailing separator or F</.> or F</..> is present. On Unix, this means that C<$no_file>
+trailing separator or I</.> or I</..> is present. On Unix, this means that C<$no_file>
 true makes this return ( '', $path, '' ).
 
 The directory portion may or may not be returned with a trailing '/'.
 
-The results can be passed to L</catpath()> to get back a path equivalent to
+The results can be passed to L<#catpath()> to get back a path equivalent to
 (usually identical to) the original path.
 
-=item split
-
+=end item1
+=begin item1 
+split
 A close relative of `splitdir`, this function also splits a path into
 volume, directory, and filename portions.  Unlike splitdir, split returns
 paths compatible with dirname and basename I<and> returns it arguments as
@@ -905,8 +940,9 @@ The results can be passed to `.join` to get back a path equivalent to
 (but not necessarily identical to) the original path.  If you want to keep
 all of the characters involved, use `.splitdir` instead.
 
-=item Comparison of splitpath and split
-
+=end item1
+=begin item1 
+Comparison of splitpath and split
 	OS      Path       splitpath               split (.values)
 	linux   /a/b/c     ("", "/a/b/", "c")      ("", "/a/b", "c")
 	linux   /a/b//c/   ("", "/a/b//c/", "")    ("", "/a/b", "c")
@@ -916,8 +952,9 @@ all of the characters involved, use `.splitdir` instead.
 
 * The VMS section is still speculative, and not yet supported.
 
-=item catpath()
-
+=end item1
+=begin item1 
+catpath()
 Takes volume, directory and file portions and returns an entire path string.
 Under Unix, C<$volume> is ignored, and directory and file are concatenated.
 On other OSes, C<$volume> is significant.    Directory separators like slashes
@@ -925,8 +962,9 @@ are inserted if need be.
 
     $full_path = IO::Spec.catpath( $volume, $directory, $file );
 
-=item join
-
+=end item1
+=begin item1 
+join
 A close relative of `.catpath`, this function takes volume, directory and
 basename portions and returns an entire path string.  If the dirname is `'.'`,
 it is removed from the (relative) path output, because this function inverts
@@ -943,9 +981,9 @@ $volume is significant.
 This method is the inverse of `.split`; the results can be passed to it
 to get the volume, dirname, and basename portions back.
 
-
-=item Comparison of catpath and join
-
+=end item1
+=begin item1 
+Comparison of catpath and join
 	OS     Components            catpath        join
 	linux  ("", "/a/b", "c")     /a/b/c         /a/b/c
 	linux  ("", ".", "foo")      ./foo          foo
@@ -955,10 +993,11 @@ to get the volume, dirname, and basename portions back.
 
 * The VMS section is still speculative, and not yet supported.
 
-=item splitdir
-X<splitdir>
+=end item1
+=begin item1 
+splitdirX<|splitdir>
 
-The opposite of L</catdir>.
+The opposite of L<#catdir>.
 
     @dirs = IO::Spec.splitdir( $directories );
 
@@ -970,8 +1009,9 @@ Unlike just splitting the directories on the separator, empty
 directory names (C<''>) can be returned, because these are significant
 on some OSes.
 
-=item catdir
-X<catdir>
+=end item1
+=begin item1 
+catdirX<|catdir>
 
 Concatenate two or more directory names to form a complete path ending
 with a directory.  Removes any trailing slashes from the resulting
@@ -979,16 +1019,18 @@ string, unless it's the root directory.
 
     $path = IO::Spec.catdir( @directories );
 
-=item catfile
-X<catfile>
+=end item1
+=begin item1 
+catfileX<|catfile>
 
 Concatenate one or more directory names and a filename to form a
 complete path ending with a filename
 
     $path = IO::Spec.catfile( @directories, $filename );
 
-=item abs2rel
-X<abs2rel>
+=end item1
+=begin item1 
+abs2relX<|abs2rel>
 
 Takes a destination path and an optional base path returns a relative path
 from the base path to the destination path:
@@ -1014,8 +1056,9 @@ This means that it is taken to be relative to C<$*CWD>.
 
 No checks against the filesystem are made.
 
-=item rel2abs
-X<rel2abs>
+=end item1
+=begin item1 
+rel2absX<|rel2abs>
 
 Converts a relative path to an absolute path. 
 
@@ -1033,59 +1076,66 @@ On systems that have a grammar that indicates filenames (like VMS), this
 ignores the C<$base> filename as well. Otherwise all path components are
 assumed to be directories.
 
-If C<$path> is absolute, it is cleaned up and returned using L</canonpath>.
+If C<$path> is absolute, it is cleaned up and returned using L<#canonpath>.
 
 No checks against the filesystem are made.
 
-=item curdir
-X<curdir>
+=end item1
+=begin item1 
+curdirX<|curdir>
 
 Returns a string representation of the current directory (C<.> on Linux and Windows).
 
     my $curdir = IO::Spec.curdir;
 
-=item updir
-X<updir>
+=end item1
+=begin item1 
+updirX<|updir>
 
 Returns a string representation of the parent directory (C<..> on Linux and Windows).
 
     my $updir = IO::Spec.updir;
 
-=item rootdir
-X<rootdir>
+=end item1
+=begin item1 
+rootdirX<|rootdir>
 
 Returns a string representation of the root directory (C</> on Linux).
 
     my $rootdir = IO::Spec.rootdir;
 
-=item devnull
-X<devnull>
+=end item1
+=begin item1 
+devnullX<|devnull>
 
 Returns a string representation of the null device (C</dev/null> on Linux).
 
     my $devnull = IO::Spec.devnull;
 
-=item path
-X<path>
+=end item1
+=begin item1 
+pathX<|path>
 
 Takes no argument.  Returns the environment variable C<PATH> (or the local
 platform's equivalent) as a list.
 
     my @PATH = IO::Spec.path;
 
-=item tmpdir
-X<tmpdir>
+=end item1
+=begin item1 
+tmpdirX<|tmpdir>
 
 Returns a string representation of the first writable directory from a
 list of possible temporary directories.  Returns the current directory
 if no writable temporary directories are found.  The list of directories
 checked depends on the platform; e.g. IO::Spec::Unix checks C<< %*ENV<TMPDIR> >>
-and F</tmp>.
+and I</tmp>.
 
     $tmpdir = IO::Spec.tmpdir;
 
-=item no-parent-or-current-test
-
+=end item1
+=begin item1 
+no-parent-or-current-test
 Returns a test as to whether a given path is identical to the parent or the
 current directory.  On Linux, this is simply C<none('.', '..')>.  The L</Functions/dir>
 function automatically removes these for you in directory listings, so under
@@ -1105,7 +1155,7 @@ not `.` or `..` directories.  This would work similarly with IO::Path.contents.
 
 This method replaces the functionality of the Perl 5 C<no_updirs> method.
 
-
+=end item1
 =head1 Here Be Dragons
 
 Everything below this point hasn't been reviewed properly
@@ -1123,10 +1173,8 @@ Accessing the C<%.options> would on Unix be done with I<getsockopt(2)>/I<setsock
 The $.Listener attribute indicates whether the socket will be a listening socket when
 opened, rather than indicating whether it is currently listening.
 
-=over
-
-=item new
-
+=begin item1 
+new
     method new(
         :$Listener, # initialises $.Listener
     )
@@ -1140,8 +1188,9 @@ The initial value of the $.Listener attribute is defined according to the follow
  * If both local and remote addresses are used, throw an exception that asks people to
    specify $Listener
 
-=item open
-
+=end item1
+=begin item1 
+open
     method open()
 
 If $.Listener is true, does a I<bind(2)> and a I<listen(2)>, otherwise does a
@@ -1150,15 +1199,17 @@ I<connect(2)>.
 It's end-user use case is intended for the case where NoOpen is passed to .new().  .new()
 itself will presumably also call it.
 
-=item close
-
+=end item1
+=begin item1 
+close
     method close()
 
 Implements the close() function from IO::Closeable by doing a shutdown on the connection
 (see below) with @how set to ('Readable', 'Writeable').
 
-=item shutdown
-
+=end item1
+=begin item1 
+shutdown
     method shutdown(Str @how)
 
 Does a I<shutdown(2)> on the connection.  See also IO::Readable.isReadable and
@@ -1166,20 +1217,22 @@ IO::Writeable.isWriteable.
 
 $how can contain 1 or more of the strings 'Readable' and 'Writeable'.
 
-=item accept
-
+=end item1
+=begin item1 
+accept
     method accept( --> IO::Socket)
 
-=item method read(Int $bytes --> Buf)
-
+=end item1
+=begin item1 
+method read(Int $bytes --> Buf)
 Reads and returns C<$bytes> bytes from the handle
 
-=item method write(Buf $buf --> Int)
-
+=end item1
+=begin item1 
+method write(Buf $buf --> Int)
 Implements the IO::Writeable interface by doing  a I<send(2)>.
 
-=back
-
+=end item1
 =head2 IO::Socket::INET
 
     class IO::Socket::INET does IO::Socket {
@@ -1191,31 +1244,24 @@ Implements the IO::Writeable interface by doing  a I<send(2)>.
         ...
     }
 
-=over
-
-=item new
-
+=begin item1 
+new
     multi method new(:$host!, :$port, *%attributes) { ... }
     multi method new(:$localhost!, :$localport, :$listen! *%attributes) { ... }
 
 Creates a new socket and opens it.
 
-=back
-
+=end item1
 =head2 IO::Handle (opened version)
 
 This role indicates that this object actually represents an open file
 descriptor in the os level.
 
-=over
-
-=item method int fileno()
-
+=begin item1 
+method int fileno()
 File descriptors are always native integers, conforming to C89.
 
-=back
-
-
+=end item1
 =head1 Conjectural Stuff
 
 Everything below this point should be considered as mere ideas for
@@ -1239,33 +1285,32 @@ interfaces, over which this is a thin veneer.
 
 The permissions used in C<%permissions> are:
 
-=over
-
-=item Readable
-
+=begin item1 
+Readable
 Should be supported by all filesystems as an item to read from the hash for the group
 "Everyone".
 
-=item Writeable
-
+=end item1
+=begin item1 
+Writeable
 Should be supported by all filesystems as an item to read from the hash for the group
 "Everyone".
 
-=item Executable
-
+=end item1
+=begin item1 
+Executable
 Supported on most Unix systems, anyway.  Windows should be able to guess when this is
 read, and throw an exception if written to.
 
-=item Default
-
+=end item1
+=begin item1 
+Default
 An ACL of User,fred,Default sets the user "fred" to be the owner of the file.  This can be
 done with groups too.  Works on Unix, at least.
 
-=back
-
+=end item1
 The C<$.owningObject> attribute of C<ACL> shows what the ACL is set on.  On a
 Windows system, this can be a parent directory, as permissions are inherited.
-
 
 =head2 IO::Pipe
 
@@ -1276,10 +1321,8 @@ Windows system, this can be a parent directory, as permissions are inherited.
 Will need to set IO::Readable.isReadable and IO::Writable.isWriteable depending on opening
 method.
 
-=over
-
-=item close()
-
+=begin item1 
+close()
 If the file handle came from a piped open, C<close> will additionally
 return C<Failure> (aliased to C<$!>) if one of the other system calls involved fails, or if the
 program exits with non-zero status.  The exception object will contain any
@@ -1288,8 +1331,9 @@ also waits for the process executing on the pipe to complete, in case you
 want to look at the output of the pipe afterwards, and
 implicitly puts the exit status value into the C<Failure> object if necessary.
 
-=item IO::Pipe.to
-
+=end item1
+=begin item1 
+IO::Pipe.to
     method to(Str $command, *%opts --> Bool)
     method to(Str *@command, *%opts --> Bool)
 
@@ -1297,8 +1341,9 @@ Opens a one-way pipe writing to C<$command>.  C<IO> redirection for
 stderr is specified with C<:err(IO)> or C<< :err<Str> >>.  Other C<IO> redirection
 is done with feed operators. XXX how to specify "2>&1"?
 
-=item IO::Pipe.from
-
+=end item1
+=begin item1 
+IO::Pipe.from
     method from(Str $command, *%opts --> Bool)
     method from(Str *@command, *%opts --> Bool)
 
@@ -1306,8 +1351,9 @@ Opens a one-way pipe reading from $command.  C<IO> redirection for
 stderr is specified with C<:err(IO)> or C<< :err<Str> >>.  Other C<IO> redirection
 is done with feed operators. XXX how to specify "2>&1"?
 
-=item IO::Pipe.pair
-
+=end item1
+=begin item1 
+IO::Pipe.pair
     method pair(--> List of IO::Pipe)
 
 A wrapper for I<pipe(2)>, returns a pair of C<IO> objects representing the
@@ -1315,18 +1361,15 @@ reader and writer ends of the pipe.
 
    ($r, $w) = IO::Pipe.pair;
 
-=back
-
+=end item1
 =head2 OS-specific classes
 
 =head3 Unix
 
 =head3 Path::Unix
 
-=over
-
-=item chown
-
+=begin item1 
+chown
     multi chown ($uid = -1, $gid = -1, *@files --> Int)
 
 Changes the owner (and group) of a list of files.  The first
@@ -1364,8 +1407,9 @@ this condition this way:
     use POSIX qw(sysconf _PC_CHOWN_RESTRICTED);
     $can-chown-giveaway = not sysconf(_PC_CHOWN_RESTRICTED);
 
-=item chmod LIST
-X<chmod> X<permission> X<mode>
+=end item1
+=begin item1 
+chmod LISTX<|chmod> X<|permission> X<|mode>
 
 Changes the permissions of a list of files.  The first element of the
 list must be the numerical mode, which should probably be an octal
@@ -1379,10 +1423,12 @@ successfully changed.
     $mode = '0o644'; chmod $mode, 'foo';     # this is better
     $mode = 0o644;   chmod $mode, 'foo';     # this is best
 
-=item stat
-
-=item IO.stat
-
+=end item1
+=begin item1 
+stat
+=end item1
+=begin item1 
+IO.stat
     $node.stat(Bool :$link); # :link does an lstat instead
 
 Returns a stat buffer.  If the lstat succeeds, the stat buffer evaluates
@@ -1390,8 +1436,7 @@ to true, and additional file tests may be performed on the value.  If
 the stat fails, all subsequent tests on the stat buffer also evaluate
 to false.
 
-=back
-
+=end item1
 =head3 IO::Socket::Unix
 
     role IO::Socket::Unix does IO::Socket {
@@ -1399,10 +1444,8 @@ to false.
         has Str $.LocalAddr,  # Local Address
     }
 
-=over
-
-=item new
-
+=begin item1 
+new
     method new(
         Str  :$RemoteAddr,
         Str  :$LocalAddr,
@@ -1415,8 +1458,9 @@ to false.
         --> IO::Socket::Unix
     ) {...}
 
-=item pair
-
+=end item1
+=begin item1 
+pair
     method pair(Int $domain, Int $type, Int $protocol --> List of IO)
 
 A wrapper for I<socketpair(2)>, returns a pair of C<IO> objects representing the
@@ -1425,126 +1469,134 @@ reader and writer ends of the socket.
    use IO::Socket;
    ($r, $w) = IO::Socket::Unix.pair(AF_UNIX, SOCK_STREAM, PF_UNSPEC);
 
-
-=back
-
-
+=end item1
 =head3 IO::POSIX
 
 Indicates that this object can perform standard posix C<IO>
 operations. It implies C<IO::Readable> and C<IO::Writeable>.
 
-=over
-
-=item method dup( --> IO)
-
-=item has Bool $.blocking is rw
-
-=item method flock(:$r,:$w --> Bool)
-
-=item method funlock( --> Bool)
-
-=item ...
-
-=back
-
+=begin item1 
+method dup( --> IO)
+=end item1
+=begin item1 
+has Bool $.blocking is rw
+=end item1
+=begin item1 
+method flock(:$r,:$w --> Bool)
+=end item1
+=begin item1 
+method funlock( --> Bool)
+=end item1
+=begin item1 
+...
+=end item1
 =head1 Unfilled
 
-=over 4
-
-=item IO.ioctl
-
+=begin item1 
+IO.ioctl
 Available only as a handle method.
 
-=item alarm
-
-=item prompt
-
+=end item1
+=begin item1 
+alarm
+=end item1
+=begin item1 
+prompt
     multi prompt (Str $prompt --> Str)
 
 Should there be an IO::Interactive role?
 
-=item Str.readpipe
-
-=item sysopen
-
-=item IO.sysseek
-
-=item umask
-
-=back
-
+=end item1
+=begin item1 
+Str.readpipe
+=end item1
+=begin item1 
+sysopen
+=end item1
+=begin item1 
+IO.sysseek
+=end item1
+=begin item1 
+umask
+=end item1
 =head1 Removed functions
 
-=over
-
-=item IO.eof
-
+=begin item1 
+IO.eof
 Gone, see eoi C<IO::Seekable>.
 
-=item IO.fileno
-
+=end item1
+=begin item1 
+IO.fileno
 See C<IO::Handle>.
 
-=item /(get|set)(host|net|proto|serv|sock).*/
-
+=end item1
+=begin item1 
+/(get|set)(host|net|proto|serv|sock).*/
 Should be implemented by an external library.
 
-=item lstat
-
+=end item1
+=begin item1 
+lstat
 Use C<stat> with the C<:link> option.
 
-=item IO.name
-
+=end item1
+=begin item1 
+IO.name
 Changed to C<.path>, but we haven't gotten around to specifying this on all of them.
 
 The C<.name> method returns the name of the file/socket/uri the handle
 was opened with, if known.  Returns Nil otherwise.  There is no
 corresponding C<name()> function.
 
-=item pipe
-
+=end item1
+=begin item1 
+pipe
 Gone, see Pipe.pair
 
-=item select(both)
-
+=end item1
+=begin item1 
+select(both)
 Gone.  (Note: for sub-second sleep, just use sleep with a fractional argument.)
 
-=item IO.shutdown()
-
+=end item1
+=begin item1 
+IO.shutdown()
 Gone, see C<IO::Socket.close()>, C<$IO::Readable.isReadable>, and C<$IO::Writeable.isWriteable>
 
-=item socketpair
-
+=end item1
+=begin item1 
+socketpair
 Gone, see Socket.pair
 
-=item IO.sysread
-
+=end item1
+=begin item1 
+IO.sysread
 Gone, see C<IO::Readable.read()>.
 
-=item IO.syswrite
-
+=end item1
+=begin item1 
+IO.syswrite
 Gone, see C<IO::Writeable.read()>.
 
-=item utime
-
+=end item1
+=begin item1 
+utime
 Gone, see C<Path.times>.
 
-=back
-
+=end item1
 =head2 IO::Buffered
 
 Indicates that this object performs buffering. The management of the
 buffer is completely implementation specific.
 
-=over
-
-=item method flush( --> Bool)
-
+=begin item1 
+method flush( --> Bool)
 Flushes the buffers associated with this object.
 
-=item method autoflush( --> Bool) is rw
-
+=end item1
+=begin item1 
+method autoflush( --> Bool) is rw
 Forces this object to keep its buffers empty
 
 If set to nonzero, forces a flush right away and after every write
@@ -1561,9 +1613,7 @@ such as when you are running a Perl program under rsh
 and want to see the output as it's happening.
 This has no effect on input buffering.
 
-
-=back
-
+=end item1
 =head2 IO::Streamable
 
 This role represents objects that depend on some external resource,
@@ -1571,10 +1621,8 @@ which means that data might not be available at request.
 
     role IO::Streamable does IO {...}
 
-=over
-
-=item new()
-
+=begin item1 
+new()
     method new(
         Bool :$NoOpen,
         Bool :$Blocking,
@@ -1586,14 +1634,16 @@ created.
 
 If blocking is passed in, .blocking() is called (see below).
 
-=item method blocking( --> Bool) is rw
-
+=end item1
+=begin item1 
+method blocking( --> Bool) is rw
 This allows the user to control whether this object should do a
 blocking wait or immediately return in the case of not having data
 available.
 
-=item uri
-
+=end item1
+=begin item1 
+uri
     method uri(Str $uri --> IO::Streamable) {...}
 
 This should be callable on the class, and act like a kind of "new()" function.  When given
@@ -1601,31 +1651,26 @@ a URI, it returns an C<IO::Streamable> of the appropriate type, and throws an er
 inappropriate type is passed in.  For example, calling C<IO::File.uri('http://....')> will
 throw an error (but will suggest using just uri('http://...') instead).
 
-=back
-
+=end item1
 =head2 IO::Encoded
 
 This is a generic role for encoded data streams.
 
-=over
-
-=item method encoding( --> Str) is rw
-
-=item method locale( --> Str) is rw
-
+=begin item1 
+method encoding( --> Str) is rw
+=end item1
+=begin item1 
+method locale( --> Str) is rw
 Encoding and locale are required for sane conversions.
 
-=back
-
+=end item1
 =head2 IO::Readable::Encoded
 
 This role provides encoded access to a readable data stream, implies
 C<IO::Encoded>. Might imply C<IO::Buffered>, but that's not a requirement.
 
-=over 4
-
-=item uri
-X<uri>X<ftp>X<http>
+=begin item1 
+uriX<|uri>X<|ftp>X<|http>
 
     method uri(Str $uri --> IO::Streamable);
     sub uri(Str $uri --> IO::Streamable);
@@ -1641,11 +1686,12 @@ passed in.  Here are some example mappings:
 
 These can naturally be overridden or added to by other modules.
 
-=item %*PROTOCOLS dynamic variable
-
+=end item1
+=begin item1 
+%*PROTOCOLS dynamic variable
 For each protocol, stores a type name that should be instantiated by calling the C<uri>
 constructor on that type, and passing in the appropriate uri.
 
-=back
-
-=for vim:set expandtab sw=4:
+=end item1
+=comment vim:set expandtab sw=4:
+=end pod
