@@ -6,7 +6,7 @@
 
 =AUTHOR
 =for table
-    Matthew N. "lue"    <L<mailto:rnddim@gmail.com|rnddim@gmail.com>>
+    Matthew N. "lue"    <L<rnddim@gmail.com|mailto:rnddim@gmail.com>>
 
 =VERSION
 =for table
