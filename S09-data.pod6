@@ -1,16 +1,11 @@
-
-=encoding utf8
-
-=head1 TITLE
-
+=begin pod
+=TITLE
 Synopsis 9: Data Structures
 
-=head1 AUTHORS
-
+=AUTHORS
     Larry Wall <larry@wall.org>
 
-=head1 VERSION
-
+=VERSION
     Created: 13 Sep 2004
 
     Last Modified: 5 Mar 2012
@@ -175,7 +170,6 @@ L<"Multidimensional arrays">), and are always contiguous:
     @seasons[0] = "Spring";          # The 1st season
     @seasons[2] = "Autumn"|"Fall";   # The 3rd season
 
-
 =head1 Fixed-size arrays
 
 A basic array declaration like:
@@ -292,7 +286,6 @@ dimension specifier (much like a subroutine definition):
 
     my @library[1_000_000 --> Book];
 
-
 =head1 Compact arrays
 
 In declarations of the form:
@@ -355,7 +348,6 @@ method, even if the type of the buffer elements is not C<byte>.
 a buffer type as their minimum abstraction level, hopefully with a
 known encoding.  Otherwise you must encode them explicitly from the
 higher-level abstraction into some buffer type.)
-
 
 =head1 Multidimensional arrays
 
@@ -999,18 +991,16 @@ single junction of the same species as the junctive argument.
 If two or more arguments are junctive, then the argument that is
 chosen to be "autothreaded" is:
 
-=over
-
-=item *
+=begin item1 
 
 the left-most I<all> or I<none> junction (if any), or else
 
-=item *
+=end item1
+=begin item1 
 
 the left-most I<one> or I<any> junction
 
-=back
-
+=end item1
 with the tests applied in that order.
 
 Each of the resulting set of calls is then recursively autothreaded
@@ -1112,7 +1102,7 @@ pragma to fill in the defaults:
     use autoindex;
     -> $i, $j, $k, $l { @c[$i; $j; $k; $l] = @a[$i; $j] * @b[$k; $l] }();
 
-or you can use the C<do BLOCK> syntax (see L<S04/"The do-once loop">) to
+or you can use the C<do BLOCK> syntax (see L<S04#"The do-once loop">) to
 call that closure, which also implicitly iterates:
 
     use autoindex;
@@ -1326,4 +1316,5 @@ Assignment doesn't look like binding, but consider that it's really
 calling some kind of underlying set method on the container, which
 must be mutable in order to change its contents.
 
-=for vim:set expandtab sw=4:
+=comment vim:set expandtab sw=4:
+=end pod
