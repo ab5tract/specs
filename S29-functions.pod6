@@ -51,7 +51,7 @@ dictate implementation.
 There is no particular difference between an operator and a function,
 but for the sake of documentation, only functions declared without
 specifying a grammatical category or with a category of C<term:>
-(see L<S02#"Bits and Pieces">) will be described as "functions",
+(see L<doc:S02#Bits and Pieces>) will be described as "functions",
 and everything else as "operators" which are outside of the scope
 of this document.  (See S03 for operators.)
 
@@ -203,12 +203,12 @@ An ordering of C<*> does the default comparison for the operator:
 
 =begin item1 
 caller
-See L<S06#"The C<callframe> and C<caller> functions">.
+See L<doc:S06#The callframe and caller functions>.
 
 =end item1
 =begin item1 
 callframe
-See L<S06#"The C<callframe> and C<caller> functions">.
+See L<doc:S06#The callframe and caller functions>.
 
 =end item1
 =begin item1 
@@ -337,7 +337,7 @@ argument should be removed from any existing code.)
 C<bless> automatically creates an object appropriate to the
 representation of the class, then calls all appropriate C<BUILD>
 routines for the current class, which initializes the object in
-least-derived to most-derived order. See L<S12#Objects> for more
+least-derived to most-derived order. See L<doc:S12#Objects> for more
 detailed information on object creation.
 
 =end item1
@@ -639,7 +639,7 @@ syscall
 =head2 Concurrency
 
 There are higher-level models of concurrency management in Perl (see
-L<S17#Concurrency>). These functions are simply the lowest level
+L<doc:S17#Concurrency>). These functions are simply the lowest level
 tools
 
 =begin item1 
@@ -833,7 +833,7 @@ delete, exists, pop, push, shift, splice, unshift
 
 =head3 Numeric
 
-See L<S32#Numeric>.
+See L<doc:S32#Numeric>.
 
 =head3 IO
 
@@ -938,7 +938,7 @@ Replaced by C<temp> which, unlike C<local>, defaults to not changing the value.
 =end item1
 =begin item1 
 lock
-See L<S17#Concurrency>. C<lock> has been replaced by
+See L<doc:S17#Concurrency>. C<lock> has been replaced by
 C<is atomic>.
 
 =end item1
