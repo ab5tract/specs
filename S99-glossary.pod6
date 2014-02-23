@@ -39,7 +39,7 @@ L<#grammar>.
 
 =head2 adverb
 
-See L<adverbial pair>.
+See L<#adverbial pair>.
 
 =head2 adverbial pair
 
@@ -232,7 +232,7 @@ branch for development in a repository.
 =head2 dies_ok
 
 A C<Test> function that succeeds when its argument, a Code object, dies at run
-time. See L<S24>.
+time. See L<doc:S24>.
 
 =head2 DIHWIDT
 
@@ -389,7 +389,7 @@ An operator that can appear between two terms.
 
 =head2 Int
 
-A built-in arbitrary-sized integer type. See L<http://doc.perl6.org/type/Int>.
+A built-in arbitrary-sized integer type. See L<doc:Int>.
 
 =head2 int
 
@@ -420,7 +420,7 @@ L<#Rakudo> running on the L<#JVM>.
 =head2 junction
 
 A compound type that is transparent to many operations. See
-L<http://doc.perl6.org/type/Junction>.
+L<doc:Junction>.
 
 =head2 JVM
 
@@ -466,7 +466,7 @@ Less Than Awesome.  #xa*~`ñ|Error -37: Operation not completedEgP&*1EW…
 
 =head2 LTM
 
-Longest Token Matching. See L<S05#Longest Token Matching>.
+Longest Token Matching. See L<doc:S05#Longest Token Matching>.
 
 =head1 M
 
@@ -529,7 +529,7 @@ Proposed Unicode normilization form for Perl6, in which composed
 characters always get their own codepoint. If a codepoint doesn't exist
 for that composed character, one is assigned dynamically.
 
-Documentation for this can hypothetically be found in L<S15>.
+Documentation for this can hypothetically be found in L<doc:S15>.
 
 =head2 Niecza
 
@@ -635,7 +635,7 @@ Parrot Magic Cookie.
 =head2 pod
 
 B<P>lain B<O>l' B<D>ocumentation, a documentation format understood by Perl
-6. See L<#S26> for details.
+6. See L<doc:S26> for details.
 
 =head2 pod6
 
@@ -652,7 +652,7 @@ Used to specify Perl 6's version of L<#pod>, as opposed to Perl 5's.
 =head2 precedence
 
 The order in which operators bind terms together; tighter precedence
-evaluates before looser precedence.  See L<S03#Operator precedence>
+evaluates before looser precedence.  See L<doc:S03#Operator precedence>
 for details.
 
 =head2 prefix
@@ -690,7 +690,7 @@ Short for Perl 6, the (spunky little sister|child) of Perl 5.
 
 =head2 QAST
 
-Successor to L<PAST>.
+Successor to L<#PAST>.
 
 =head1 R
 
@@ -777,7 +777,7 @@ Something that should never, ever happen.  Complain on #perl6 if you see one.
 
 In Perl, the sigil is the first character of a variable name.
 It must be either C<$>, C<@>, C<%>, or C<&> respectively for a scalar,
-array, hash, or code variable.  See also L<twigil>.
+array, hash, or code variable.  See also L<#twigil>.
 
 =head2 sink context
 
@@ -810,14 +810,14 @@ Software Transactional Memory
 =head2 Synopsis
 
 The current definition of the Perl 6 language.  Still in development.  Much
-more a community effort than the L<#Apocalypse>s and L<#Exegesis|Exegeses> were.
+more a community effort than the L<#Apocalypse>s and L<Exegeses|#Exegesis> were.
 
 =head1 T
 
 =head2 TheDamian
 
 L<#IRC> screen name for Damian Conway, writer of the original
-L<#Exegesis|Exegeses>.
+L<Exegeses|#Exegesis>.
 
 =head2 thinko
 
