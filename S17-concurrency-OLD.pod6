@@ -1,19 +1,14 @@
-
-=encoding utf8
-
-=head1 TITLE
-
+=begin pod
+=TITLE
 DRAFT: Synopsis 17: Processes and Concurrency
 
-=head1 AUTHORS
-
+=AUTHORS
     Elizabeth Mattijsen <liz@dijkmat.nl>
     Audrey Tang <audreyt@audreyt.org>
     Christoph Buchetmann
     Tim Nelson <wayland@wayland.id.au>
 
-=head1 VERSION
-
+=VERSION
     Created: 13 Jun 2005
 
     Last Modified: 06 June 2013
@@ -23,26 +18,26 @@ Concurrency takes many forms in Perl 6, some of which are covered
 in more detail in other Synopses.  Some specific instances of
 concurrency detailed elsewhere includes:
 
-=over
+=begin item1 
 
-=item *
+Hyper operators (L<S03#Hyper operators>)
 
-Hyper operators (L<S03/Hyper operators>)
+=end item1
+=begin item1 
 
-=item *
+Junctions (L<S09#Junctions>)
 
-Junctions (L<S09/Junctions>)
+=end item1
+=begin item1 
 
-=item *
+Feeds (L<S06#Feed operators>)
 
-Feeds (L<S06/Feed operators>)
+=end item1
+=begin item1 
 
-=item *
+C<hyper> and C<race> operators (L<S02#The hyper operator>)
 
-C<hyper> and C<race> operators (L<S02/The hyper operator>)
-
-=back
-
+=end item1
 The remainder of this draft has been pasted from various sources.  The
 bulk of it is simply the old S17-concurrency.pod, which dealt only with 
 concurrency.  Signals were added from S16-io, but haven't been merged 
@@ -481,40 +476,42 @@ a codeblock being executed in this thread.
        END { }
    };
 
-
 =head3 Thread status and attributes
 
-=over
-
-=item Self reflection
-
+=begin item1 
+Self reflection
 TODO: how you can access thread attributes inside a thread
 
    async {
       say "my tid is ", +self;
    };
 
-=item started
-
+=end item1
+=begin item1 
+started
 start time
 
-=item finished
-
+=end item1
+=begin item1 
+finished
 end time
 
-=item waiting
-
+=end item1
+=begin item1 
+waiting
 suspended (not diff from block on wakeup signal)
 waiting on a handle, a condition, a lock, et cetera
 otherwise returns false for running threads
 if it's finished then it's Nil
 
-=item current_continuation
-
+=end item1
+=begin item1 
+current_continuation
 the CC currently running in that thread
 
-=item wake_on_readable, wake_on_writable, wake_on
-
+=end item1
+=begin item1 
+wake_on_readable, wake_on_writable, wake_on
 TODO: IO objects and containers gets concurrency love!
 
  $obj.wake_on_either_readable_or_writable_or_passed_time(3); # fixme fixme
@@ -525,81 +522,86 @@ TODO: IO objects and containers gets concurrency love!
  async { @a.blocking_shift({ ... }) };
  async { @a.unshift({ ... }) };
 
-=back
-
+=end item1
 =head3 Thread operators
 
-=over
-
-=item Stringify
-
+=begin item1 
+Stringify
 Stringify to something sensible (eg. "<Conc:tid=5>");
 
   my $thr = async { ... };
   say ~$thr;
 
-=item Numerify
-
+=end item1
+=begin item1 
+Numerify
 Numify to TIDs (as in pugs)
 
   my $thr = async { ... };
   say +$thr;
 
-=item Enumerable
-
+=end item1
+=begin item1 
+Enumerable
 TODO: Enumerable with Conc.list
 
-=back
-
+=end item1
 =head3 Thread methods
 
-=over
-
-=item yield
-
+=begin item1 
+yield
 TODO: Conc.yield (if this is to live but deprecated, maybe call it sleep(0)?)
 
-=item sleep
-
+=end item1
+=begin item1 
+sleep
 sleep() always respects other threads, thank you very much
 
-=item join
-
+=end item1
+=begin item1 
+join
 wait for invocant to finish (always item context)
 
   my $thr = async { ... };
   $thr.join();
 
-=item die
-
+=end item1
+=begin item1 
+die
 throw exception in the invocant thread
 
-=item alarm
-
+=end item1
+=begin item1 
+alarm
 set up alarms
 
-=item alarms
-
+=end item1
+=begin item1 
+alarms
 query existing alarms
 
-=item suspend
-
+=end item1
+=begin item1 
+suspend
 pause a thread; fail if already paused
 
-=item resume
-
+=end item1
+=begin item1 
+resume
 revive a thread; fail if already running
 
-=item detach
-
+=end item1
+=begin item1 
+detach
 survives parent thread demise (promoted to process)
 process-local changes no longer affects parent
 tentatively, the control methods still applies to it
 including wait (which will always return Nil)
 also needs to discard any atomicity context
 
-=item "is throttled" trait
-
+=end item1
+=begin item1 
+"is throttled" trait
 TODO:
 
     method throttled::trait_auxiliary:<is> ($limit=1, :$key=gensym()) {
@@ -619,9 +621,7 @@ TODO:
     async { $f.a }
     async { $f.b }
 
-=back
-
-
+=end item1
 =head3 Continuations
 
 TODO document
@@ -630,9 +630,7 @@ TODO document
 
 Live in userland for the time being.
 
-
 =head3 Still more or less unorganized stuff
-
 
     ### INTERFACE BARRIER ###
     module Blah;
@@ -672,29 +670,25 @@ Live in userland for the time being.
 
 =head3 See also
 
-=over
+=begin item1 
 
-=item *
+L<S16#IE<sol>O Considerations>
 
-L<S16/IE<sol>O Considerations>
+=end item1
+=begin item1 
 
-=item *
+L<S16#File Descriptors>
 
-L<S16/File Descriptors>
+=end item1
+=begin item1 
 
-=item *
+L<S16#Sockets>
 
-L<S16/Sockets>
-
-=back
-
-=cut
-
+=end item1
 =head1 Additions
 
 Please post errors and feedback to perl6-language.  If you are making
 a general laundry list, please separate messages by topic.
 
-=cut
-
-=for vim:set expandtab sw=4:
+=comment vim:set expandtab sw=4:
+=end pod

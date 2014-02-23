@@ -1,16 +1,12 @@
-=encoding utf8
-
-=head1 TITLE
-
+=begin pod
+=TITLE
 RE-DRAFT: Synopsis 17: Concurrency 
 
-=head1 AUTHORS
-
+=AUTHORS
     Jonathan Worthington <jnthn@jnthn.net>
     Elizabeth Mattijsen <liz@dijkmat.nl>
 
-=head1 VERSION
-
+=VERSION
     Created: 3 Nov 2013
 
     Last Modified: 7 Jan 2014
@@ -32,28 +28,27 @@ also helps make it easier to extend and refactor code.
 Many common language features related to parallel and asynchronous programming
 lack composability. For example:
 
-=over
-
-=item *
+=begin item1 
 
 Locks do not compose, since two independently correct operations using
 locks may deadlock when performed together.
 
-=item *
+=end item1
+=begin item1 
 
 Callback-centric approaches tend to compose badly, with chains of
 asynchronous operations typically leading to deeply nested callbacks. This
 essentially is just leaving the programmer to do a CPS transform of their own
 logical view of the program by hand.
 
-=item *
+=end item1
+=begin item1 
 
 Directly spawning threads on a per-component basis tends to compose
 badly, as when a dozen such components are used together the result is a high
 number of threads with no ability to centrally schedule or handle errors.
 
-=back
-
+=end item1
 In Perl 6, concurrency features aimed at typical language users should have
 good composability properties, both with themselves and also with other
 language features.
@@ -97,31 +92,31 @@ Elsewhere in the specification, Perl 6 provides several features that allow
 the programmer to indicate that parallelizing an operation will produce the
 same result as evaluating it serially:
 
-=over
+=begin item1 
 
-=item *
-
-Hyper operators (L<S03/Hyper operators>) express that parallel operator
+Hyper operators (L<S03#Hyper operators>) express that parallel operator
 application is safe.
 
-=item *
+=end item1
+=begin item1 
 
-Junctions (L<S09/Junctions>) may auto-thread in parallel.
+Junctions (L<S09#Junctions>) may auto-thread in parallel.
 
-=item *
+=end item1
+=begin item1 
 
-Feeds (L<S06/Feed operators>) form pipelines and express that the stages
+Feeds (L<S06#Feed operators>) form pipelines and express that the stages
 may be executed in parallel in a producer-consumer style relationship (though
 each stage is in itself not parallelized).
 
-=item *
+=end item1
+=begin item1 
 
-C<hyper> and C<race> list operators (L<S02/The hyper operator>) express
+C<hyper> and C<race> list operators (L<S02#The hyper operator>) express
 that iteration may be done in parallel; this is a generalization of hyper
 operators.
 
-=back
-
+=end item1
 =head2 Make the hard things possible
 
 The easy things should be easy, and able to be built out of primitives that
@@ -551,60 +546,62 @@ taps it.
 
 The following methods are available on a C<Supply>:
 
-=over
-
-=item flat
-
-=item grep
-
-=item map
-
-=item uniq
-
-=item squish
-
-=back
-
+=begin item1 
+flat
+=end item1
+=begin item1 
+grep
+=end item1
+=begin item1 
+map
+=end item1
+=begin item1 
+uniq
+=end item1
+=begin item1 
+squish
+=end item1
 There are some others that will only publish a result or results if C<done> is
 reached:
 
-=over
-
-=item elems
-
-=item max
-
-=item min
-
-=item minmax
-
-=item reduce
-
-=item reverse
-
-=item sort
-
-=back
-
+=begin item1 
+elems
+=end item1
+=begin item1 
+max
+=end item1
+=begin item1 
+min
+=end item1
+=begin item1 
+minmax
+=end item1
+=begin item1 
+reduce
+=end item1
+=begin item1 
+reverse
+=end item1
+=begin item1 
+sort
+=end item1
 There are some combinators that deal with bringing multiple supplies
 together:
 
-=over
-
-=item C<merge>
-
+=begin item1 
+C<merge>
 produces a supply containing the values produced by two
 other supplies, and triggering C<done> once both of the supplies have
 done so. 
 
-=item C<zip>
-
+=end item1
+=begin item1 
+C<zip>
 produces a supply that pairs together items from two other
 supplies, using C<< infix:<,> >> by default or any other user-supplied
 function.
 
-=back
-
+=end item1
 [TODO: plenty more of these: combine_latest, while, until...]
 
 These combinators that involve multiple supplies need care in their
@@ -634,7 +631,6 @@ synchronization issues. Here is how C<zip> is implemented:
     }
 
 Conjecture: this is going to end up looking more like:
-
 
     method zip(Supply $a, Supply $b, &with = &infix:<,>) {
         my @as;
@@ -941,4 +937,5 @@ The initial number of permits may be negative, positive or 0.
 Some implementations allow for race-free acquisition and release of multiple
 permits at once, but this primitive does not offer that capability.
 
-=for vim:set expandtab sw=4:
+=comment vim:set expandtab sw=4:
+=end pod
