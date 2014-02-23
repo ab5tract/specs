@@ -35,23 +35,21 @@ to support C<< postcircumfix:<( )> >>.
 
 Base class for all executable objects.
 
-=begin item1 
+=begin defn
 signature
- method signature( --> Signature )
-
-=end item1
-=begin item1 
+    method signature( --> Signature )
+=end defn
+=begin defn
 assuming
- method assuming( Code $executable: *@curried_positionals, *%curried_named --> Code)
+    method assuming( Code $executable: *@curried_positionals, *%curried_named --> Code)
 
 C<assuming> primes C<$executable>, returning a C<Code> object that,
 when executed, will use curried arguments as well as any additionally
-supplied arguments. See L<S06#Priming>.
-
-=end item1
-=begin item1 
+supplied arguments. See L<doc:S06#Priming>.
+=end defn
+=begin defn
 defined
- method defined( --> Bool )
+    method defined( --> Bool )
 
 For C<Code>, the C<.defined> method returns whether a body has
 been defined.  A body consisting only of C<...>, C<!!!>, or C<???>
@@ -59,10 +57,10 @@ been defined.  A body consisting only of C<...>, C<!!!>, or C<???>
 
 To test if a name has been declared, look up the symbol in the
 appropriate symbol table.
-
-=end item1
+=end defn
 =head1 Block
 
+=for code :allow<L>
     # Executable objects that have lexical scopes
     class Block is Code does Callable {
         method next()   {...}
@@ -70,50 +68,49 @@ appropriate symbol table.
         method redo()   {...}
         method leave()  {...}
         method labels() {...}
-        method as()     {...} # See L<S12#Introspection> and L<S02#Value types>
+        method as()     {...} # See L<doc:S12#Introspection> and L<doc:S02#Value types>
     }
 
 =head1 Signature
 
- class Signature {...}
+    class Signature {...}
 
 The C<Signature> class is used for function parameters, as the left-hand
 side of a binding, and for the argument to declarators like C<my>.
-See L<S02#Signature objects>, L<S06#Signatures>, and L<S06#Signature Introspection>
+See L<doc:S02#Signature objects>, L<doc:S06#Signatures>, and L<doc:S06#Signature Introspection>
 
 =head1 Capture
 
- class Capture does Positional does Associative {...}
+    class Capture does Positional does Associative {...}
 
 The C<Capture> class is used for the arguments of function calls
 and the right-hand side of a binding.
-See L<S02#Parcels, parameters, and Captures>
+See L<doc:S02#Parcels, parameters, and Captures>
 
 =head1 WrapHandle
 
- class WrapHandle {...}
+    class WrapHandle {...}
 
 =head1 Routine
 
- class Routine is Block {
-      method wrap(Code $code --> WrapHandle ) {...}
-      method unwrap(Wraphandle $original --> Routine ) {...}
-      method name( --> Str ) {...}
-      method multi( --> Bool ) {...}
- }
+    class Routine is Block {
+        method wrap(Code $code --> WrapHandle ) {...}
+        method unwrap(Wraphandle $original --> Routine ) {...}
+        method name( --> Str ) {...}
+        method multi( --> Bool ) {...}
+    }
 
-=begin item1 
+=begin defn
 unwrap
-See L<S06#Wrapping>.
-
-=end item1
-=begin item1 
+See L<doc:S06#Wrapping>.
+=end defn
+=begin defn
 wrap
- method wrap(Code $code) {...}
+    method wrap(Code $code) {...}
 
-See L<S06#Wrapping>.
+See L<doc:S06#Wrapping>.
 
-=end item1
+=end defn
 =head1 Sub
 
     class Sub is Routine {...}
