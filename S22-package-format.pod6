@@ -1,19 +1,14 @@
-
-=encoding utf8
-
-=head1 TITLE
-
+=begin pod
+=TITLE
 Synopsis 22: Package Format [DRAFT]
 
-=head1 AUTHORS
-
+=AUTHORS
     Jos Boumans <kane@cpan.org>
     Audrey Tang <audreyt@audreyt.org>
     Florian Ragwitz <rafl@debian.org>
     Tim Nelson <wayland@wayland.id.au>
 
-=head1 VERSION
-
+=VERSION
     Created: 3 Nov 2005
 
     Last Modified: 19 Dec 2008
@@ -26,36 +21,34 @@ Synopsis 22: Package Format [DRAFT]
 I'll start by listing a few terms, and whether this document is supposed to cover them or
 not.
 
-=over
+=begin item1 
+.jib files; this is the source package format, and is specified in this document
+=end item1
+=begin item1 
+CPAN6; this is a piece of software for managing an archive network (such as CPAN).This is not specified in this document; see L<http://cpan6.org/>
 
-=item * .jib files; this is the source package format, and is specified in this document
+=end item1
+=begin item1 
+PAUSE6; this is an actual network based on the cpan6 software (see above).  It alsois not documented here.
 
-=item * CPAN6; this is a piece of software for managing an archive network (such as CPAN).
-This is not specified in this document; see L<http://cpan6.org/>
-
-=item * PAUSE6; this is an actual network based on the cpan6 software (see above).  It also
-is not documented here.
-
-=item * CPAN6.pm; this is a piece of software that starts with what it can get on PAUSE6, and
-attempts to give you an installed perl module (this is a replacement for
+=end item1
+=begin item1 
+CPAN6.pm; this is a piece of software that starts with what it can get on PAUSE6, andattempts to give you an installed perl module (this is a replacement for
 CPANPLUS/cpan2dist)
 
-=back
-
+=end item1
 =head2 Inspirations
 
 The following can be useful inspirations:
 
-=over
-
-=item * Debian Policy: L<http://www.us.debian.org/doc/debian-policy>
-
-=item * Software::Packager::Metadata:
-L<http://perlsoftpackmet.svn.sourceforge.net/viewvc/perlsoftpackmet/main/doc/> (click on the
+=begin item1 
+Debian Policy: L<http://www.us.debian.org/doc/debian-policy>
+=end item1
+=begin item1 
+Software::Packager::Metadata:L<http://perlsoftpackmet.svn.sourceforge.net/viewvc/perlsoftpackmet/main/doc/> (click on the
 link in the Rev. column next to Overview)
 
-=back
-
+=end item1
 =head1 PACKAGE LAYOUT
 
 =head2 Project directory
@@ -173,32 +166,31 @@ C<Authority> can be made to hold both cases.
 
     [3] Steal more tags from debian policy
 
-=head1 DEPENDENCIES
-
+=DEPENDENCIES
 =head2 Dependency Notation
 
 Dependency notation allows you to express the following concepts:
 
-=over
-
-=item OR
-
+=begin item1 
+OR
 Specifies alternatives
 
-=item AND
-
+=end item1
+=begin item1 
+AND
 Specifies cumulative requirements
 
-=item associate VERSION requirement
-
+=end item1
+=begin item1 
+associate VERSION requirement
 Specifies a criteria for the version requirement
 
-=item grouping
-
+=end item1
+=begin item1 
+grouping
 This allows nesting of the above expressions
 
-=back
-
+=end item1
 =head3 Basic notation:
 
     a, b                        # a AND b
@@ -238,10 +230,10 @@ This allows nesting of the above expressions
     # { a => 1 } -- VERSIONED
     a: 1
 
-
     # \[ ... ]  -- GROUPING
     - !perl/ref:
       =:
         - ...
 
-=for vim:set expandtab sw=4:
+=comment vim:set expandtab sw=4:
+=end pod
