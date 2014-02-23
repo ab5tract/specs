@@ -1498,24 +1498,19 @@ reader and writer ends of the socket.
 Indicates that this object can perform standard posix C<IO>
 operations. It implies C<IO::Readable> and C<IO::Writeable>.
 
-=begin item1 
-method dup( --> IO)
-=end item1
-=begin item1 
-has Bool $.blocking is rw
-=end item1
-=begin item1 
-method flock(:$r,:$w --> Bool)
-=end item1
-=begin item1 
-method funlock( --> Bool)
-=end item1
-=begin item1 
-...
-=end item1
+=item1
+    method dup( --> IO)
+=item1
+    has Bool $.blocking is rw
+=item1
+    method flock(:$r,:$w --> Bool)
+=item1
+    method funlock( --> Bool)
+=item1
+    ...
 =head1 Unfilled
 
-=begin item1 
+=begin item1
 IO.ioctl
 Available only as a handle method.
 
@@ -1614,12 +1609,13 @@ Indicates that this object performs buffering. The management of the
 buffer is completely implementation specific.
 
 =begin item1 
-method flush( --> Bool)
+    method flush( --> Bool)
 Flushes the buffers associated with this object.
 
 =end item1
 =begin item1 
-method autoflush( --> Bool) is rw
+
+    method autoflush( --> Bool) is rw
 Forces this object to keep its buffers empty
 
 If set to nonzero, forces a flush right away and after every write
@@ -1646,6 +1642,7 @@ which means that data might not be available at request.
 
 =begin item1 
 new()
+
     method new(
         Bool :$NoOpen,
         Bool :$Blocking,
@@ -1667,6 +1664,7 @@ available.
 =end item1
 =begin item1 
 uri
+
     method uri(Str $uri --> IO::Streamable) {...}
 
 This should be callable on the class, and act like a kind of "new()" function.  When given
@@ -1679,14 +1677,12 @@ throw an error (but will suggest using just uri('http://...') instead).
 
 This is a generic role for encoded data streams.
 
-=begin item1 
-method encoding( --> Str) is rw
-=end item1
-=begin item1 
-method locale( --> Str) is rw
-Encoding and locale are required for sane conversions.
+=item1
+    method encoding( --> Str) is rw
+=item1
+    method locale( --> Str) is rw
 
-=end item1
+Encoding and locale are required for sane conversions.
 =head2 IO::Readable::Encoded
 
 This role provides encoded access to a readable data stream, implies
