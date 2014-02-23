@@ -1,12 +1,8 @@
-
-=encoding utf8
-
-=head1 TITLE
-
+=begin pod
+=TITLE
 DRAFT: Synopsis 32: Setting Library - Basics
 
-=head1 AUTHORS
-
+=AUTHORS
     Rod Adams <rod@rodadams.net>
     Larry Wall <larry@wall.org>
     Aaron Sherman <ajs@ajs.com>
@@ -15,8 +11,7 @@ DRAFT: Synopsis 32: Setting Library - Basics
     Moritz Lenz <moritz@faui2k3.org>
     Tim Nelson <wayland@wayland.id.au>
 
-=head1 VERSION
-
+=VERSION
     Created: 19 Mar 2009 extracted from S29-functions.pod
 
     Last Modified: 29 June 2012
@@ -44,10 +39,8 @@ The following are defined in the C<Mu> class:
      
  }
 
-=over
-
-=item defined
-
+=begin item1 
+defined
   multi method defined ( $self: --> Bool ) is export
   multi method defined ( $self: ::role --> Bool ) is export
 
@@ -63,16 +56,18 @@ A value may be defined according to one role and undefined according to another.
 Without the extra argument, defaults to the definition of defined supplied by
 the type of the object.
 
-=item new
-
+=end item1
+=begin item1 
+new
   multi method new(*%attrs) { }
 
 Creates a new object of the same type as the object is called on,
 setting attributes with public accessors to the values provided
 by the named arguments to C<new>.
 
-=item undefine
-
+=end item1
+=begin item1 
+undefine
   multi undefine( Any $thing is rw --> Any )
 
 Takes any variable as a parameter and attempts to "remove" its
@@ -86,12 +81,14 @@ In all cases, calling C<undefine> on a variable
 should place the object in the same state as if it was just
 declared.
 
-=item not
-
+=end item1
+=begin item1 
+not
      method not() {...}
 
-=item so
-
+=end item1
+=begin item1 
+so
      method so() {...}
 
 XXX Copied from S02 -- should it be deleted from there?
@@ -105,8 +102,7 @@ unless the class overrides the definition.  Note that if you could
 instantiate a C<Mu> it would be considered defined, and thus true.
 (It is not clear that this is allowed, however.)
 
-=back
-
+=end item1
 =head2 Any
 
 The following are defined in the C<Any> class:
@@ -122,10 +118,8 @@ The following are defined in the C<Any> class:
      multi method warn ( Mu $o: --> Any ) is export {...}
  }
 
-=over
-
-=item can
-
+=begin item1 
+can
  multi method can ($self:, Str $method --> Callable )
 
 If there is a multi method of name C<$method> that can be called on
@@ -134,8 +128,9 @@ of the invocant.
 
 Otherwise an undefined value is returned.
 
-=item clone
-
+=end item1
+=begin item1 
+clone
  multi method clone (::T $self --> T --> Any )
  multi method clone (::T $self, *%attributes --> T --> Any )
 
@@ -145,28 +140,32 @@ to C<$o>.
 The second variant does the same, but any named arguments override an
 attribute during the cloning process.
 
-=item does
-
+=end item1
+=begin item1 
+does
  multi method does ($self:, $type --> Bool )
 
 Returns C<True> if and only if C<$self> conforms to type C<$type>.
 
-=item isa
-
+=end item1
+=begin item1 
+isa
  multi method isa ($self:, $type --> Bool )
 
 Returns C<True> if a the invocant an instance of class C<$type>, or
 of a subset type or a derived class (through inheritance) of C<$type>.
 
-=item perl
-
+=end item1
+=begin item1 
+perl
  multi method perl ( Mu $o: --> Str ) is export
 
 Returns a perlish representation of the object, so that calling C<eval>
 on the returned string reproduces the object as accurately as possible.
 
-=item warn
-
+=end item1
+=begin item1 
+warn
  multi method warn ( Mu $o: --> Any ) is export
 
 Throws a resumable warning exception, which is considered a control
@@ -183,36 +182,31 @@ To simply print to C<$*ERR>, please use C<note> instead.  C<warn>
 should be reserved for use in threatening situations when you don't
 quite want to throw an exception.
 
-=back
-
+=end item1
 =head2 Pattern
 
  role Pattern {
      method ACCEPTS($self:, $other) {...}
  }
 
-=over
-
-=item ACCEPTS
-
+=begin item1 
+ACCEPTS
 Used in smartmatching; see S03.
 
-=back
-
+=end item1
 =head2 Scalar
 
 C<Scalar> provides the basic tools for operating on undifferentiated
 scalar variables. All of the following are exported by default.
 
-=over
-
-=item VAR
-
+=begin item1 
+VAR
 This is not really a method, but some kind of macro.  See L<S12> for details.
 
-=back
-
+=end item1
 =head1 Additions
 
 Please post errors and feedback to perl6-language.  If you are making
 a general laundry list, please separate messages by topic.
+
+=end pod
