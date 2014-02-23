@@ -1,17 +1,11 @@
-
-=encoding utf8
-
-=head1 TITLE
-
+=begin pod
+=TITLE
 DRAFT: Synopsis 19: Command Line Interface
 
-
-=head1 AUTHORS
-
+=AUTHORS
     Jerry Gay <jerry.gay@rakudoconsulting.com>
 
-=head1 VERSION
-
+=VERSION
     Created: 12 Dec 2008
 
     Last Modified: 27 Nov 2013
@@ -25,30 +19,31 @@ muscle memory will still work.
 
 Notable features described in the sections below include:
 
-=over 4
-
-=item *
+=begin item1 
 
 A smart default command-line processor in the core
 
-=item *
+=end item1
+=begin item1 
 
 All options have a long, descriptive name for increased clarity
 
-=item *
+=end item1
+=begin item1 
 
 Common options have a short, single-character name, and allow clustering
 
-=item *
+=end item1
+=begin item1 
 
 Extended option syntax provides the ability to set boolean true/false
 
-=item *
+=end item1
+=begin item1 
 
 New C<++> metasyntax allows options to be passed through to subsystems
 
-=back
-
+=end item1
 This interface to Perl 6 is special in that it occurs at the intersection of
 the program and the operating system's command line shell, and thus is not
 accessed via a consistent syntax everywhere. A few assumptions are made here,
@@ -58,14 +53,13 @@ and as such the syntax presented in this document is expected to work in a
 Unix-style shell. To explore the particularities of other operating systems,
 see L<Synopsis 25|S25-portability> (TBD).
 
-
 =head1 Command Line Elements
 
 The command line is broken down into two basic elements: a I<program>, and
 I<arguments>. Each command line element is whitespace separated, so elements
 containing whitespace must be quoted. The I<program> processes the arguments
-and performs the requested actions. It looks something like F</usr/bin/perl6>,
-F<parrot perl6.pbc>, or F<rakudo> (or F<mono niecza.exe>, et cetera),
+and performs the requested actions. It looks something like I</usr/bin/perl6>,
+I<parrot perl6.pbc>, or I<rakudo> (or I<mono niecza.exe>, et cetera),
 and is followed by zero or more I<arguments>.
 The I<program> portion of the command
 line is made available at run-time via the C<< PROCESS::<$PROGRAM> >>
@@ -79,7 +73,6 @@ values remain, Perl 6 implicitly opens STDIN to read the script. If you wish
 to pass arguments to a script read from STDIN, you must specify STDIN by name
 (C<-> on most operating systems).
 
-
 =head1 Backward (In)compatibility
 
 You may find yourself typing your favorite Perl 5 options, even after
@@ -90,22 +83,21 @@ syntax, Perl gives you a friendly error message.  If the unrecognized
 syntax is a valid Perl 5 option, Perl provides helpful suggestions to allow
 you to perform the same action using the current syntax.
 
-
 =head2 Unchanged Syntactic Features
 
 Several features have not changed from Perl 5, including:
 
-=over 4
-
-=item *
+=begin item1 
 
 The most common options have a single-character short name
 
-=item *
+=end item1
+=begin item1 
 
 Single-character options may be clustered with the same syntax and semantics
 
-=item *
+=end item1
+=begin item1 
 
 Many command-line options behave similarly, for example:
 
@@ -124,185 +116,198 @@ Many command-line options behave similarly, for example:
   -V                                   Display verbose config info
 
 All of these options have extended syntax, and some may have slightly
-different semantics, so see L</"Option Reference"> below for the details.
+different semantics, so see L<#"Option Reference"> below for the details.
 
-=back
-
-
+=end item1
 =head2 Removed Syntactic Features
 
 Some Perl 5 command-line features are no longer available, either because
 there's a new and different way to do it in Perl 6, or because they're
 no longer relevant.  Here's a breakdown of what's been removed:
 
-=over 4
-
-=item -0 *octal/hex*
-
+=begin item1 
+-0 *octal/hex*
 Sets input record separator.  Missing due to lack of specification in
-L<Synopsis 16|S16-io>.  There is a comment about this in the L</"Notes">
+L<Synopsis 16|S16-io>.  There is a comment about this in the L<#"Notes">
 section at the end of this document.
 
-=item -C *number/list*
-
+=end item1
+=begin item1 
+-C *number/list*
 Control unicode features.  Perl 6 has unicode semantics, and assumes a
 UTF-8 command-line interface (until proven otherwise, at which point this
 functionality may be readdressed).
 
-=item -d, -dt, -d:foo, -D, etc.
-
+=end item1
+=begin item1 
+-d, -dt, -d:foo, -D, etc.
 Debugging commands.  Replaced with the C<++BUG> metasyntactic option.
 
-=item -E *line*
-
+=end item1
+=begin item1 
+-E *line*
 Execute a line of code, with all features enabled.  This is specific to
 Perl 5.10, and not relevant to Perl 6, where C<-e> performs this function.
 
-=item -i *extension*
-
+=end item1
+=begin item1 
+-i *extension*
 Modify files in-place.  Haven't thought about it enough to add yet, but
 I'm certain it has a strong following. {{TODO review decision here}}
 
-=item -l
-
+=end item1
+=begin item1 
+-l
 Enable automatic line-ending processing.  This is the default behavior.
 
-=item -M *module*, -m *module*, etc.
-
+=end item1
+=begin item1 
+-M *module*, -m *module*, etc.
 use/no module.  Replaced by C<--use>.
 
-=item -P
-
+=end item1
+=begin item1 
+-P
 Run option through C preprocessor. This caused problems for Perl 5, and is completely obsolete now.
 
-=item -s
-
+=end item1
+=begin item1 
+-s
 Enable rudimentary switch parsing.  By default, Perl 6 parses the
 arguments passed to a script using the signature supplied by the user
-in the MAIN routine (see L<S06/"Declaring a MAIN subroutine">).
+in the MAIN routine (see L<S06#"Declaring a MAIN subroutine">).
 
-=item -t
-
+=end item1
+=begin item1 
+-t
 Enable taint warnings mode.  Taint mode needs more thought, but it's
 much more likely that the C<-T> switch will take options rather than
 use a second command-line flag to implement related behavior.
 
-=item -u
-
+=end item1
+=begin item1 
+-u
 Dump the core after parsing the program. This has been deemed obsolete.
 
-=item -U
-
+=end item1
+=begin item1 
+-U
 Allow unsafe operations.  This is extremely dangerous and infrequently
 used, and doesn't deserve its own command-line option.
 
-=item -w
-
+=end item1
+=begin item1 
+-w
 Enable warnings.  This is the default behavior.
 
-=item -W
-
+=end item1
+=begin item1 
+-W
 Enable all warnings.  This is infrequently used, and doesn't deserve its
 own command-line option.
 
-=item -X
-
+=end item1
+=begin item1 
+-X
 Disable all warnings.  This is infrequently used, and doesn't deserve its
 own command-line option.
 
-=back
-
-
+=end item1
 =head1 Options and Values
 
 Command line options are parsed using the following rules:
 
-=over 4
-
-=item *
+=begin item1 
 
 Options must begin with one of the following symbols: C<-->, C<->, or C<:>.
 
-=item *
+=end item1
+=begin item1 
 
 Options are case sensitive. C<-o> and C<-O> are not the same option.
 
-=item *
+=end item1
+=begin item1 
 
 All options have a multi-character, descriptive name for increased clarity.
 Multi-character option names always begin with C<--> or C<:>.
 
-=item *
+=end item1
+=begin item1 
 
 Common options have a short, one-character name for speed.
 Single-character names always begin with C<->.
 
-=item *
+=end item1
+=begin item1 
 
 Single-character options may be clustered. C<-ab> means C<-a -b>. When a
 single-character option which requires a value is clustered, the option may
 appear only in the final position of the cluster.
 
-=item *
+=end item1
+=begin item1 
 
 Options may be negated with C</>, for example C<--/name>, C<:/name>, C<-/n>.
 Negated single-character options cannot appear in a cluster.  In practice,
 negated options are rare anyway, as most boolean options default to False.
 
-=item *
+=end item1
+=begin item1 
 
 Option names follow Perl 6 identifier naming convention, except C<'> is not
 allowed, and single-character options may be any character or number.
 
-=item *
+=end item1
+=begin item1 
 
 The special option C<--> signals the parser to stop option processing.
 Arguments following a bare C<--> (with no identifier) are always parsed as
 a list of values, even if they look like valid options.
 
-=back
-
-
+=end item1
 Delimited options allow you to transparently pass one or more options through to
 a subsystem, as specified by the special options that delimit those options.
 They are parsed according to the following rules:
 
-=over 4
-
-=item *
+=begin item1 
 
 The opening and closing delimiters begin with two or more plus characters,
 for example C<++>.  You'll usually use two plus characters, but more are
 allowed to avoid ambiguity when nesting delimited options.
 
-=item *
+=end item1
+=begin item1 
 
 Opening and closing delimited option names follow option identifier naming
 convention, defined above.
 
-=item *
+=end item1
+=begin item1 
 
 If the closing delimiter is omitted, the rest of the command line is consumed.
 
-=item *
+=end item1
+=begin item1 
 
 Inside a delimited option, the C<--> option does not suppress searching for
 the closing delimiter.  That is, only the rest of the arguments within
 the delimiters are treated as values.
 
-=item *
+=end item1
+=begin item1 
 
 Eager matching semantics are used, so the first closing delimiter found
 completes the match.
 
-=item *
+=end item1
+=begin item1 
 
 Delimited options cannot be negated.  However, the final delimiter takes
 a slash indicating the termination of the delimited processing, much
 like a closing HTML tag.
 
-=back
-
+=end item1
 These options are made available in dynamic variables matching their name,
 and are invisible to C<MAIN()> except as C<< %*OPTSZ<><name> >>.  For example:
 
@@ -331,28 +336,26 @@ allowing you to properly nest delimited options.
 The actual storage location of C<%*OPTS> may be either in C<< PROCESS::<%OPTS> >>
 or C<< GLOBAL::<%OPTS> >>, depending on how the process sets up its interpreters.
 
-
 Values are parsed with the following rules:
 
-=over 4
-
-=item *
+=begin item1 
 
 Values are passed to options with the following syntax C<--option=value>
 or C<--option value>.
 
-=item *
+=end item1
+=begin item1 
 
 Values containing whitespace must be enclosed in quotes, for example
 C<-O="spacey value">
 
-=item *
+=end item1
+=begin item1 
 
 Multiple values are passed by specifying multiple instances
 of the option, as in C<--option=val1 --option='val 2'>.
 
-=back
-
+=end item1
 =head2 Remaining arguments
 
 Any remaining arguments to the Perl6 program are placed in the @*ARGS array.
@@ -385,29 +388,30 @@ Perl 6 options, descriptions, and services.
 
 =head2 Reference
 
-=over 4
-
-=item --autoloop-comb, -a
-
+=begin item1 
+--autoloop-comb, -a
 When used with C<-n> or C<-p>, implicitly combs input and assigns the
 result to C<@_> within the loop produced by the C<-n> or C<-p>.
 
 The default pattern is C</\S+/>, an alternate pattern for comb may be
 specified with C<--autoloop-pattern>, a.k.a. C<-F>.
 
-=item ++CMD --command-line-parser *parser* ++/CMD
-
+=end item1
+=begin item1 
+++CMD --command-line-parser *parser* ++/CMD
 Add a command-line processor.  When this option is parsed, it immediately
 triggers an action that affects or replaces the command-line parser.
 Therefore, it is a good idea to put this option as early as possible in the
 argument list.
 
-=item --check-syntax, -c
-
+=end item1
+=begin item1 
+--check-syntax, -c
 Check syntax, then exit.  Desugars to C<-e 'CHECK { compiles_ok(); exit; }'>.
 
-=item --doc
-
+=end item1
+=begin item1 
+--doc
 Lookup Perl documentation in Pod format.  Desugars to
 C<-e 'CHECK { compiles_ok(); dump_perldoc(); }'>. C<$*ARGS> contains the
 arguments passed to C<perl6>, and is available at C<CHECK> time, so
@@ -416,73 +420,85 @@ C<dump_perldoc()> can respond to command-line options.
 {{TODO may create a ++DOC subsystem here. also, may use -d for short name,
 even though it clashes with perl 5}}
 
-=item ++BUG [*switches*, *flags*] ++/BUG
-
+=end item1
+=begin item1 
+++BUG [*switches*, *flags*] ++/BUG
 Set switches and flags for the debugger.
 
 Note: The debugger needs further specification.
 
-=item --execute, -e *line*
-
+=end item1
+=begin item1 
+--execute, -e *line*
 Execute a single-line program.  Multiple C<-e> options may be chained together,
 each one representing an input line with an implicit newline at the end.
 
 If you wish to run in lax mode, without strictures and warnings enabled,
 pass a value of '6;' to the first -e on the command line, like C<-e '6;'>.
-See L<Synopsis 11|S11-modules/"Forcing Perl 6"> for details.
+See L<Synopsis 11|S11-modules#"Forcing Perl 6"> for details.
 
-=item --autoloop-delim, -F *expression*
-
+=end item1
+=begin item1 
+--autoloop-delim, -F *expression*
 Pattern to split on (used with -a).  Substitutes an expression for the default
 split function, which is C<{split ' '}>.  Accepts unicode strings (as long as
 your shell lets you pass them).  Allows passing a closure
 (e.g. -F "{use Text::CSV}").  Awk's not better any more :)
 
-=item --help, -h
-
+=end item1
+=begin item1 
+--help, -h
 Print summary of options.  Desugars to C<++CMD --print-help --exit ++/CMD>.
 
-=item --include, -I location[,Class=location[,...]]
-
+=end item1
+=begin item1 
+--include, -I location[,Class=location[,...]]
 Prepend C<CompUnitRepo>'s to @*INC, for ad hoc module searching.  The
 L<CompUnitRepo::Local::File> class will be assumed if no class has been
 specified.  Any class specified should adhere to the L<CompUnitRepo> interface.
 In any Searching the standard library follows the policies laid out in
 L<Synopsis 11|S11-modules>.
 
-=item --language, -L *dsl*
-
+=end item1
+=begin item1 
+--language, -L *dsl*
 Set the domain specific language for parsing the script file.  (That is,
 specify the I<setting> (often known as the prelude) for the program.)
 C<++PARSER --setting=*dsl* ++/PARSER>.
 
-=item --autoloop-no-print, -n
-
+=end item1
+=begin item1 
+--autoloop-no-print, -n
 Act like awk.  Desugars to
 C<++PARSER --setting=Perl6-autoloop-no-print ++/PARSER>.
 
-=item --output-format, -O *format*
-
+=end item1
+=begin item1 
+--output-format, -O *format*
 Emit compiler output to STDOUT in the specified format, rather than invoking
 the compiled code immediately. This option is implementation-specific, so
 consult the documentation for your Perl 6 implementation for further details.
 
-=item --autoloop-print, -p
-
+=end item1
+=begin item1 
+--autoloop-print, -p
 Act like sed.  Desugars to
 C<++PARSER --setting=Perl6-autoloop-print ++/PARSER>.
 
-=item --search-path, -S
-
+=end item1
+=begin item1 
+--search-path, -S
 Use PATH environment variable to search for script specified on command-line.
 
-=item --taint, -T
-
+=end item1
+=begin item1 
+--taint, -T
 Turns on "taint" checking. See L<Synopsis 23|S23-security> for details.
 Commits very early.  Put this option as early on the command-line as possible.
 
-=item --use, -u *module*
-
+=end item1
+=begin item1 
+--use, -u *module*
 C<--use *module*> and C<-u *module*> desugars to C<-e 'use *module*'>.
 Specify version info and import symbols by appending info to the module name:
 
@@ -491,29 +507,30 @@ Specify version info and import symbols by appending info to the module name:
 You'll need the quotes so your shell doesn't complain about redirection.
 There is no special command-line syntax for C<'no *module*>, use C<-e>.
 
-=item --version, -v
-
+=end item1
+=begin item1 
+--version, -v
 Display program name, version, patchlevel, etc.  Desugars to
 C<++CMD -v ++/CMD ++PARSER -v ++/PARSER ++BUG -v ++/BUG>.
 
-=item --verbose-config, -V
-
+=end item1
+=begin item1 
+--verbose-config, -V
 Display configuration details.  Desugars to
 C<++CMD -V ++/CMD ++PARSER -V ++/PARSER ++BUG -V ++/BUG>.
 
-=item --extract-from-text, -x
-
+=end item1
+=begin item1 
+--extract-from-text, -x
 Run program embedded in Unicode text.  Scan for the first line starting
 with C<#!> and containing the word C<perl>, and start there instead.
 This is useful for running a program embedded in a larger message.
 (In this case you would indicate the end of the program using the C<=END>
-block, as defined in L<Synopsis 26|S26-documentation/"The =END block">.)
+block, as defined in L<Synopsis 26|S26-documentation#"The =END block">.)
 
 Desugars to C<--PARSER --Perl6-extract-from-text --/PARSER>.
 
-=back
-
-
+=end item1
 =head1 Metasyntactic Options
 
 Metasyntactic options are a subset of delimited options used to pass arguments
@@ -535,56 +552,55 @@ interface, so consult the documentation for your Perl 6 implementation.
    ++X a -b  ++/X -c  ++X -d e  ++/X   a -b -d e
   +++X a -b +++/X -c  ++X -d e  ++/X   a -b -d e
 
-
 =head1 Environment Variables
 
 Environment variables may be used to the same effect as command-line
 arguments.
 
-=over 4
-
-=item PATH
-
+=begin item1 
+PATH
 Used in executing subprocesses, and for finding the program if the -S switch
 is used.
 
-=item PERL6LIB
-
+=end item1
+=begin item1 
+PERL6LIB
 A list of directories in which to look for ad hoc Perl library files.
 
 Note: this is speculative, as library loading is not yet specified,
 except insofar as S11 mandates various behaviors incompatible with
 mere directory probing.
 
-=item PERL6OPT
-
+=end item1
+=begin item1 
+PERL6OPT
 Default command-line arguments. Arguments found here are prepended to the
 list of arguments provided on the command-line.
 
-=back
-
-
+=end item1
 =head1 References
 
-=over 4
-
-=item L<http://perldoc.perl.org/perlrun.html>
-
-=item L<http://search.cpan.org/~jv/Getopt-Long-2.37/lib/Getopt/Long.pm>
-
-=item L<http://search.cpan.org/~dconway/Getopt-Euclid-v0.2.0/lib/Getopt/Euclid.pm>
-
-=item L<http://perlcabal.org/syn/S06.html#Declaring_a_MAIN_subroutine>
-
-=item L<http://search.cpan.org/src/AUDREYT/Perl6-Pugs-6.2.13/docs/Pugs/Doc/Run.pod>
-
-=item L<http://haskell.org/ghc/docs/latest/html/users_guide/using-ghc.html>
-
-=item L<http://java.sun.com/j2se/1.4.2/docs/tooldocs/windows/java.html>
-
-=back
-
-
+=begin item1 
+L<http://perldoc.perl.org/perlrun.html>
+=end item1
+=begin item1 
+L<http://search.cpan.org/~jv/Getopt-Long-2.37/lib/Getopt/Long.pm>
+=end item1
+=begin item1 
+L<http://search.cpan.org/~dconway/Getopt-Euclid-v0.2.0/lib/Getopt/Euclid.pm>
+=end item1
+=begin item1 
+L<http://perlcabal.org/syn/S06.html#Declaring_a_MAIN_subroutine>
+=end item1
+=begin item1 
+L<http://search.cpan.org/src/AUDREYT/Perl6-Pugs-6.2.13/docs/Pugs/Doc/Run.pod>
+=end item1
+=begin item1 
+L<http://haskell.org/ghc/docs/latest/html/users_guide/using-ghc.html>
+=end item1
+=begin item1 
+L<http://java.sun.com/j2se/1.4.2/docs/tooldocs/windows/java.html>
+=end item1
 =head1 Notes
 
 I'd like to be able to adjust the input record separator from command line,
@@ -593,7 +609,8 @@ I don't have a solution, but perhaps pass a closure that evaluates to an Int?
 This should try to use whatever option does the same thing to a new
 filehandle when S16 is further developed.
 
-=for consideration
+=head1 Consideration
+
 [probably a setter method on $*IN of some sort?  --law]
 
 Sandboxing? maybe -r
@@ -601,4 +618,5 @@ Sandboxing? maybe -r
 Env var? maybe -E.
 Could be posed in terms of substituting a different setting.
 
-=for vim:set expandtab sw=4:
+=comment vim:set expandtab sw=4:
+=end pod
