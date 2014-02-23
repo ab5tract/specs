@@ -1,17 +1,14 @@
-
-=head1 TITLE
-
+=begin pod
+=TITLE
  [DRAFT] Synopsis 28 - Special Names [DRAFT]
 
-=head1 AUTHORS
-
+=AUTHORS
     Larry Wall <larry@wall.org>
     Tim Nelson <wayland@wayland.id.au>
     Lyle Hopkins <webmaster@cosmicperl.com>
     Carl Mäsak <cmasak@gmail.com>
 
-=head1 VERSION
-
+=VERSION
     Created: 23 Feb 2009, created by Tim Nelson from miscellaneous documents lying around
 
     Last Modified: 27 Nov 2013
@@ -275,4 +272,5 @@ ${^TAINT} variable, which is pending, among other things, infectious trait spec
 Please post errors and feedback to perl6-language.  If you are making
 a general laundry list, please separate messages by topic.
 
-=for vim:set expandtab sw=4:
+=comment vim:set expandtab sw=4:
+=end pod
