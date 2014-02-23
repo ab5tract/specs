@@ -87,7 +87,7 @@ normal execution time of the code in which they are embedded.  For normal
 mainline code, this is the normal flow of execution; if this is too late
 to initialize something in the package that you want to be initialized, consider
 use of a MAIN subroutine, which is invoked at the end of normal execution.
-See L<S06#Declaring a C<MAIN> subroutine>.
+See L<Declaring a C<MAIN> subroutine|doc:S06#Declaring a MAIN subroutine>.
 
 For packages (modules, classes, roles, etc.) defined in separate files
 from the mainline code, there can be no mainline code by definition,
