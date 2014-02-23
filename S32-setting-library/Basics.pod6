@@ -201,7 +201,7 @@ scalar variables. All of the following are exported by default.
 
 =begin item1 
 VAR
-This is not really a method, but some kind of macro.  See L<S12> for details.
+This is not really a method, but some kind of macro.  See L<doc:S12> for details.
 
 =end item1
 =head1 Additions
