@@ -1,16 +1,11 @@
-
-=encoding utf8
-
-=head1 TITLE
-
+=begin pod
+=TITLE
 Synopsis 10: Packages
 
-=head1 AUTHORS
-
+=AUTHORS
     Larry Wall <larry@wall.org>
 
-=head1 VERSION
-
+=VERSION
     Created: 27 Oct 2004
 
     Last Modified: 9 Jul 2010
@@ -92,7 +87,7 @@ normal execution time of the code in which they are embedded.  For normal
 mainline code, this is the normal flow of execution; if this is too late
 to initialize something in the package that you want to be initialized, consider
 use of a MAIN subroutine, which is invoked at the end of normal execution.
-See L<S06/Declaring a C<MAIN> subroutine>.
+See L<S06#Declaring a C<MAIN> subroutine>.
 
 For packages (modules, classes, roles, etc.) defined in separate files
 from the mainline code, there can be no mainline code by definition,
@@ -248,4 +243,5 @@ the end of the function dispatcher's search, but sets up the current
 package as a kind of cache for newly-defined functions just ahead of itself
 in the search path.
 
-=for vim:set expandtab sw=4:
+=comment vim:set expandtab sw=4:
+=end pod
