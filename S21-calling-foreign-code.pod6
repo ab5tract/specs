@@ -1,17 +1,12 @@
-
-=encoding utf8
-
-=head1 TITLE
-
+=begin pod
+=TITLE
 DRAFT: Synopsis 21: Calling Foreign Code
 
-=head1 AUTHORS
-
+=AUTHORS
     Arne Skjærholt <arnsholt@gmail.com>
     Jonathan Worthington <jnthn@jnthn.net>
 
-=head1 VERSION
-
+=VERSION
     Created: 27 Feb 2009
 
     Last Modified: 23 Nov 2012
@@ -26,8 +21,7 @@ repository under
 L<https://github.com/perl6/specs/blob/master/S21-calling-foreign-code.pod>
 so edit it there in the git repository if you would like to make changes.
 
-=head1 SYNOPSIS
-
+=SYNOPSIS
     use NativeCall;
 
     sub native_function(int arg) is native('libsomething') { * }
@@ -35,8 +29,7 @@ so edit it there in the git repository if you would like to make changes.
 
     native_function(42);
 
-=head1 DESCRIPTION
-
+=DESCRIPTION
 Perl 6 has a standard foreign function interface, NativeCall. The only
 libraries NativeCall is able to interface with are those written in C.
 Languages like Fortran and C++ require name mangling, which is
@@ -44,14 +37,11 @@ compiler-specific and thus falls well beyond the scope of this specification.
 
 Hypotheticals:
 
-=over
-
-=item
+=begin item1 
 This is likely not an exhaustive list of showstoppers for C++/Fortran compat;
 also, some platforms may be tricky simply in terms of C interop as well
 
-=back
-
+=end item1
 =head2 Calling foreign code
 
 A sub is marked as a native routine with the C<is native> trait. A native sub
@@ -76,6 +66,7 @@ currently loaded libraries of the process; that is, behaviour consistent with
 C<dlsym(RTLD_DEFAULT, symbol)> in C.
 
 Hypotheticals:
+
 =for item
 Perl 6 allows a greater range of characters in identifiers than C. Should we
 look for cases where the identifier isn't legal in C?
@@ -139,50 +130,55 @@ Numeric types, both native types and not, have obvious marshalling semantics
 (as long as they are not arbitrary-precision types). A NativeCall
 implementation should support the following types:
 
-=over
-
-=item C<int8>, C<uint8> signed and unsigned byte
-
-=item C<int16>, C<uint16> signed and unsigned two-byte integer
-
-=item C<int32>, C<uint32> signed and unsigned four-byte integer
-
-=item C<int64>, C<uint64> signed and unsigned eight-byte integer
-
-=item C<int>, C<uint> signed and unsigned machine word
-
-=item C<Int> largest available integer type
-
-=item C<num32> four-byte floating point number
-
-=item C<num>, C<num64> eight-byte floating point number
-
-=back
-
+=begin item1 
+C<int8>, C<uint8> signed and unsigned byte
+=end item1
+=begin item1 
+C<int16>, C<uint16> signed and unsigned two-byte integer
+=end item1
+=begin item1 
+C<int32>, C<uint32> signed and unsigned four-byte integer
+=end item1
+=begin item1 
+C<int64>, C<uint64> signed and unsigned eight-byte integer
+=end item1
+=begin item1 
+C<int>, C<uint> signed and unsigned machine word
+=end item1
+=begin item1 
+C<Int> largest available integer type
+=end item1
+=begin item1 
+C<num32> four-byte floating point number
+=end item1
+=begin item1 
+C<num>, C<num64> eight-byte floating point number
+=end item1
 Hypotheticals:
 
-=over
-
-=item
+=begin item1 
 This is a wider range of native types than what S02 mandates. We'll either
 want to expand that list of natives, or find some other way of specifying
 sizes.
 
-=item
+=end item1
+=begin item1 
 There is no obvious mirror of C<Int> for largest available I<unsigned> type.
 
-=item
+=end item1
+=begin item1 
 Should C<Num> be a synonym for C<num>/C<num64>?
 
-=item
+=end item1
+=begin item1 
 If the Int or Num type object is passed, should it be silently converted to a
 zero value, or cause an exception?
 
-=item
+=end item1
+=begin item1 
 How should overflows be handled?
 
-=back
-
+=end item1
 =head3 Strings
 
     multi explicitly-manage(Str $x is rw, :$encoding = 'utf8') is export(:DEFAULT, :utils) { ... }
@@ -201,15 +197,12 @@ by default risks causing later code to access freed memory.
 
 Hypotheticals:
 
-=over
-
-=item
+=begin item1 
 We need better facilities for signaling when it's appropriate to free data.
 The current facilities have the benefit that it won't cause memory-related
 errors later on, but on the flip side, it will leak memory over time.
 
-=back
-
+=end item1
 =head3 The C<OpaquePointer> class
 
     class OpaquePointer is repr('CPointer') { }
@@ -294,8 +287,8 @@ mechanism to duplicate this. One possible source of inspiration for this is
 C#. C# distinguishes between value and reference types similarly to Perl 6 and
 also has a well-supported foreign function interface.
 
-=head3 Varargs
-To be determined. This section is hypothetical.
+=head3 VarargsTo be determined. This section is hypothetical.
+
 
 One option is an API similar to the C99 C<stdarg.h> macros and explicitly get
 arguments off an opaque object. For example C<my $arg = va_arg($args, Type)>.
@@ -317,11 +310,10 @@ cache.
 
 Hypotheticals:
 
-=over
-
-=item
+=begin item1 
 Sometimes it will be necessary to reinterpret a pointer-valued object as a
 different kind of pointer. One way to provide this would be a function a la:
 C<my $val = reinterpret($ptr, Type)>.
 
-=back
+=end item1
+=end pod
