@@ -105,6 +105,7 @@ L<X::IO::Dir|doc:S32::Exception#X::IO::Dir> failure.
 =end item1
 =begin item1 
 glob
+
     multi glob(Str $pattern --> Array[Str])
 
 Accepts a pattern that will then be expanded into a array of filenames (the
@@ -163,6 +164,7 @@ strings, particularly braces.
 =end item1
 =begin item1 
 note
+
     multi note (*@LIST --> Bool)
 
 Does a "say" to C<$*ERR>, more or less.  Like C<warn>, it adds a
@@ -176,6 +178,7 @@ scope by declaring:
 =end item1
 =begin item1 
 slurp
+
     multi slurp (IO::Handle $fh = $*ARGFILES,
         Bool :$bin = False,
         Str  :$enc = "Unicode",
@@ -195,6 +198,7 @@ The routine will C<fail> if the file does not exist, or is a directory.
 =end item1
 =begin item1 
 spurt
+
     multi spurt (IO::Handle $fh,
         Str   $contents,
         Str  :$enc = $?ENC,
@@ -231,6 +235,7 @@ other error in opening, writing, or closing.
 =end item1
 =begin item1 
 chdir
+
     multi sub chdir(Str:D)
     multi sub chdir(IO::Path:D)
 
@@ -251,6 +256,7 @@ you to set the working directory as a parameter.
 =end item1
 =begin item1 
 visitdir
+
     multi sub visitdir(Str:D)
     multi sub visitdir(IO::Path:D)
 
@@ -263,6 +269,7 @@ working directory.
 =end item1
 =begin item1 
 unlink
+
     sub unlink(Cool:D $path)
 
 Unlinks an ordinary file, link, or symbolic link from disk -- that is, it is
@@ -272,6 +279,7 @@ failure.
 =end item1
 =begin item1 
 rmdir
+
     sub rmdir(Cool:D $directory)
 
 Removes the directory given from disk.  Returns True on success, or an 
@@ -280,6 +288,7 @@ L<X::IO::Rmdir|doc:S32::Exception#X::IO::Rmdir> failure.
 =end item1
 =begin item1 
 mkdir
+
     sub mkdir(Cool:D $directory)
 
 Makes (creates) the directory represented by the IO::Path. Returns True on success,
@@ -304,6 +313,7 @@ writing like a file.
 
 =begin item1 
 open
+
     multi method open (
       # mode
         Bool :$r  = True,
@@ -335,6 +345,7 @@ Conjectural: The <:p> parameter opens a pipe, which is readable with C<:r>
 =end item1
 =begin item1 
 get
+
     method get() returns Str:D
 
 Reads and returns one line from the handle. Uses C<input-line-separator>
@@ -343,6 +354,7 @@ to determine where a line ends.
 =end item1
 =begin item1 
 lines
+
     method lines($limit = Inf)
 
 Returns a lazy list of lines read via the C<get> method, limited to C<$limit>
@@ -404,6 +416,7 @@ Output through C<Str.sprintf>. See L<doc:S32::Str> for details.
 =end item1
 =begin item1 
 write
+
     method write(IO::Handle:D: Buf $buf --> Int)
 
 Tries to write C<$buf>. The actual number of bytes
@@ -417,6 +430,7 @@ C<IO::Writeable::Encoded> methods.
 =end item1
 =begin item1 
 slurp
+
     method slurp(
         Bool :$bin = False,
         Str  :$enc = "Unicode",
@@ -432,6 +446,7 @@ The routine will C<fail> if the file does not exist, or is a directory.
 =end item1
 =begin item1 
 spurt
+
     multi method spurt (
         Str   $contents,
         Str  :$enc = $?ENC,
@@ -456,6 +471,7 @@ other error in opening, writing, or closing.
 =end item1
 =begin item1 
 t
+
     method t() returns Bool:D
 
 Returns C<True> if the handle is opened to a tty.
@@ -463,6 +479,7 @@ Returns C<True> if the handle is opened to a tty.
 =end item1
 =begin item1 
 p
+
     method p() returns Bool:D
 
 Returns C<True> if the handle is opened to a pipe.
@@ -470,6 +487,7 @@ Returns C<True> if the handle is opened to a pipe.
 =end item1
 =begin item1 
 eof
+
     method eof() returns Bool:D
 
 Returns C<True> if the handle is exhausted.
@@ -477,7 +495,8 @@ Returns C<True> if the handle is exhausted.
 =end item1
 =begin item1 
 seek
-method seek(Int $position, Int $whence --> Bool)
+
+    method seek(Int $position, Int $whence --> Bool)
 
 Position this stream into C<$position>. The meaning of this position is
 always in "octets".
@@ -489,6 +508,7 @@ TODO: make $whence an Enum
 =end item1
 =begin item1 
 tell
+
     method tell() returns Int:D:
 
 Returns the current raw position in the stream in number of "octets".
@@ -496,6 +516,7 @@ Returns the current raw position in the stream in number of "octets".
 =end item1
 =begin item1 
 ins
+
     method ins( --> Int)
 
 Returns the number of lines that have been read with C<get>.
@@ -503,6 +524,7 @@ Returns the number of lines that have been read with C<get>.
 =end item1
 =begin item1 
 input-line-separator
+
     method input-line-separator( --> Str) is rw
 
 This regulates how C<get> and C<lines> behave.
@@ -528,6 +550,7 @@ if you care about the contents of the separator.
 =end item1
 =begin item1 
 encoding
+
     multi method encoding($enc?)
 
 With no arguments, simply returns the current encoding used on the handle.
