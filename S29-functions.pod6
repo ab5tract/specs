@@ -1,11 +1,8 @@
-=encoding utf8
-
-=head1 TITLE
-
+=begin pod
+=TITLE
 Synopsis 29: Builtin Functions
 
-=head1 AUTHORS
-
+=AUTHORS
     Rod Adams <rod@rodadams.net>
     Larry Wall <larry@wall.org>
     Aaron Sherman <ajs@ajs.com>
@@ -54,7 +51,7 @@ dictate implementation.
 There is no particular difference between an operator and a function,
 but for the sake of documentation, only functions declared without
 specifying a grammatical category or with a category of C<term:>
-(see L<S02/"Bits and Pieces">) will be described as "functions",
+(see L<S02#"Bits and Pieces">) will be described as "functions",
 and everything else as "operators" which are outside of the scope
 of this document.  (See S03 for operators.)
 
@@ -69,10 +66,8 @@ from their various packages into the CORE lexical scope.  See S02.
 
 The following type declarations are assumed:
 
-=over
-
-=item AnyChar
-
+=begin item1 
+AnyChar
 The root class of all "character" types, regardless of level.
 
 This is a subtype of C<Str>, limited to a length of 1 at its highest
@@ -86,20 +81,21 @@ when you don't care which level you're writing for.
 
 Subclasses (things that are C<isa AnyChar>):
 
-=over
-
-=item CharLingua (language-defined characters)
-
-=item Grapheme (language-independent graphemes)
-
-=item Codepoint
-
-=item Byte
-
+=end item1
+=begin item2 
+CharLingua (language-defined characters)
+=end item2
+=begin item2 
+Grapheme (language-independent graphemes)
+=end item2
+=begin item2 
+Codepoint
+=end item2
+=begin item2 
+Byte
 Yes, Byte is both a string and a number.
 
-=back
-
+=end item2
 The short name for C<Grapheme> is typically C<Char> since that's the
 default Unicode level.  A grapheme is defined as a base codepoint plus
 any subsequent "combining" codepoints that apply to that base codepoint.
@@ -114,8 +110,8 @@ Instead you have names like C<CharFrench>, C<CharJapanese>,
 C<CharTurkish>, etc. for instantiated C<CharLingua> types.
 (Plus the corresponding C<StrLingua> types, presumably.)
 
-=item Matcher
-
+=begin item1 
+Matcher
  subset Matcher of Mu where * !=== any(Bool,Match,Nil)
 
 Used to supply a test to match against. Assume C<~~> will be used against it.
@@ -127,9 +123,9 @@ For instance:
     grep { $_ == 1 }, 1,2,3;    # okay
     grep * == 1, 1,2,3;         # okay
 
-
-=item Ordering
-
+=end item1
+=begin item1 
+Ordering
  subset KeyExtractor of Code where { .signature === :(Any --> Any) };
  subset Comparator   of Code where { .signature === :(Any, Any --> Int ) };
  subset OrderingPair of Pair where { .left ~~ KeyExtractor && .right ~~ Comparator };
@@ -141,10 +137,9 @@ ends up in functions like C<sort()>,
 C<min()>, C<max()>, etc., as a $by parameter which provides
 the information on how two things compare relative to each other.
 
-=over
-
-=item Comparator
-
+=end item1
+=begin item2 
+Comparator
 A closure with arity of 2, which for ordering returns
 negative/zero/positive, signaling the first argument should
 be before/tied with/after the second. aka "The Perl 5 way".
@@ -152,8 +147,9 @@ be before/tied with/after the second. aka "The Perl 5 way".
 For equivalence the closure returns either not 0 or 0 indicating
 if the first argument is equivalent or not to the second.
 
-=item KeyExtractor
-
+=end item2
+=begin item2 
+KeyExtractor
 A closure with arity of 1, which returns the "key" by which
 to compare.  Values are compared using C<cmp> for orderings
 and C<eqv> for equivalences, which in Perl 6 do different
@@ -170,15 +166,17 @@ simple operators C<*> returns a closure of one argument.
     @sorted = sort +*, @unsorted;  #ascending numeric
     @sorted = sort -*, @unsorted;  #descending numeric
 
-=item OrderingPair
-
+=end item2
+=begin item2 
+OrderingPair
 A combination of the two methods above, for when one wishes
 to take advantage of the internal caching of keys that is
 expected to happen, but wishes to compare them with something
 other than C<eqv> or C<cmp>, such as C<E<lt>=E<gt>> or C<leg>.
 
-=item Signature
-
+=end item2
+=begin item2 
+Signature
 If a signature is specified as a criterion, the signature is
 bound to each value and then each parameter does comparisons
 in positional order according to its type, as modified by
@@ -191,32 +189,30 @@ reduced as if using [||] but all comparisons do not need to be
 performed if an early one determines an increasing or decreasing
 order.  For equivalence the list is reduced as if using [&&].
 
-=item Whatever
-
+=end item2
+=begin item2 
+Whatever
 An ordering of C<*> does the default comparison for the operator:
 
     @sorted = sort *, @unsorted;
 
-=back
-
-=back
-
+=end item2
 =head1 Function Packages
 
 =head2 Context
 
-=over
+=begin item1 
+caller
+See L<S06#"The C<callframe> and C<caller> functions">.
 
-=item caller
+=end item1
+=begin item1 
+callframe
+See L<S06#"The C<callframe> and C<caller> functions">.
 
-See L<S06/"The C<callframe> and C<caller> functions">.
-
-=item callframe
-
-See L<S06/"The C<callframe> and C<caller> functions">.
-
-=item EVAL
-
+=end item1
+=begin item1 
+EVAL
  macro EVAL ( Str|Buf $code, Grammar :$lang = CALLER::<$?PARSER>)
 
 Execute C<$code> as if it were code written in C<$lang>. If C<$code> 
@@ -231,16 +227,17 @@ Returns whatever C<$code> returns, or fails when the compilation fails.
 Note that unlike in Perl 5's C<eval>, C<EVAL> does not catch any exceptions or control
 exceptions.
 
-=item evalfile
-
+=end item1
+=begin item1 
+evalfile
  multi evalfile (Str $filename ; Grammar :$lang = Perl6)
 
 Behaves like, and replaces Perl 5 C<do EXPR>, with optional C<$lang>
 support.
 
-
-=item exit
-
+=end item1
+=begin item1 
+exit
  multi exit (Int $status = 0)
 
 Stops all program execution, and returns C<$status> to the calling environment.
@@ -253,8 +250,9 @@ an embedded interpreter, all memory must also be reclaimed.
 
 [TBD: thread termination policy]
 
-=item sleep
-
+=end item1
+=begin item1 
+sleep
  multi sleep ( Real $for --> Nil )
  multi sleep ( Whatever --> Nil )
 
@@ -276,8 +274,9 @@ is not subject to relative clock drift.
 
 All of these sleep functions work only on the current thread.
 
-=item sleep-timer
-
+=end item1
+=begin item1 
+sleep-timer
  multi sleep-timer ( Real $for --> Duration )
 
 Just like C<sleep>, but returns the amount of time remaining to sleep
@@ -290,8 +289,9 @@ However, the optimizer is encouraged to change this to a bare C<sleep>
 in sink context.  (But then, you might as well just write that in
 the first place.)
 
-=item sleep-till
-
+=end item1
+=begin item1 
+sleep-till
  multi sleep-till ( Instant $till --> Bool )
 
 Just like C<sleep>, but checks the current time and goes back to
@@ -300,15 +300,17 @@ specified time.  Returns True if the function actually waited, or if
 the specified time happens to be the present moment.  Returns False
 if you asked to sleep until a time in the past.
 
-=item die
-
+=end item1
+=begin item1 
+die
  multi die (@LIST)
 
 Throws a fatal Exception. The default exception handler prints each element of
 the list to $*ERR (STDERR).
 
-=item fail
-
+=end item1
+=begin item1 
+fail
  multi fail (Str $message)
 
 Can only be called inside a routine and causes the routine to C<return> an
@@ -316,15 +318,11 @@ unthrown exception; a C<Failure> object which stringifies to C<$message>.
 If C<use fatal> is in effect where the routine was called from, it throws
 the exception.
 
-=back
-
-
+=end item1
 =head2 Conversions
 
-=over
-
-=item bless
-
+=begin item1 
+bless
  method bless(*@protos, *%init_args )
 
 Calling C<bless> on any invocant (but typically a type object) to create a new
@@ -339,17 +337,21 @@ argument should be removed from any existing code.)
 C<bless> automatically creates an object appropriate to the
 representation of the class, then calls all appropriate C<BUILD>
 routines for the current class, which initializes the object in
-least-derived to most-derived order. See L<S12/Objects> for more
+least-derived to most-derived order. See L<S12#Objects> for more
 detailed information on object creation.
 
-=item chrs
-
-=item ords
-
-=item chr
-
-=item ord
-
+=end item1
+=begin item1 
+chrs
+=end item1
+=begin item1 
+ords
+=end item1
+=begin item1 
+chr
+=end item1
+=begin item1 
+ord
  multi sub chrs( Int *@grid  --> Str )
  multi method ords( Str $string: --> List of Int ) is export
  multi method chr( Int $grid: --> Char ) is export
@@ -384,28 +386,32 @@ The C<chr> and C<ord> variants are restricted to processing a single
 character.  As is customary, you may pass a longer string to C<ord>,
 but only the first character will be translated.
 
-=item item
-
+=end item1
+=begin item1 
+item
  multi item ( $item --> Item )
 
 Forces generic Item context on its argument, and returns it.
 
-=item list
-
+=end item1
+=begin item1 
+list
  multi list ( Iterable $item --> List ) { $item.iterator.list }
  multi list ( List \iter --> List ) { iter }
 
 Almost a no-op; just makes sure that $item can be iterated.
 
-=item flat
-
+=end item1
+=begin item1 
+flat
  multi flat ( *@list --> List )
 
 Forces flat context on its arguments, and returns them.
 The heavy work is done by the C<*@> binding.
 
-=item lol
-
+=end item1
+=begin item1 
+lol
  multi lol ( **@list --> List )
 
 Forces the argument list to be evaluated in lol ("list of lists") context.
@@ -414,8 +420,9 @@ Any C<Parcel> within the top level of the outer list will be transformed into an
 The work is actually done by the binding to the C<**@> parameter.
 See also the more general C<.tree> method, which defaults to itemizing every level.
 
-=item hash
-
+=end item1
+=begin item1 
+hash
 The C<hash> contextualizer
 
  multi hash ( *@list --> Hash )
@@ -428,8 +435,9 @@ and grab the next value in the list as its value.)  Equivalent to
 C<%()> (except that empty C<%()> means C<%($/)>, while
 empty C<hash()> means an empty hash).
 
-=item gist
-
+=end item1
+=begin item1 
+gist
  multi gist( |item --> Str )
  multi method gist( Mu $item: --> Str )
 
@@ -447,8 +455,9 @@ C<say>, C<note>, C<warn>, and any non-exceptional arguments to C<die>.
 The C<print> function is specifically excluded, since it's outputting
 to a printer. C<:-)>
 
-=item :16, :8, :2, :10
-
+=end item1
+=begin item1 
+:16, :8, :2, :10
  multi prefix:<:16> ( Str $hexstr --> Num )
  multi prefix:<:8> ( Str $octstr --> Num )
  multi prefix:<:2> ( Str $binstr --> Num )
@@ -472,16 +481,11 @@ and such.
 
 Replaces Perl 5 C<hex> and C<oct>.
 
-
-=back
-
-
+=end item1
 =head2 OS
 
-=over
-
-=item gethost
-
+=begin item1 
+gethost
  multi gethost( --> OS::Name )
  multi gethost( Str $name, OS::Addfamily :$type --> OS::Name )
  multi method gethost( OS::Addr $addr: --> OS::Name ) is export
@@ -517,8 +521,9 @@ Examples:
   my $address = gethost("foo.example.com").addr;
   my $hostname = gethost(:addr<"10.1.2.3">);
 
-=item chroot
-
+=end item1
+=begin item1 
+chroot
  multi chroot ( Str $path = CALLER::<$_> --> Bool )
 
 On POSIX systems, changes the process context of the current process such
@@ -528,15 +533,17 @@ that path. For security reasons, many operating systems limit
 this functionality to the superuser. The return value will be
 true on success.
 
-=item getlogin
-
+=end item1
+=begin item1 
+getlogin
  multi getlogin ( --> Str )
 
 Returns the username of the account running the program. This may
 not be as secure as using C<getpwuid> on some platforms.
 
-=item kill
-
+=end item1
+=begin item1 
+kill
  multi kill ( OS::Signal $signal, Bool :$group, *@pids --> Bool )
  multi method kill ( Proc::PID $pid: OS::Signal $signal?, Bool :$group --> Bool )
 
@@ -570,11 +577,12 @@ signal at all, and is used to determine if processes are still running:
 
   say "Still running" if $proc.kill(0);
 
-=item run
-
-=item shell
-
-
+=end item1
+=begin item1 
+run
+=end item1
+=begin item1 
+shell
  multi shell ( $expression,   :$bg,  :%env = %*ENV --> Proc::Status )
  multi run   ( *$cmd, *@args, :$bg,  :%env = %*ENV --> Proc::Status )
 
@@ -615,29 +623,27 @@ actually a C<Proc>, which represents the created process.
 [ Conjecture: maybe shell() and run() should support a C<:$cwd = $*CWD>
 parameter -moritz ]
 
-
-=item runinstead
-
+=end item1
+=begin item1 
+runinstead
  multi runinstead ( ; Str $path, *@args )
  multi runinstead ( ; Str $command )
 
 Identical to C<run> except that it never returns. The executed program
 replaces the currently running program in memory.
 
-=item syscall
-
-=back
-
+=end item1
+=begin item1 
+syscall
+=end item1
 =head2 Concurrency
 
 There are higher-level models of concurrency management in Perl (see
-L<S17/Concurrency>). These functions are simply the lowest level
+L<S17#Concurrency>). These functions are simply the lowest level
 tools
 
-=over
-
-=item fork
-
+=begin item1 
+fork
  sub Processes::fork( --> Proc )
 
 Creates a copy of the current process. Both processes return from
@@ -660,8 +666,9 @@ Typical usage would be:
    wait();
  }
 
-=item wait
-
+=end item1
+=begin item1 
+wait
  multi method wait( Proc $process: *%options --> Proc::Status )
 
  multi wait ( Proc $process = -1, *%options --> Proc::Status )
@@ -691,106 +698,127 @@ there was no such process to wait for.
 
 The named options include:
 
-=over
-
-=item blocking
-
+=end item1
+=begin item2 
+blocking
 Defaults to true. If set to false, this forces wait to return immediately.
 
-=item WNOHANG
-
+=end item2
+=begin item2 
+WNOHANG
 Exists for historical compatibility. C<WNOHANG => 1> is identical to
 C<blocking => False>.
 
-=back
-
-=back
-
+=end item2
 =head2 Pending Apocalypse
 
 The following functions are classified by Apocalypse/Synopsis numbers.
 
-=over 4
-
-=item A/S??: OS Interaction
-
+=begin item1 
+A/S??: OS Interaction
 chroot crypt getlogin /[get|set][pw|gr].*/ kill setpgrp setpriority
 times
 
 ... These are probably going to be part of POSIX, automatically imported to GLOBAL B<if> the platform is the right one
 
-=back
-
+=end item1
 =head2 Default Functions
 
 These functions are exported into the default namespace
 
-=over
-
-=item all -- see S32-setting-library/Containers.pod
-
-=item any -- see S32-setting-library/Containers.pod
-
-=item cat -- see S32-setting-library/Containers.pod
-
-=item classify -- see S32-setting-library/Containers.pod
-
-=item defined -- see S32-setting-library/Basics.pod
-
-=item grep -- see S32-setting-library/Containers.pod
-
-=item first -- see S32-setting-library/Containers.pod
-
-=item keys -- see S32-setting-library/Containers.pod
-
-=item kv -- see S32-setting-library/Containers.pod
-
-=item join -- see S32-setting-library/Containers.pod
-
-=item map -- see S32-setting-library/Containers.pod
-
-=item max -- see S32-setting-library/Containers.pod
-
-=item min -- see S32-setting-library/Containers.pod
-
-=item none -- see S32-setting-library/Containers.pod
-
-=item one -- see S32-setting-library/Containers.pod
-
-=item pairs -- see S32-setting-library/Containers.pod
-
-=item print -- see S32-setting-library/IO.pod
-
-=item printf -- see S32-setting-library/IO.pod
-
-=item roundrobin -- see S32-setting-library/Containers.pod
-
-=item pick -- see S32-setting-library/Containers.pod
-
-=item reduce -- see S32-setting-library/Containers.pod
-
-=item reverse -- see S32-setting-library/Containers.pod
-
-=item say -- see S32-setting-library/IO.pod
-
-=item shape -- see S32-setting-library/Containers.pod
-
-=item sort -- see S32-setting-library/Containers.pod
-
-=item srand -- see S32-setting-library/Numeric.pod
-
-=item undefine -- see S32-setting-library/Basics.pod
-
-=item uri -- see S32-setting-library/IO.pod
-
-=item values -- see S32-setting-library/Containers.pod
-
-=item warn -- see S32-setting-library/Any.pod
-
-=item zip -- see S32-setting-library/Containers.pod
-
-=back
-
+=begin item1 
+all -- see S32-setting-library/Containers.pod
+=end item1
+=begin item1 
+any -- see S32-setting-library/Containers.pod
+=end item1
+=begin item1 
+cat -- see S32-setting-library/Containers.pod
+=end item1
+=begin item1 
+classify -- see S32-setting-library/Containers.pod
+=end item1
+=begin item1 
+defined -- see S32-setting-library/Basics.pod
+=end item1
+=begin item1 
+grep -- see S32-setting-library/Containers.pod
+=end item1
+=begin item1 
+first -- see S32-setting-library/Containers.pod
+=end item1
+=begin item1 
+keys -- see S32-setting-library/Containers.pod
+=end item1
+=begin item1 
+kv -- see S32-setting-library/Containers.pod
+=end item1
+=begin item1 
+join -- see S32-setting-library/Containers.pod
+=end item1
+=begin item1 
+map -- see S32-setting-library/Containers.pod
+=end item1
+=begin item1 
+max -- see S32-setting-library/Containers.pod
+=end item1
+=begin item1 
+min -- see S32-setting-library/Containers.pod
+=end item1
+=begin item1 
+none -- see S32-setting-library/Containers.pod
+=end item1
+=begin item1 
+one -- see S32-setting-library/Containers.pod
+=end item1
+=begin item1 
+pairs -- see S32-setting-library/Containers.pod
+=end item1
+=begin item1 
+print -- see S32-setting-library/IO.pod
+=end item1
+=begin item1 
+printf -- see S32-setting-library/IO.pod
+=end item1
+=begin item1 
+roundrobin -- see S32-setting-library/Containers.pod
+=end item1
+=begin item1 
+pick -- see S32-setting-library/Containers.pod
+=end item1
+=begin item1 
+reduce -- see S32-setting-library/Containers.pod
+=end item1
+=begin item1 
+reverse -- see S32-setting-library/Containers.pod
+=end item1
+=begin item1 
+say -- see S32-setting-library/IO.pod
+=end item1
+=begin item1 
+shape -- see S32-setting-library/Containers.pod
+=end item1
+=begin item1 
+sort -- see S32-setting-library/Containers.pod
+=end item1
+=begin item1 
+srand -- see S32-setting-library/Numeric.pod
+=end item1
+=begin item1 
+undefine -- see S32-setting-library/Basics.pod
+=end item1
+=begin item1 
+uri -- see S32-setting-library/IO.pod
+=end item1
+=begin item1 
+values -- see S32-setting-library/Containers.pod
+=end item1
+=begin item1 
+warn -- see S32-setting-library/Any.pod
+=end item1
+=begin item1 
+zip -- see S32-setting-library/Containers.pod
+=end item1
 =head2 Non-default Functions
 
 These functions which existed in perl5 still exist, but are not part of the default
@@ -805,7 +833,7 @@ delete, exists, pop, push, shift, splice, unshift
 
 =head3 Numeric
 
-See L<S32/Numeric>.
+See L<S32#Numeric>.
 
 =head3 IO
 
@@ -840,82 +868,95 @@ Some of these are obsoleted only as general functions, and are still available b
 the right packages.  Others are obsoleted in that they're keywords, rather than functions
 (these are in their own section, below).
 
-=over 4
-
-=item %
-
+=begin item1 
+%
  $num1 % $num2
 
 Does a floating point modulo operation, i.e. 5.5 % 1 == 0.5 and 5 % 2.5 == 0.
 
-=item dbmopen, dbmclose
-
+=end item1
+=begin item1 
+dbmopen, dbmclose
  use DB_File;
 
-=item dump
-
+=end item1
+=begin item1 
+dump
 Dumped.  Restoring from core dumps is in any event not very useful on modern
 virtual-memory operating systems.  Startup acceleration should be accomplished
 using a precompiler of some kind (details will be very implementation specific),
 or a pre-forking daemon such as Perl 5's App::Persistent (which will be an
 external module when it is ported).
 
-=item each
-
+=end item1
+=begin item1 
+each
 See .pairs() method, above.
 
-=item endpwent, endgrent, endservent, endprotoent, endnetent, endhostent
-
+=end item1
+=begin item1 
+endpwent, endgrent, endservent, endprotoent, endnetent, endhostent
 The NameServices role in S16 covers most of these.
 
-=item format, formline
-
+=end item1
+=begin item1 
+format, formline
 See Exegesis 7.
 
-=item getgrgid, getgrnam, getpwnam, getpwuid
-
+=end item1
+=begin item1 
+getgrgid, getgrnam, getpwnam, getpwuid
 The User and Group roles in S16 cover most of these.
 
-=item getpwent, getgrent, getservent, getnetent, gethostent
-
+=end item1
+=begin item1 
+getpwent, getgrent, getservent, getnetent, gethostent
 The NameServices role in S16 covers most of these.
 
-=item length()
-
+=end item1
+=begin item1 
+length()
 This word is banned in Perl 6.  You must specify units.  In practice, this probably means
 you want Str.chars(), although it could be Str.bytes(), or even something else.  See
 S32-setting-library/String for details.
 
-=item lcfirst
-
+=end item1
+=begin item1 
+lcfirst
 Retired due to lack of use case
 
-=item msgctl, msgget, msgrcv, msgsnd
-
+=end item1
+=begin item1 
+msgctl, msgget, msgrcv, msgsnd
 See IPC::SysV
 
-=item local
-
+=end item1
+=begin item1 
+local
 Replaced by C<temp> which, unlike C<local>, defaults to not changing the value.
 
-=item lock
-
-See L<S17/Concurrency>. C<lock> has been replaced by
+=end item1
+=begin item1 
+lock
+See L<S17#Concurrency>. C<lock> has been replaced by
 C<is atomic>.
 
-=item pos
-
+=end item1
+=begin item1 
+pos
 There is no C<pos> function in Perl 6 because that would not allow a string
 to be shared among threads.  Generally you want to use C<$/.to> for that now,
 or keep your own position variable as a lexical.
 
-=item prototype
-
+=end item1
+=begin item1 
+prototype
  &func.meta.signature;
  &func.^signature;
 
-=item ref
-
+=end item1
+=begin item1 
+ref
 There is no ref() any more, since it was almost always used to get
 the type name in Perl 5.  If you really want the type name, you can
 use C<$var.WHAT.perl>.  If you really want P5 ref
@@ -924,28 +965,34 @@ semantics, use C<Perl5::p5ref>.
 But if you're just wanting to test against a type, you're likely better off
 performing an C<isa> or C<does> or C<can>, or just C<$var ~~ TYPE>.
 
-=item reset
-
+=end item1
+=begin item1 
+reset
 Was there a I<good> use for this?
 
-=item semctl, semget, semop
-
+=end item1
+=begin item1 
+semctl, semget, semop
 See IPC::SysV;
 
-=item setpwent, setgrent, setservent, setprotoent, setnetent, sethostent
-
+=end item1
+=begin item1 
+setpwent, setgrent, setservent, setprotoent, setnetent, sethostent
 The NameServices role in S16 covers most of these.
 
-=item shmctl, shmget, shmread, shmwrite
-
+=end item1
+=begin item1 
+shmctl, shmget, shmread, shmwrite
 See IPC::SysV;
 
-=item study
-
+=end item1
+=begin item1 
+study
 Algorithm was too Anglo-centric.  Could be brought back if generalized somehow.
 
-=item tie, tied
-
+=end item1
+=begin item1 
+tie, tied
 These are replaced by container types.  The compiler is free to assume
 that any lexical variable is never going to change its container type
 unless some representation is made to that effect in the declaration.
@@ -959,25 +1006,28 @@ macro tie ( $var, $class, *@args ) { CODE { variable($var).meta.rebless( $class,
 
 endXXX
 
-=item untie
-
+=end item1
+=begin item1 
+untie
 See notes on "tie", above, but basically these are replaced with container classes.
 
-=item vec
-
+=end item1
+=begin item1 
+vec
 Should replace C<vec> with declared buffer/array of C<bit>, C<uint2>,
 C<uint4>, etc.
 
-=item waitpid
-
+=end item1
+=begin item1 
+waitpid
 C<wait> can now be called with or without an optional process/pid.
 
-=item write
-
+=end item1
+=begin item1 
+write
 See Exegesis 7.
 
-=back
-
+=end item1
 =head3 Keywords
 
 The following were listed in Perl 5's perlfunc, but should now be considered keywords
@@ -990,15 +1040,14 @@ last, my, next, no, our, package, return, sub, use
 Not sure whether these are exported by default or not.  Also, many may no longer exist; if
 so, they should be entered in the "Obsolete" section.
 
-=over
-
-=item Signal-related
-
+=begin item1 
+Signal-related
 alarm
 kill
 
-=item OS or library related
-
+=end item1
+=begin item1 
+OS or library related
  chroot
  crypt
  getlogin
@@ -1029,14 +1078,16 @@ OS objects:
  gethostbyaddr
  gethostbyname
 
-=item Flow control
-
+=end item1
+=begin item1 
+Flow control
 succeed
 proceed
 redo
 
-=item Other
-
+=end item1
+=begin item1 
+Other
 caller
 chr
 die
@@ -1061,11 +1112,11 @@ times
 utime
 wait
 
-=back
-
+=end item1
 =head1 Additions
 
 Please post errors and feedback to perl6-language.  If you are making
 a general laundry list, please separate messages by topic.
 
-=for vim:set expandtab sw=4:
+=comment vim:set expandtab sw=4:
+=end pod
