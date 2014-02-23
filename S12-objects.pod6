@@ -1,16 +1,11 @@
-
-=encoding utf8
-
-=head1 TITLE
-
+=begin pod
+=TITLE
 Synopsis 12: Objects
 
-=head1 AUTHORS
-
+=AUTHORS
     Larry Wall <larry@wall.org>
 
-=head1 VERSION
-
+=VERSION
     Created: 27 Oct 2004
 
     Last Modified: 30 Dec 2013
@@ -289,7 +284,7 @@ default to C<our> semantics, or even C<my> semantics, but rather
 C<has> semantics.  So instead of installing a symbol into a lexical
 or package symbol table, they merely install a public or private
 method in the current class or role via calls to its metaobject.
-(Likewise for C<submethod> declarations--see L</Submethods> below.)
+(Likewise for C<submethod> declarations--see L<#Submethods> below.)
 
 Use of an explicit C<has> declarator has no effect on the declaration.
 You may install additional aliases to the method in the lexical scope
@@ -425,7 +420,7 @@ As with the scalar variant, string method names are not allowed, only
 C<Callable> objects, The list is treated as a list of candidates to
 call.  After the first successful call the rest of the candidates are
 discarded.  Failure of the current candidate is indicated by calling
-C<nextwith> or C<nextsame> (see L</Calling sets of methods> below).
+C<nextwith> or C<nextsame> (see L<#Calling sets of methods> below).
 
 Note also that the
 
@@ -1644,7 +1639,7 @@ That is, these mean something like:
     Int:T       Int:U where none(Failure)
 
 where C<DEFINITE> is a boolean macro that says whether the object
-in question has a valid concrete representation (see L</Introspection> below).
+in question has a valid concrete representation (see L<#Introspection> below).
 
 In standard Perl 6, C<Int> is generally assumed to mean C<Int:_>, except
 for invocants, where the default is C<Int:D>.  (The default C<new> method
@@ -2694,4 +2689,5 @@ package requires a final C<::> before the subscript:
 
     Dog::{$varname}
 
-=for vim:set expandtab sw=4:
+=comment vim:set expandtab sw=4:
+=end pod
