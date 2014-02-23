@@ -1,17 +1,13 @@
-=encoding utf8
-
-=head1 TITLE
-
+=begin pod
+=TITLE
 Synopsis 14: Roles and Parametric Types [DRAFT]
 
-=head1 AUTHORS
-
+=AUTHORS
     Larry Wall <larry@wall.org>
     Tim Nelson <wayland@wayland.id.au>
     Jonathan Worthington <jnthn@jnthn.net>
 
-=head1 VERSION
-
+=VERSION
     Created: 24 Feb 2009 (extracted from S12-objects.pod)
 
     Last Modified: 24 Nov 2012
@@ -582,4 +578,5 @@ Then neither of these calls will work. The type check is based on the
 declared type of the array, and the content is unknown to the type
 checker.
 
-=for vim:set expandtab sw=4:
+=comment vim:set expandtab sw=4:
+=end pod
