@@ -1092,9 +1092,8 @@ BagHash, Pair, and PairMap.
 
 =head3 Methods
 
-=over
-
-=item sample
+=begin defn
+sample
 
     multi method sample ( $range: Int $num = 1 --> List )
     multi method sample ( $range: Whatever --> List )
@@ -1106,7 +1105,7 @@ C<(^10).sample(*)> is equivalent to C<rand * 10 xx *>.  Ranges with exclusions
 other than C<..^> may be less efficient by virtue of having to generate from a larger
 interval, throwing out values that are outside the specified interval.
 
-=back
+=end defn
 
 =head2 Buf
 
