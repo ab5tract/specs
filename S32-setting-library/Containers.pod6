@@ -14,8 +14,8 @@ DRAFT: Synopsis 32: Setting Library - Containers.pod
 =VERSION
     Created: 19 Feb 2009 extracted from S29-functions.pod
 
-    Last Modified: 24 Jan 2014
-    Version: 46
+    Last Modified: 24 Feb 2014
+    Version: 47
 
 If you read the HTML version, it is generated from the Pod in the specs
 repository under
@@ -1087,7 +1087,26 @@ BagHash, Pair, and PairMap.
         method bounds() returns Parcel {...}
         method excludes_min {...}
         method excludes_max {...}
+	method sample {...}
     }
+
+=head3 Methods
+
+=over
+
+=item sample
+
+    multi method sample ( $range: Int $num = 1 --> List )
+    multi method sample ( $range: Whatever --> List )
+
+Returns a lazy list of C<Num> values, taken as linearly distributed samples from
+the real interval specified by the invocant.  The argument, if any, indicates
+how many samples to return.  Hence, C<(^1).sample> is equivalent to C<rand>, and
+C<(^10).sample(*)> is equivalent to C<rand * 10 xx *>.  Ranges with exclusions
+other than C<..^> may be less efficient by virtue of having to generate from a larger
+interval, throwing out values that are outside the specified interval.
+
+=back
 
 =head2 Buf
 
