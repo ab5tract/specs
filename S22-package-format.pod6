@@ -421,6 +421,7 @@ irc
 
 The URL of the IRC channel where this distribution can be discussed, if any.
 
+=end item
 =begin item
 phone
 
