@@ -2014,7 +2014,9 @@ for free, which fails if the current rule would match again at this location.
 =end item1
 =begin item1 
 
-A leading C<|> indicates some kind of a zero-width boundary.
+A leading C<|> indicates some kind of a zero-width boundary. You can refer to
+backslash sequences with this syntax; C<< <|h> >> will match between a C<\h> and
+a C<\H>, for instance. Some examples:
 
     <|w> word boundary
     <|g> grapheme boundary (always matches in grapheme mode)
@@ -3063,7 +3065,7 @@ you can override that by calling C<make> inside a regex:
     ]);
 
 This puts the new abstract node into C<$/.made>.  An AST node may be of any
-type.  Using the make/.made mechanism, it is convenient to build up an
+type.  Using the C<make>/C<.made> mechanism, it is convenient to build up an
 abstract syntax tree of arbitrary node types.
 
 However, the C<make> function is not limited to be used for storing AST
@@ -3088,8 +3090,12 @@ this, use one of these:
 
 or use C<.made.item> or a C<$> variable on the receiving end.
 
+The C<.ast> method is a synonym C<.made> with no differing behavior. It exists
+both for historical reasons and as a way to indicate to those reading your code
+a more AST-like use of the C<made>/C<.make> mechanism.
 =end item2
-=begin item2 
+=begin item2
+
 
 You may also capture a subset of the match using the C<< <(...)> >> construct:
 
@@ -3189,6 +3195,7 @@ The currently defined methods are
     $/.orig      # the original match string
     $/.Str       # substr($/.orig, $/.from, $/.chars)
     $/.made      # the abstract result associated with this node (from make)
+    $/.ast       # same as $/.made
     $/.caps      # sequential captures
     $/.chunks    # sequential tokenization
     $/.prematch  # $/.orig.substr(0, $/.from)
@@ -4379,23 +4386,22 @@ so too a grammar can collect a set of named rules together:
 
 Like classes, grammars can inherit:
 
+
      grammar Letter {
-         rule text     { <greet> <body> <close> }
+         rule text     { <greet> $<body>=<line>+? <close> }
 
-         rule greet { [Hi|Hey|Yo] $<to>=(\S+?) , $$}
+         rule greet    { [Hi|Hey|Yo] $<to>=\S+? ',' }
 
-         rule body     { <line>+? }   # note: backtracks forwards via +?
+         rule close    { Later dude ',' $<from>=.+ }
 
-         rule close { Later dude, $<from>=(.+) }
-
-         # etc.
+         token line    { \N* \n}
      }
 
      grammar FormalLetter is Letter {
 
-         rule greet { Dear $<to>=(\S+?) , $$}
+         rule greet { Dear $<to>=\S+? ',' }
 
-         rule close { Yours sincerely, $<from>=(.+) }
+         rule close { Yours sincerely ',' $<from>=.+ }
 
      }
 
@@ -4403,7 +4409,7 @@ Like classes, grammars can inherit:
 =begin item1 
 
 Just like the methods of a class, the rule definitions of a grammar are
-inherited (and polymorphic!). So there's no need to respecify C<body>,
+inherited (and polymorphic!). So there's no need to respecify C<text>,
 C<line>, etc.
 
 =end item1

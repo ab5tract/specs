@@ -1,6 +1,6 @@
 =begin pod
 =TITLE
-Synopsis 11: Units and Modules
+Synopsis 11: Compilation Units
 
 =AUTHORS
     Larry Wall <larry@wall.org>
@@ -9,8 +9,8 @@ Synopsis 11: Units and Modules
 =VERSION
     Created: 27 Oct 2004
 
-    Last Modified: 28 Dec 2013
-    Version: 40
+    Last Modified: 15 Mar 2014
+    Version: 42
 
 =head1 Overview
 
@@ -59,47 +59,8 @@ Perl 6.  The second is always used when searched for locally installed compunits
 as files in directories.  Of course, one is free to devise any other way of
 storing and searching for compunits, as long as C<API> is the same.
 
-Some of Perl 6 Pod's uppercase block typenames may be used to indicate
-meta-information that is needed to add a compunit to a given Perl 6 installation
-(for instance with L<doc:CompUnitRepo::Local::Installation>, as well as being
-able to load the compunit at a later time.  These are:
-
-=begin defn
-V<=>NAME
-This is the (long) name of the compunit, which with the compunit can be found
-with C<use>, C<need> or C<require>.  To keep this compatible with older uses
-of NAME, only the first \S+ of the string will actually be used. So:
-
-=for code :allow<V>
-    V<=>NAME Foo::Bar - making Bar out of Foo
-
-would only use "Foo::Bar" for the (long) name of the compunit.
-=end defn
-=begin defn 
-V<=>AUTHOR
-This is the I<auth> of the compunit.  It is supposed to be a URI identifying the
-author or authorizing authority. Only the first \S+ of the string will actually
-be used.  For example:
-
-=for code :allow<V>
-    V<=>AUTHOR cpan:JRANDOM - Joe Random
-
-would only use I<cpan:JRANDOM> as the I<auth>.
-
-=end defn
-=begin defn
-V<=>VERSION
-This is the I<ver> of the compunit.  Also, only the first \S+ of the string will
-actually be used.  For example:
-
-=for code :allow<V>
-    V<=>VERSION 2013.06 - Poznan
-
-would only use I<2013.06> as the I<ver>.
-
-=end defn
-The combination of (long) NAME, AUTHOR (auth) and VERSION (ver), we call the
-I<credentials> of a compunit.
+See L<S22/"Distributions, Recommendations, Delivery and Installation"> for
+more information about the C<CompUnitRepo> interface.
 
 =head1 Modules
 
@@ -217,8 +178,8 @@ arguments.
 If the exporting module is actually a class, C<EXPORTALL> will invoke its
 C<EXPORT> method with the class itself as the invocant.
 
-=head1 Compile-time ImportationX<|use>
-
+=head1 Compile-time Importation
+X<|use>
 
 [Note: the :MY forms are being rethought currently.]
 
@@ -279,8 +240,8 @@ These further break down into:
       }
     }
 
-=head2 Loading without importingX<|need>
-
+=head2 Loading without importing
+X<|need>
 
 The C<need> declarator takes a list of modules and loads them (at
 compile time) without importing any symbols.  It's good for loading
@@ -316,8 +277,8 @@ is equivalent to:
       }
     }
 
-=head2 Importing without loadingX<|import>
-
+=head2 Importing without loading
+X<|import>
 
 The importation into your lexical scope may also be a separate declaration
 from loading.  This is primarily useful for modules declared inline, which
@@ -424,11 +385,11 @@ Other than that, the semantics are identical to the direct form.
 
 =head1 Versioning
 
-Compilation units posted to CPAN as part of a distribution, or entered into
-any standard Perl 6 library, are required to declare their full name so that
-installations can know where to keep them, such that multiple versions by
-different authors can coexist, all of them available to any installed version
-of Perl.
+Compilation units posted to an authority (such as CPAN) as part of a
+distribution, or entered into any standard Perl 6 library, are required to
+declare their full name so that installations can know where to keep them,
+such that multiple versions by different authors can coexist, all of them
+available to any installed version of Perl.
 
 Such modules are also required to specify exactly which version (or
 versions) of Perl they are expecting to run under, so that future
@@ -436,7 +397,7 @@ versions of Perl can emulate older versions of Perl (or give a cogent
 explanation of why they cannot).  This will allow the language to
 evolve without breaking existing widely used modules.  (Perl 5 library
 policy is notably lacking here; it would induce massive breakage even
-to change Perl 5 to make strictness the default.)  If a CPAN module
+to change Perl 5 to make strictness the default.)  If an installed module
 breaks because it declares that it supports future versions of Perl
 when it doesn't, then it must be construed to be the module's fault,
 not Perl's.  If Perl evolves in a way that does not support emulation
@@ -444,33 +405,33 @@ of an older version (at least, back to 6.0.0), then it's Perl's fault
 (unless the change is required for security, in which case it's the
 fault of the insensitive clod who broke security :).
 
-The internal API for package names is always case-sensitive, even if the library
-system is hosted on a system that is not case-sensitive.  Likewise internal
-names are Unicode-aware, even if the filesystem isn't.  This implies either some
-sort of name mangling capability or storage of intermediate products into a
-database of some sort for the L<doc:CompUnitRep::Local::Installation> class and
-similar classes.  In any event, the actual storage location must be encapsulated
-in the library system such that it is hidden from all language level naming
-constructs.  (Provision must be made for interrogating the library system for
-the actual location of a module, of course, but this falls into the category of
-introspection.)  Note also that distributions need to be distributed in a way
-that they can be installed on case-insensitive systems without loss of
-information.  That's fine, but the language-level abstraction must not leak
-details of this mechanism without the user asking for the details to be leaked.
+The internal API for package names is always case-sensitive, even if
+the library system is hosted on a system that is not case-sensitive.
+Likewise internal names are Unicode-aware, even if the filesystem isn't.
+This implies either some sort of name mangling capability or storage
+of intermediate products into a database of some sort for the
+L<doc:CompUnitRep::Local::Installation> class and similar classes.  In any event,
+the actual storage location must be encapsulated in the library system
+such that it is hidden from all language level naming constructs.
+(Provision must be made for interrogating the library system for
+the actual location of a module, of course, but this falls into
+the category of introspection.)  Note also that distributions
+need to be distributed in a way that they can be installed on
+case-insensitive systems without loss of information.  That's fine,
+but the language-level abstraction must not leak details of this
+mechanism without the user asking for the details to be leaked.
 
 As discussed in C<Units>, the required parts for library insertion are the
 (long) name of the compilation unit, a URI identifying the author/authority
 (called auth to be intentionally ambiguous) and its version number (ver for
-short).  For example, if a compunit contains this pod (and no other
-meta-information has been specified during installation with
-L<doc:CompUnitRepo::Local::Installation>):
+short).  For example, if a compunit contains this configuration in its
+L<META6.json>:
 
-=for code :allow<V>
-    V<=>NAME     Dog - our favorite pet
-    V<=>AUTHOR   cpan:JRANDOM - Joe Random
-    V<=>VERSION  1.2.1
+  "name"    : "Dog",
+  "version" : "1.2.1"
 
-When you then attempt to load a compilation unit, like:
+and has been installed from an author identified by C<cpan:JRANDOM>, then
+when you then attempt to load a compilation unit, like:
 
     use Dog;
 
@@ -606,39 +567,6 @@ is a conflict over which version to use, the new one is used by both users,
 but each gets a view that is consistent with the version it thinks it is
 using.  Of course, this depends crucially on how well the new version
 actually emulates the old version.
-
-To declare that a compunit emulates an older version, you can declare it
-with the uppercase block typename EMULATES.  For instance:
-
-=code :allow<V>
-    V<=>NAME     Dog - man's best friend
-    V<=>AUTHOR   cpan:JRANDOM - Joe Random
-    V<=>VERSION  1.2.1
-    V<=>EMULATES 1.2.0
-
-would indicate this compunit emulates version 1.2.0 itself.
-
-Or to simply exclude use of the older module and (presumably) force
-the user to upgrade, you can say:
-
-=code :allow<V>
-     V<=>EXCLUDES 1.2.0
-
-The string is parsed like a C<use> wildcard, and you can have more than one,
-so you can say things like:
-
-=code :allow<V>
-    V<=>NAME     Dog - man's best friend
-    V<=>AUTHOR   cpan:JRANDOM - Joe Random
-    V<=>VERSION  1.2.1
-    V<=>EMULATES Dog:auth(DCONWAY|JCONWAY|TCONWAY):ver<1.0+>
-    V<=>EXCLUDES Fox:<http://oreillymedia.com 3.14159>
-    V<=>EMULATES Wolf:from<C# 0.8..^1.0>;
-
-Please note that all of these are only potential default values for installing
-a compunit with the L<doc:CompUnitRepo>'s C<install> interface.  Any CompUnitRepo
-implementation may choose to ignore these hints in favor of other explicit or
-implicit information.
 
 =head1 Forcing Perl 6
 
@@ -783,64 +711,6 @@ embedded, and this separate compilation must be able to produce a deterministic
 profile of the interface.  It must be possible to extract out the
 language tweaking part of this profile for use in tools that wish to
 know how to parse the current language variant deterministically.
-
-=head1 CompUnitRepo
-
-Base class (interface, really) for the object living in the @*INC array.  Used
-both for installing compunits, as well as finding a certain compunit by way
-of its from, longname, auth and ver information.
-
-=head2 new
-
-    my $repo = CompUnitRepo.new( $location );
-
-Create a new CompUnitRepo object, either for inclusion in C<@*INC>, or to
-install a compilation unit..  The parameter indicates the location in
-which compunits are supposed to be located for this object.  This could be a
-local directory (as in the case of L<doc:CompUnitRepo::Local::File> and
-L<doc:CompUnitRepo::Local::Installation>).  Or it could be anything that indicates
-a remote repository, such as a connect string to a database, or a URL to a
-CPAN mirror or github repository.  Returns the instantiated object.
-
-=head2 install
-
-    my $installed = $repo.install(
-        $source,       # actual source
-        :$longname,    # e.g. Dog
-        :$auth,        # e.g. cpan:JRANDOM
-        :$ver,         # e.g. 1.0.3
-        :$emulates,    # e.g. 1.0.2
-        :$excludes,    # e.g. 1.2.0
-        :$created,     # e.g. 2013.12.04
-        :$from         # most likely "perl6"
-    );
-
-Install a compilation unit in the appropriate way for this object.  May cause
-a fatal exception if this repository does not support installing.  The first
-parameter contains the actual source-code of the compilation unit to be
-installed.  The named parameters indicate the other meta-information to be
-associated with the compunit.  Returns whether compilation unit was installed.
-
-Of course, any implementation of L<doc:CompUnitRepo>'s C<install> interface, may
-decide to accept additional meta-information and store this and make available
-for later introspection.
-
-=head2 candidates
-
-    my @candidates = $repo.candidates( $longname, $auth?, $ver?, $from? );
-
-Return L<doc:CompUnit> candidates given the matching credentials.
-
-=head1 CompUnit
-
-The object that describes a compilation unit.  Is expected to have the
-following attributes/methods: longname, auth, ver, emulates, excludes, created
-and from, corresponding to the parameters as specified in L<doc:CompUnitRepo>'s
-C<install> interface.
-
-=head2 load
-
-    my $loaded = @candidates[0].load;
 
 =comment vim:set expandtab sw=4:
 =end pod

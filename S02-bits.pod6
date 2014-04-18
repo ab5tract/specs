@@ -1331,7 +1331,7 @@ endianness.)
 
 Among other things, C<Mu> is named after the eastern concept of
 "Mu" or 無 (see L<http://en.wikipedia.org/wiki/MU>, especially the
-"Mu_(negative)" entry), so in Perl 6 it stands in for Perl 5's
+"Mu (negative)" entry), so in Perl 6 it stands in for Perl 5's
 concept of "undef" when that is used as a noun.  However, C<Mu> is also
 the "nothing" from which everything else is derived via the undefined
 type objects, so it stands in for the concept of "Object" as used in
@@ -3087,6 +3087,8 @@ The following return objects that contain all pertinent info:
     $?CLASS     Which class am I in? (as variable)
     $?ROLE      Which role am I in? (as variable)
     $?GRAMMAR   Which grammar am I in?
+    %?META      The META.info data associated with the module
+    %?RESOURCE  Associated resource files, shortcut for %?META<resource>
 
 It is relatively easy to smartmatch these constant objects
 against pairs to check various attributes such as name,
@@ -4737,7 +4739,7 @@ forces parallel evaluation of any iterator, hyper, or junction, such
 that if any single thread dies or hangs its computation, it does not
 block any other thread from returning its results to the race list.
 When the demand for the race list drops, hung threads may be killed.
-You can think of it as a C<gather> with a 'C<try take async {...}>'
+You can think of it as a C<gather> with a 'C<try take start {...}>'
 on parallel computation.  Note that exceptions are trapped by
 default; if your car crashes, you simply do not finish the race.
 If you want notifications of some sort back to the pit crew, you'll

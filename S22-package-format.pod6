@@ -1,238 +1,541 @@
 =begin pod
 =TITLE
-Synopsis 22: Package Format [DRAFT]
+Synopsis 22: Distributions, Recommendations, Delivery and Installation
 
 =AUTHORS
-    Jos Boumans <kane@cpan.org>
-    Audrey Tang <audreyt@audreyt.org>
-    Florian Ragwitz <rafl@debian.org>
-    Tim Nelson <wayland@wayland.id.au>
+    Elizabeth Mattijsen <liz@dijkmat.nl>
 
 =VERSION
-    Created: 3 Nov 2005
+    Created: 15 March 2014
 
-    Last Modified: 19 Dec 2008
-    Version: 2
+    Last Modified: 15 March 2014
+    Version: 1
 
-=head1 OVERVIEW
+=head1 Terminology
 
-=head2 Terminology and Scope
+Because many of the concepts used in this document may be overloaded by
+other concepts in the mind of the reader, it seems like a good idea to define
+some terminology first.  Please note that these definitions only apply within
+the context of Perl 6.
 
-I'll start by listing a few terms, and whether this document is supposed to cover them or
-not.
+=head2 compilation unit
 
-=begin defn
-.jib files
-This is the source package format, and is specified in this document
-=end defn
-=begin defn
-CPAN6
-This is a piece of software for managing an archive network (such as CPAN). This
-is not specified in this document; see L<http://cpan6.org/>
-=end defn
-=begin defn
-PAUSE6
-This is an actual network based on the cpan6 software (see above).  It also is
-not documented here.
-=end defn
-=begin defn
-CPAN6.pm
-This is a piece of software that starts with what it can get on PAUSE6, and
-attempts to give you an installed perl module (this is a replacement for
-CPANPLUS/cpan2dist)
-=end defn
-=head2 Inspirations
+A piece of code that can be compiled as a unit.  It can either exist in a
+file (and be compiled using C<use> or C<require>), or be presented as a stream
+of characters for compilation with C<EVAL>.  An example of a compilation unit
+in a file:
 
-The following can be useful inspirations:
+  lib/JSON/Fast.pm6
 
-=begin item1 
-Debian Policy: L<http://www.us.debian.org/doc/debian-policy>
-=end item1
-=begin item1 
-Software::Packager::Metadata: L<http://perlsoftpackmet.svn.sourceforge.net/viewvc/perlsoftpackmet/main/doc/> (click on the
-link in the Rev. column next to Overview)
+=head2 distribution
 
-=end item1
-=head1 PACKAGE LAYOUT
+A distribution is an archive of some form that can be used to install zero
+or more compilation units (each stored in a separate file), with any possibly
+associated files needed for execution.  For example:
 
-=head2 Project directory
+  lib/JSON/Fast.pm6
+  lib/JSON/PurePerl.pm6
 
-Step 1 of the general flow should ideally be done by an automated tool, like
-p5's current Module::Starter or somesuch. Suffice to say, it should produce
-a layout something along these lines (note, this is just an example):
+It has a name for identification, which may or may not coincide with the
+compilation units in the distribution.  An example of a distribution name:
 
-    p5-Foo-Bar/
-        lib/
-            Foo/
-                Bar.pm
-        t/
-            00_load.t
-        _jib/
-            META.info
+  JSON-Fast
 
-The files in the _jib dir are part of the package metadata. The most important
-file is the META.info file that holds all the collected metadata about the
-package, which ideally gets filled (mostly) by what is described in step 2 of
-the C<General Flow>. Any pre/posthook files should also go in this directory.
-This directory should be extensible, so new files can be added to extend
-functionality.
-See the section on C< Metadata Spec > for details.
+It also has a version, to distinguish it from other distributions with the
+same name.  For instance:
 
-=head2 .jib files
+  1.23
 
-These files are created in step 3 of the C<General Flow>
+Which, together, are used to create the filename of the distribution, for
+instance:
 
-C<JIB> is a simple 3 letter combination that's not yet 'taken' as
-a known extension. It's purposely not perl specific, as there's nothing
-about the C<JIB> specification that's limiting it to perl only.
+  JSON-Fast.1.23.tar.gz
 
-# XXX - Also C<package> is carrying double meaning in P6 as both namespace
-and source distribution.  Can we remove the former meaning and refer to them
-as C<module> and C<namespace> from now on?
+Please note that by changing the C<::> from the module specification to a
+C<-> for the filename of the archive, we are effectively disallowing an owner
+to upload a distribution for "JSON-Fast" and "JSON::Fast" at the same time.
+This seems unlikely to become a problem.
 
-C<.jib> files are archives designed to distribute source packages, not
-installable packages. As we will need to compile things on the client side
-(things that have C bits or equivalent), and because we can not know the
-install path before hand, a source package is an obvious choice.
-A binary, installable package like C<.deb> is therefor no option.
+A Perl 6 distribution B<must> contain a configuration file named C<META6.json>,
+containing JSON-encoded information about the contents of the distribution.
 
-These C<.jib> contain metadata and installable code quite analogous to
-the C<.deb> packages we know, except that the metadata is also used to
-C<compile> (for the lack of a better term so far) the code on the user side.
+=head2 owner
 
-The name of a C<.jib> file is determined as follows:
+The owner of a distribution is responsible for the development of a
+distribution.  This can either be a single person, or a (semi-)official
+organisation.  The owner of a distribution has a (mnemonic) name, e.g.:
 
-    <prefix>-<package-name>-<version>-<authority>.<extension>
+  JRANDOM
 
-In praxis, this will produce a name along these lines:
+Please note that the owner is not necessarily the developer of a distribution,
+although if the owner is a single individual, this is pretty likely.
 
-    p5-Foo-Bar-1.1-cpan+kane.jib
+=head2 content storage
 
-The Internal layout is as follows:
+A service to which an owner can upload a distribution to and other people can
+download B<specific> distributions from.  This is most likely some online
+web-service, but it does not need to be.  It has a logical name that is
+essentially a URL.  An example would be:
 
-    - control.tgz
-        * contains the data in the _jib directory
-    - data.tgz
-        * contains the following directories the other directories.
-            This may be limited in the future, by say, a manifest.skip
-            like functionality, or by dictating a list of directories/
-            files that will be included
+  cpan
 
-There is room to ship more files alongside the 2 above mentioned archives.
-This allows us to ship an extra md5sum, version, signature, anything.
+The (mnemonic) name of the owner usually coincides with the userid or login
+name used to upload distributions, but does not need to be.
 
-=head1 METADATA SPEC
+=head2 auth
 
-    - Define no more than needed to get started for now
-        - Allow for future extensions
-        - Use YAML as metadata format as it's portable and available standard
-            in perl6
+The C<auth> of a distribution, is the combination of the content storage name
+with the name of the owner, separated by a colon.  For example:
 
-=head2 Supported fields
+  cpan:JRANDOM
 
-=for code :allow<N>
-    - Prefix        Package prefix category     (p5)
-    - Name          Perl module name            (Foo-Bar)
-    - Version       Perl module version         (1.2.3)
-    - Authority     From S11                    (cpan+KANE)
-    - Package       Full package name           (p5-Foo-Bar-1.2.3-cpan+kane)
-    - Description   Description of function     (This is what it does)
-    - Author        CPAN author id              (KANE)
-    - Depends       Packages it depends onN«This is packages, *not* modules. If we need a module -> package
-        mapping, this needs to be done when extracting the data from the
-        compiler, and queried against the available packages cache.»N<See the section on L<Dependencies>>(p5-Foo)
-    - Provides      Packages this one provides  (p5-Foo-Bar,
-                                                    p5-Foo-Bar-cpan+kane)
+Please note that this is B<not> an authority, merely an indication of the
+location where the distribution for that owner was obtained.  Typically the
+auth of a distribution is used to try to load compilation units of already
+installed distributions, such as in:
 
-As the <Prefix>-<Name>-<Version>-<Authority> combination make up the
-<Package> name, arguably, we can leave the former out.
-The upside is to make sure all fields contain unique information.
-The downside is that 3rd party parsers will need to understand the
-C<Package> syntax.
+  use JSON::Fast:auth<cpan:JRANDOM>;
 
-Again, arguably, the C<Author> and C<Authority> fields overlap, and
-C<Authority> can be made to hold both cases.
+=head2 identity
 
-=head2 Suggested fieldsN<Steal more tags from debian policy>
+The identity of a distribution, is the combination of name of the content
+storage, the name of the owner, name and version of a distribution, separated
+by colons.  For example:
 
-    - Build-Depends Packages needed to build this package
-    - Suggests      Packages suggested by this package
-    - Recommends    Packages recommended by this package
-    - Enhances      Packages that are enhanced by this package
-    - Conflicts     Packages this one conflicts with
-    - Replaces      Packages this one replaces
-    - Tags          Arbitrary metadata about the package,
-                    like flickr and debtags
-    - Contains      List of modules (and scripts?) contained
-                    in the package
+ cpan:JRANDOM:JSON-Fast:1.23
 
-=DEPENDENCIES
-=head2 Dependency Notation
+There should really be only one unique distribution for a given identity in the
+world.
 
-Dependency notation allows you to express the following concepts:
+The content storage should accept an identity and either directly return the
+archive for that distribution, or return a URL from which that distribution
+can be downloaded.
 
-=begin item1 
-OR
-Specifies alternatives
+=head2 recommendation manager
 
-=end item1
-=begin item1 
-AND
-Specifies cumulative requirements
+A service that will translate a request for a compilation unit (with optional
+owner and/or version and/or content storage specification, like a C<use>
+statement) into a list of zero or more identities of distributions that match
+the request.
 
-=end item1
-=begin item1 
-associate VERSION requirement
-Specifies a criteria for the version requirement
+The recommendation manager is only used during the installation process of
+the distribution for a wanted compilation unit.
 
-=end item1
-=begin item1 
-grouping
-This allows nesting of the above expressions
+A recommendation manager can be run by a community (like the current Perl 6
+ecosystem or the packages list for Perl 5 on CPAN), or by company (for use
+inside the company itself), or by any reviewing / grading service (for use
+by anybody wanting to use that service), or by any other person willing to
+put in the effort.
 
-=end item1
-=head3 Basic notation:
+A request for:
 
-    a, b                        # a AND b
-    [a, b]                      # a OR b
-    { a => "> 2" }              # a greater than 2
-    { a => 1 }                  # shorthand for a greater or equal to 1
-    \[ ... ]                    # grouping
+  JSON::PurePerl
 
-=head3 More complex examples:
+would yield the identity:
 
-=for code :allow<N>
-    a, [b,c]                    # a AND (b OR c)
-    { a => 1 }, { a => '< 2' }  # a greater or equal to 1 AND smaller than 2
-    [a, \[ b, c ] ]             # a OR (b AND c) N«This is possibly not portable to other languages. Options seem
-        thin as we don't have some /other/ grouping mechanism than [ ], { }
-        and \[ ]; ( ) gets flattened and \( ) == [ ].
-        We could abuse { } to create { OR => [ ] } and { AND => [ ] }
-        groups, but it would not read very intuitively. It would also mean
-        that the version requirements would have to be in the package naming,
-        ie. 'a > 2' rather than a => '> 2'»
+  cpan:JRANDOM:JSON-Fast:1.23
 
-=head3 Serialization Examples
+because the compilation unit C<JSON::PurePerl> is part of the C<JSON::Fast>
+distribution.
 
-    # a, b -- AND
-    - a
-    - b
+However, a request for:
 
-    # [a, b] -- OR
-    -
-      - a
-      - b
+  JSON::Fast:auth<github:JRANDOM>
 
-    # { a => "> 2" } -- VERSIONED
-    a: > 2
+would not find anything, because it has the wrong content storage specification
+("github" instead of "cpan").
 
-    # { a => 1 } -- VERSIONED
-    a: 1
+Please note that a recommendation manager does not need to be bound to a single
+content storage.  In fact, a recommendation manager would be best if being able
+to supply identities from the best of B<all> worlds.  And potentially be
+able to recommend identities responding to more natural language queries, but
+that is probably outside the scope of this specification.
 
-    # \[ ... ]  -- GROUPING
-    - !perl/ref:
-      =:
-        - ...
+A bundle of distributions is basically just a collection of identities that
+listen to a name (such as C<Rakudo *>).  A recommendation manager may provide
+bundles as part of its service.  And packagers may use this information as the
+source for bundling distributions in their specific packaging system.
+
+=head1 Distribution
+
+A Perl 6 distribution consists of an archive of some form (presumably a
+.tar.gz, .tar.bz2 or .zip file) which is expected to at least contain a file
+called "META6.json".  The existence of this file indicates that this
+distribution is a Perl 6 distribution.  This is important for those archive
+networks that also serve as a content-distribution system for other types
+of distributions (such as PAUSE / CPAN), so that they can adapt the processing
+of the contents, or decide to ignore any processing at all (such as CPAN-testers
+not being able to test Perl 6 distributions (yet)).
+
+=head2 META6.json
+
+The META6.json file is a JSON-file that must at least contain a C<perl>,
+C<name>, C<version> and C<description> section.
+
+=head3 perl
+
+Mandatory.  The minimal perl version for which this distribution can be
+installed.  Specified as a version string.  So:
+
+  "perl" : "v6.0.1"
+
+would not allow installation on Perl version 6.0.0.
+
+=head3 name
+
+Mandatory.  The name identifying this distribution.  This is usually the name
+of the main module that this distribution provides.  An example of this would
+be:
+
+  "name" : "JSON::Fast"
+
+=head3 version
+
+Mandatory.  The version literal for this distribution.  An example of this
+would be:
+
+  "version" : "v1.23"
+
+=head3 description
+
+Mandatory.  A one line description of this distribution.  So, for instance:
+
+  "description" : "Providing fast JSON encoding/decoding"
+
+=head3 authors
+
+Optional.  A list of (mnemonic) names of people who work / have worked on this
+distribution.  For informational purposes only.  An example:
+
+  "authors" : [
+    "Janet Random",
+    "Sam Helpedwithit"
+  ]
+
+Please note that for identification purposes, only the owner (who uploaded
+the distribution to the content storage) should be used.
+
+=head3 provides
+
+Optional.  A list of module - local filename pairs that this distribution makes
+available to be C<use>d.  For example:
+
+  "provides" : {
+    "JSON::Fast"     : "lib/JSON/Fast.pm6"
+    "JSON::PurePerl" : "lib/JSON/PurePerl.pm6"
+  }
+
+Please note that the filenames specified only indicate the names of the files
+in the B<distribution>.  The installer may need to mangle filenames to be able
+support file systems that do not support the file names given (e.g. when they
+contain unicode characters where the file system does not support them).  This
+also implies that any installer needs to keep a local database that is able to
+convert from the module names given, to the actual associated file).
+
+=head3 depends
+
+Optional.  A list of run-time dependencies, specified as C<use> strings.  To
+indicate alternatives, it is possible to specify a list of C<use> strings,
+instead of just a single use string.  So:
+
+  "depends" : [
+    "Sereal:auth<cpan:*>:ver(1..*)",
+    [ "Archive::Compress", "Archive::Zlib" ]
+  ]
+
+would indicate a dependency on Sereal, and either Archive::Compress or
+Archive::Zlib.
+
+An installer has the option to automatically install any dependencies, if the
+user has so indicated.  Dependencies and alternatives should be tried in the
+order they are specified.  In the case of alternatives, the first one
+for which the recommendation manager returns an identity should be installed.
+Failure of installation of an alternative may allow automatic attempts on other
+alternatives.
+
+Please note that the C<use> strings of compilation units are specified.  It
+is the responsibility of the recommendation manager to turn these into
+identities of distributions that can be downloaded.
+
+=head3 emulates
+
+Optional.  A hash in which the key is the compunit (provided by the
+distribution) to be aliased, and the value is the use string that should match
+to get that compilation unit.  An example of this would be:
+
+  "emulates" : {
+    "JSON::Fast" : "JSON::XS:auth<cpan:MLEHMANN>"
+  }
+
+If then later, a program would say:
+
+  use JSON::XS;
+
+it would in fact load the C<JSON::Fast> compunit, but make it appear as a
+C<JSON::XS> compunit, but only if there was no "real" C<JSON::XS> compunit
+installed that would match the C<use> specification.  In other words: if the
+real thing is available, then it will be used.  If it is not, it will fall back
+to the indicated compilation unit.  And it will look like you are using the
+thing you asked for.
+
+Conversely, if one would do a:
+
+  use JSON::Fast;
+
+then later doing a:
+
+  use JSON::XS:auth<cpan:MLEHMANN>;
+
+in the same scope would become a no-op, just as if the compunit had already
+been loaded.
+
+Please note that it is responsibility of the emulating compunit to actually
+provide a compatible interface with emulated compunit.
+
+=head3 supersedes
+
+Optional.  Has the same meaning as "emulates" for the L</CompUnitRepo>.
+But has additional meaning for external packagers: it indicates a potential
+superseding of the indicated compilation unit from the packagers point of
+view.  See L</superseded_by>.
+
+=head3 superseded_by
+
+Optional.  Has the reverse meaning of "emulates" for the L</CompUnitRepo>.
+It is a hash in which the key is compunit provided by the distribution, and
+the value is the C<use> string of the compunit it should be aliased to if
+that compunit is available.  So in this case:
+
+  "superseded_by" : {
+    "JSON::Fast" : "SuperJSON:ver(v1.0 .. *)"
+  }
+
+it would mean that if a program attempts to load the C<JSON::Fast> compunit
+of this distribution, it should instead use any C<SuperJSON> compunit that is
+installed that has a version of 1.0 or higher.  In other words: please don't
+use my compunit, unless you really have to.
+
+This tag has additional meaning for packagers: if a packager detects a valid
+C<supersedes> and C<superseded_by> pair in its collection of distributions to
+be packaged, the packager may decide to only supply the distribution providing
+the C<superseded_by> compilation unit.
+
+Please note that C<superseded_by> has no meaning as a C<depends>, so an
+installer should probably not automatically install any C<superseded_by>
+compunits.
+
+=head3 excludes
+
+Optional.  A hash in which the key is a compilation unit provided by this
+distribution, and the value is a C<use> string of all compilation units that
+will be disallowed when attempted to be loaded in the same lexical scope.
+An example of this would be:
+
+  "excludes" : {
+    "JSON::PurePerl" : "JSON::Slow:auth<cpan:*>:ver(1..*)"
+  }
+
+So, if a lexical scope loads C<JSON::PurePerl> from this distribution, then
+attempting to load C<JSON::Slow> will cause a Failure.  Please note that this
+has B<no> meaning for packagers: it is simply a way to provide a better error
+message if a collision of some sort will occur when both modules are loaded
+in the same lexical scope.
+
+=head3 build-depends
+
+Optional.  A list of build-time dependencies, specified as C<use> strings.  An
+example of this would be:
+
+  "build-depends" : [
+    "Archive::Zip"
+  ]
+
+=head3 test-depends
+
+Optional.  A list of test-time dependencies, specified as C<use> strings.  An
+example of this would be:
+
+  "test-depends" : [
+    "Test:auth<cpan:OVID>"
+  ]
+
+=head3 resource
+
+Optional.  A hash of resource groups, each of them corresponding to a
+directory in the "resource" directory in the distribution.  Each resource
+group has a name and a list of files that are provided.  During installation
+the installer will install these into a location, and make the files available
+through the %?RESOURCE hash.  So, for example:
+
+  "resource" : {
+    "images" : {
+      "fido.png"
+    }
+  }
+
+would assume there is a file C<resource/images/fido.png>.  After installation,
+the path of that file would be available through
+
+  %?RESOURCE<images><fido.png>.path
+
+and a handle could be obtained with:
+
+  %?RESOURCE<images><fido.png>.IO
+
+without there being any guarantee that this path has anything to do with the
+path as specified in the distribution.  Please also note that the installer
+may mangle filenames of actually installed files.
+
+=head3 support
+
+Optional.  A hash of key-value pairs regarding support for this distribution.
+Possible names are: C<email>, C<mailinglist>, C<bugtracker>, C<source>,
+C<irc>, C<phone>.
+
+=begin item
+email
+
+The email address of the owner of this distribution, if any.
+
+=end item
+=begin item
+mailinglist
+
+The mailinglist of users of this distribution, if any.
+
+=end item
+=begin item
+bugtracker
+
+The bugtracker of this distribution, if any.
+
+=end item
+=begin item
+source
+
+The URL of the source of this distribution, if any.
+
+=end item
+=begin item
+irc
+
+The URL of the IRC channel where this distribution can be discussed, if any.
+
+=begin item
+phone
+
+A fully qualified phone number (with potential cost indication) that can be
+used with queries about this distribution.
+
+=end item
+=head3 production
+
+Optional.  A Boolean to indicate whether or not this is a distribution intended
+to be used in production.  For instance:
+
+  "production" : 1
+
+By default, a distribution is not ready for production.  If a distribution
+is not ready for production, then it will never be recommended.
+
+Please note that this section is only to be used by B<installers>, giving them
+the opportunity to decide whether or not to install that distribution.  Once
+a distribution is installed, it can be loaded just like any other distribution.
+
+=head3 license
+
+Optional.  The URL with the text of the license under which this distribution
+is available for installation.  Or some other way to indicate the license,
+e.g. inspired by the Perl 5 module L<Software::License>.
+
+  "license" : "http://www.gnu.org/licenses/gpl-1.0.html"  
+
+=head3 tags
+
+Optional.  A list of general purpose tags.  For instance:
+
+  "tags" : [
+    "json",
+    "perl6"
+  ]
+
+It has no meaning other than the meaning B<you> assign to it.
+
+=head2 Special directories
+
+A distribution may contain several directories that will be handled
+specially.
+
+=head3 bin
+
+Any file inside this directory, will be installed as a callable shell
+application.
+
+=head3 t
+
+All C<.t> files in this directory, will be tested in alphabatical order,
+possibly in parallel.  Any files in this directory will never be installed.
+
+=head3 hooks
+
+All files in this directory should contain executable Perl 6 code, to be
+executed at various stages of the install process of this distribution.
+
+=head2 Installation
+
+Distributions can be installed with an installer.  This may be a command-line
+script, or be some kind of GUI.  The installer needs the user to (implicitly)
+select the C<CompUnitRepo> in which the distribution should be installed, and
+the recommendation manager that should be used to convert requests for a
+compilation unit into an identity of a distribution to be downloaded.
+
+=head2 Classes
+
+=head3 CompUnitRepo
+
+Base class (interface, really) for the object living in the @*INC array.  Used
+both for installing compunits, as well as finding a certain compunit by way
+of its from, longname, auth and ver information.
+
+=head3 new
+
+ my $repo = CompUnitRepo.new( $location );
+
+Create a new CompUnitRepo object, either for inclusion in C<@*INC>, or to
+install a compilation unit..  The parameter indicates the location in
+which compunits are supposed to be located for this object.  This could be a
+local directory (as in the case of L<CompUnitRepo::Local::File> and
+L<CompUnitRepo::Local::Installation>).  Or it could be anything that indicates
+a remote repository, such as a connect string to a database, or a URL to a
+an authority (such as CPAN or Github).  Returns the instantiated object.
+
+=head3 install
+
+ my $installed = $repo.install(...);
+
+Install a compilation unit in the appropriate way for this object.  May cause
+a fatal exception if this repository does not support installing.  The first
+parameter contains the actual source-code of the compilation unit to be
+installed.  The named parameters indicate the other meta-information to be
+associated with the compunit.  Returns whether compilation unit was installed.
+
+Of course, any implementation of L<CompUnitRepo>'s C<install> interface, may
+decide to accept additional meta-information and store this and make available
+for later introspection.
+
+=head3 candidates
+
+ my @candidates = $repo.candidates( $longname, $auth?, $ver?, $from? );
+
+Return L<CompUnit> candidates given the matching credentials.
+
+=head2 CompUnit
+
+The object that describes a compilation unit.
+
+=head3 load
+
+ my $loaded = @candidates[0].load;
 
 =comment vim:set expandtab sw=4:
 =end pod

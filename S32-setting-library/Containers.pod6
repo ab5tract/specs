@@ -1157,7 +1157,7 @@ C<$elems> elements (or to the end of the buffer, if not provided).
 
 The method fails with C<X::OutOfRange> if either C<$from> or C<$elems> are negative. The method also fails if C<$from> is larger than the amount of elemens in the buffer. 
 
-C<$from>may be specified relative to the end of the string using a WhateverCode:
+C<$from> may be specified relative to the end of the string using a WhateverCode:
 
  Buf.new(0x00, 0xFF).subbuf(*-1, 1)
 
@@ -1296,7 +1296,8 @@ A collection of values or objects that work just like sets, except
 that they need not be unique.  The count of each value or object is
 represented by an associative mapping from each key value/object to its
 replication number.  The C<.total> method returns the sum of all
-replication values.
+replication values.  The C<.minpairs> and C<.maxpairs> methods return the
+pairs with the minimum and maximum replication number.
 
 Sets and bags do not flatten into list context, nor do the constructors
 interpolate items passed to them, even if they look like sets or bags.
@@ -1345,6 +1346,13 @@ of marbles corresponds to the number of sides, and the number of
 marbles of the same color corresponds to number of sides with the
 same color.  (For "picking without replacement" see C<pick> instead.)
 Rolling requires no temporary state.
+
+=item kxxv
+
+ method kxxv (-->List)
+
+Returns a list of the keys of the bag, with each key multiplied by its
+replication factor (hence the name: .k xx .v).
 
 =end defn
 =head2 BagHash

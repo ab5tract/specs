@@ -11,8 +11,8 @@
 =VERSION
 =for table
     Created          2 December 2013
-    Last Modified    11 December 2013
-    Version          5
+    Last Modified    17 April 2014
+    Version          6
 
 This document describes how Unicode and Perl 6 work together. Needless to say,
 it would be good for your chosen reader to support various Unicode characters.
@@ -266,31 +266,95 @@ on the first codepoint of the string. Various array-based operations would be
 needed to gain information on every character in the string.
 
 [Note: If adding additional methods to access Unicode information, priority
-should be placed on info that can't be accessed through the C<uniprops> hash.]
+should be placed on info that can't be accessed as a Unicode property.]
 
-=head2 Information Hash
+=head2 Property Lookup
 
-    uniprops(Str $char) --> Hash
-    Str.uniprops(Str $char) --> Hash
+    uniprop(Int $codepoint, Stringy $property)
+    Int.uniprop(Str $property)
 
-This function returns a C<Hash> of all the properties associated with the first
-codepoint in the string.
+    uniprop(Unicodey $char, Stringy $property)
+    Unicodey.uniprop(Stringy $property)
+
+    uniprops(Unicodey $str, Stringy $property)
+    Unicodey.uniprops(String $property)
+
+This function returns the value of C<$property> for the given C<$codepoint> or
+C<$char>, or an array of values of the property of each character in C<$str> .
 
 All official spellings of a property name are supported.
 
-    uniprops("a")<ASCII_Hex_Digit> # is this character an ASCII hex digit?
-    uniprops("a")<AHex>            # ditto
+    uniprops("a", "ASCII_Hex_Digit") # is this character an ASCII hex digit?
+    uniprops("a", "AHex")            # ditto
 
-Accessing non-existent properties causes the same behavior as with any other
-C<Hash>.
+Values returned for properties may be the narrowest possible type for numeric
+and boolean values (widest C<Rat>), and C<Str> objects for all other types of
+values. (To treat boolean values as boolean, see L<C<unibool>|#Binary Property
+Lookup>.)
 
-Values for properties may be C<Bool> for binary ("Yes"/"No") values, a C<Rat>
-for numeric values, and C<Str> objects for all other types of values.
+Note there is no version of C<uniprops> for integers, while there is one for
+strings. To achieve the same thing, use normal array operations:
 
-[Conjecture: Should we define enumerations for Enumeration (but I<not> Catalog)
-values, or is that unnecessary fluff? See
-L<http://www.unicode.org/reports/tr44/tr44-12.html#About_Property_Table|this
-section of UAX#44> for details on prop value types.]
+    my @isws = (32,42,43)».uniprop("White_Space");
+
+Note that the integer-based lookup is the fundamental version; the string-based
+versions are convenience functions. These two are nearly equivalent:
+
+    uniprop("0".ord, "Numeric_Value");  # integer lookup
+    uniprop("0", "Numeric_Value");      # stringy lookup
+
+However, the string-based version will convert NFG strings to NFC before sending
+either the first or all characters through the lookup. This is because Unicode
+property lookup is considered an NFG-less environment (see L<NFC and NFD|#NFC
+and NFD>).
+
+Integer-based lookup should die on negative integers, or integers greater than
+C<0x10_FFFF>.
+
+[Conjecture: would versions of uniprop with a slurpy instead of a single string
+property be useful? Or is C<uniprop(0x20, $_) for @props> good enough?]
+
+=head3 Binary Property Lookup
+
+    unibool(Int $codepoint, Stringy $property)
+    Int.unibool(Str $property)
+
+    unibool(Unicodey $char, Stringy $property)
+    Unicodey.unibool(Stringy $property)
+
+    unibools(Unicodey $str, Stringy $property)
+    Unicodey.unibools(String $property)
+
+Looks up a boolean Unicode property (such as C<Case_Ignorable>) and returns a
+boolean. Throws an error on non-boolean properties.
+
+    unibool(0x41, "Case_Ignorable");   # OK
+    unibool(0x41, "General_Category"); # dies
+
+As with C<uniprop>, the string version converts NFG strings to NFC, but
+otherwise is equivalent to feeding the result of C<.ord> through the base
+integer version.
+
+=head3 Binary Category Check
+
+    unimatch(Int $codepoint, Stringy $category)
+    Int.unimatch(Str $category)
+
+    unimatch(Unicodey $char, Stringy $category)
+    Unicodey.unimatch(Stringy $category)
+
+    unimatches(Unicodey $str, Stringy $category)
+    Unicodey.unimatches(String $category)
+
+Checks to see if the character(s) given are in the given C<$category>. The
+string-based versions are conveniences that convert any NFG input to NFC, and
+then pass it along to the integer version.
+
+    unimatch("A", "Lu"); # True
+    unimatch("A", "L");  # True
+    unimatch("A", "Sc"); # False
+
+An error may be issued if the given category name is not valid.
 
 =head2 Numeric Codepoint
 
@@ -417,6 +481,32 @@ If a strict adherence to the values in those properties is desired (i.e. return
 null strings instead of code-point labels), the C<Name> and C<Unicode_1_Name>
 properties of the C<uniprops> hash may be used.
 
+=head2 Numeric Value
+
+    unival(Int $codepoint)
+    Int.unival
+
+    unival(Unicodey $char)
+    Unicodey.unival
+
+    univals(Unicodey $str)
+    Unicodey.univals
+
+Returns a C<Rat> (or C<Int> if the denominator is 1) of the given character's
+numeric value. Returns C<NaN> if the character is not a number.
+
+    say unival("0"); # output: 0
+    say unival("½"); # output: .5
+    say unival("."); # output: NaN
+    say univals("½¾"); # output: .5 .75 (array of Rats and/or Ints)
+
+Note that this will not convert a multi-digit string into one numeral; use the
+normal string-to-numeral coercers for that.
+
+[Conjecture: should C<val()> use C<unival> on one-character strings as part of
+its allomorphic type process? E.g. K<./fractionmagic.p6 ¾> takes the one
+positional argument as a C<RatStr>.]
+
 =head1 Regexes
 
 By default regexes operate on the grapheme (NFG) level, regardless of how the
@@ -505,6 +595,56 @@ The typical C<:nf> adverbs are in use here.
     :nfkd   NFKD literal
     :nfkc   NFKC literal
 
+=head1 Unicode Literals
+
+=head2 Identifiers
+
+Identifiers in Perl 6 can start with any alphabetic character (those characters
+in the C<L> category, as well as underscore), followed by any number of
+alphanumeric characters (those characters in the C<L> or C<N> category, as well
+as underscore). Dashes (C<->) and apostrophes (C<'>) may also appear, provided
+that they are followed by an alphabetic character.
+
+    my $foo;     # OK
+    my $ｆｏｏ;     # also OK
+    my $১০kinds; # not ok (১০ are digits)
+
+Combining marks (characters in the C<M> category) may not be the first character
+in an identifier, but they may appear at any time afterwards.
+
+Perl 6 internally stores all identifiers in NFG form, so these two lines create
+the same variable (and throw a redeclaration warning if used like this in code):
+
+    my $ä; # precomposed
+    my $ä; # not precomposed
+
+=head2 Numbers
+
+Similar to its support for any kind of Unicode in identifiers, Perl 6 allows any
+kind of character within the category C<Nd> (Decimal Number) for decimal
+numbers:
+
+    say 42 + ٤٢; # ascii digits + arabic indic
+    say ᱄2;     # lepcha & ascii
+    say ⑨;       # not ok (category No, not Nd)
+
+For hexadecimal digits, any character with C<Hex_Digit = yes> is allowed:
+
+    say 0xCAFE;     # OK
+    say 0xｃａｆｅ; # OK too
+
+The C<:radix[]> form of specifying numbers can accept strings following this
+same rule, with the following sets of characters specifying digits C<10..35>, as
+they have characters with true C<Hex_Digit> properties:
+
+    a b c d e f g h i j k l m n o p q r s t u v w x y z
+    A B C D E F G H I J K L M N O P Q R S T U V W X Y Z
+    ａ ｂ ｃ ｄ ｅ ｆ ｇ ｈ ｉ ｊ ｋ ｌ ｍ ｎ ｏ ｐ ｑ ｒ ｓ ｔ ｕ ｖ ｗ ｘ ｙ ｚ
+    Ａ Ｂ Ｃ Ｄ Ｅ Ｆ Ｇ Ｈ Ｉ Ｊ Ｋ Ｌ Ｍ Ｎ Ｏ Ｐ Ｑ Ｒ Ｓ Ｔ Ｕ Ｖ Ｗ Ｘ Ｙ Ｚ
+
+For radices greater than 36, you must use literal numbers (see L<doc:S02/General
+radices> for details).
+
 =head1 Pragmas
 
 [ the NF* pragmas have been removed, as they no longer are attributes of a Str
@@ -570,11 +710,8 @@ casing.
 =item Those who realize the superiority of a capital ẞ and would rather ß not be
 capitalized to SS C<:D>.
 
-Also, what happens when someone does
-
-    use EBCDIC;
-
-?
+How would a hypothetical C<EBCDIC> string type be implemented by some module
+writer?
 
 Other areas to consider, surely.
 
